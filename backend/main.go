@@ -17,6 +17,7 @@ func main() {
 	})
 
 	r.POST("/register", controllers.Register)
+	r.POST("/login", controllers.Login)
 
 	models.ConnectDatabase()
 
