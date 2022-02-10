@@ -1,7 +1,11 @@
 package controllers
 
 import (
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 	"net/http"
+	"os"
+	"time"
 
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
@@ -10,6 +14,16 @@ import (
 
 func errorResponse(err error) gin.H {
 	return gin.H{"error": err.Error()}
+}
+
+func getenv(key string) string {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		panic("gawatt, env tidak terdeteksii")
+	}
+
+	return os.Getenv(key)
 }
 
 func Register(c *gin.Context) {
@@ -31,7 +45,30 @@ func Register(c *gin.Context) {
 
 	models.DB.Create(&user)
 
-	c.JSON(http.StatusOK, user)
+	expiryDate := time.Now().AddDate(0, 0, 10)
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"expire":    expiryDate,
+		"userId":    user.ID,
+		"userEmail": user.Email,
+		"userPhone": user.Phone,
+		"userName":  user.Name,
+	})
+	tokenStr, e := jwtToken.SignedString([]byte(getenv("JWTKEY")))
+	if e != nil {
+		c.JSON(500, gin.H{
+			"message": "something wrong happened while create jwt",
+		})
+	}
+	authToken := models.Auth{
+		ExpiredAt: expiryDate,
+		UserID:    user.ID,
+		Token:     tokenStr,
+	}
+	models.DB.Create(&authToken)
+	c.JSON(http.StatusOK, gin.H{
+		"user":  user,
+		"token": tokenStr,
+	})
 }
 
 func Login(c *gin.Context) {
@@ -54,12 +91,46 @@ func Login(c *gin.Context) {
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data["password"])); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.JSON(http.StatusForbidden, gin.H{
 			"message": "incorrect password",
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	var token models.Auth
+	err := models.DB.Where("user_id = ?", user.ID).First(&token)
+	expiryDate := time.Now().AddDate(0, 0, 10)
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"expire":    expiryDate,
+		"userId":    user.ID,
+		"userEmail": user.Email,
+		"userPhone": user.Phone,
+		"userName":  user.Name,
+	})
+	tokenStr, e := jwtToken.SignedString([]byte(getenv("JWTKEY")))
+	if e != nil {
+		c.JSON(500, gin.H{
+			"message": "something wrong happened while create jwt",
+		})
+	}
+
+	if err != nil {
+		token.ExpiredAt = expiryDate
+		token.Token = tokenStr
+		models.DB.Updates(&token)
+	} else {
+		authToken := models.Auth{
+			ExpiredAt: expiryDate,
+			UserID:    user.ID,
+			Token:     tokenStr,
+		}
+		models.DB.Create(&authToken)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"user":   user,
+		"token":  tokenStr,
+		"expire": expiryDate,
+	})
 
 }
