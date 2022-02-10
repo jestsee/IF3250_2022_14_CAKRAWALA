@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/Screens/SplashScreen/splash_screen.dart';
 import 'package:cakrawala_mobile/Screens/Welcome/welcome_screen.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             primaryColor: primaryColor, scaffoldBackgroundColor: Colors.black),
-        home: const WelcomeScreen());
+        home: const SplashScreen());
   }
 }
