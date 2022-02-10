@@ -1,9 +1,11 @@
 package main
 
 import (
+	"net/http"
+
+	"cakrawala.id/m/controllers"
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
@@ -13,6 +15,8 @@ func main() {
 			"test": "oke boskuh",
 		})
 	})
+
+	r.POST("/register", controllers.Register)
 
 	models.ConnectDatabase()
 
