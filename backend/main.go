@@ -9,7 +9,6 @@ import (
 
 func main() {
 	r := gin.Default()
-
 	r.GET("/", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"test": "oke boskuh",
