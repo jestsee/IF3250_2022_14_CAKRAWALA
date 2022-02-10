@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ac1e22e-8b2d-4620-b566-0b313da28992" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/mobile/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="6ac1e22e-8b2d-4620-b566-0b313da28992" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
