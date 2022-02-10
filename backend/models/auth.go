@@ -4,7 +4,7 @@ import "time"
 
 type Auth struct {
 	ID        uint      `gorm:"primary_key;auto_increment" json:"id"`
-	token     string    `gorm: "not_null"`
+	Token     string    `gorm: "not_null"`
 	ExpiredAt time.Time `gorm: "not_null" json:"expiredAt"`
 	UserID    uint      `gorm:"column:user_id"`
 	User      User
