@@ -2,10 +2,10 @@ package models
 
 import (
 	"fmt"
-	"net/url"
 	"os"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
@@ -17,23 +17,21 @@ func ConnectDatabase() {
 	dbPort := os.Getenv("DBPORT")
 	dbName := os.Getenv("DBNAME")
 
-	dbdata := url.URL{
-		User:   url.UserPassword(dbUsn, dbPass),
-		Scheme: "postgres",
-		Host:   fmt.Sprintf("%s:%d", dbHost, dbPort),
-		Path:   dbName,
-		RawQuery: (&url.Values{
-			"sslmode":  []string{"disable"},
-			"TimeZone": []string{"Asia/Jakarta"},
-		}).Encode(),
-	}
-	database, err := gorm.Open("postgres", dbdata.String())
+	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+		dbUsn,
+		dbPass,
+		dbHost,
+		dbPort,
+		dbName)
+
+	database, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 
 	if err != nil {
+		fmt.Println(err)
 		panic("Failed to connect to database!")
 	}
 
-	//database.AutoMigrate(&Book{})
+	database.AutoMigrate(&User{}, &Auth{}, &Merchant{}, &Reward{}, &Transaksi{}, &HistoryReward{})
 
 	DB = database
 }
