@@ -1,15 +1,13 @@
 package main
 
 import (
-	"net/http"
-
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
 	r := gin.Default()
-
 	r.GET("/", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"test": "oke boskuh",
