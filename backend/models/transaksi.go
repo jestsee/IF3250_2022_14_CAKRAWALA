@@ -4,10 +4,10 @@ import "time"
 
 type Transaksi struct {
 	ID        uint      `gorm:"primary_key;auto_increment" json:"id"`
-	amount    uint64    `gorm: "not_null"`
-	exp       uint32    `gorm:"default:0"`
-	status    string    `gorm:"default:completed"`
-	cashback  uint32    `gorm:"default:0"`
+	Amount    uint64    `gorm: "not_null"`
+	Exp       uint32    `gorm:"default:0"`
+	Status    string    `gorm:"default:completed"`
+	Cashback  uint32    `gorm:"default:0"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
 

@@ -1,23 +1,20 @@
 package main
 
 import (
-	"net/http"
-
-	"cakrawala.id/m/controllers"
 	"cakrawala.id/m/models"
+	"cakrawala.id/m/routes"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func main() {
 	r := gin.Default()
+	routes.GetRoutes(r)
 	r.GET("/", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"test": "oke boskuh",
 		})
 	})
-
-	r.POST("/register", controllers.Register)
-	r.POST("/login", controllers.Login)
 
 	models.ConnectDatabase()
 
