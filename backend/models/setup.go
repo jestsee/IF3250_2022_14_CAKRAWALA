@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -11,6 +12,12 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		panic("gawatt, env tidak terdeteksii")
+	}
+
 	dbUsn := os.Getenv("DBUSN")
 	dbPass := os.Getenv("DBPASS")
 	dbHost := os.Getenv("DBHOST")
@@ -23,7 +30,7 @@ func ConnectDatabase() {
 		dbHost,
 		dbPort,
 		dbName)
-
+	fmt.Println("try to call env from models: ", dbPass)
 	database, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 
 	if err != nil {
