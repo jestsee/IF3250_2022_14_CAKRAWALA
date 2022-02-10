@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"cakrawala.id/m/models"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -13,6 +15,8 @@ func main() {
 			"test": "oke boskuh",
 		})
 	})
+
+	models.ConnectDatabase()
 
 	err := r.Run()
 	if err != nil {
