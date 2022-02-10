@@ -5,6 +5,7 @@ import (
 
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func errorResponse(err error) gin.H {
@@ -16,38 +17,49 @@ func Register(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&data); err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
+		return
 	}
+
+	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
 
 	user := models.User{
 		Email:    data["email"],
-		Password: data["password"],
+		Password: string(password),
 		Name:     data["name"],
 		Phone:    data["phone"],
 	}
 
 	models.DB.Create(&user)
 
-	c.JSON(http.StatusOK, data)
+	c.JSON(http.StatusOK, user)
 }
 
-// func Register(c *gin.Context) {
-// 	var data map[string]string
+func Login(c *gin.Context) {
+	var data map[string]string
 
-// 	if err := c.ShouldBindJSON(&data); err != nil {
-// 		c.JSON(http.StatusBadRequest, errorResponse(err))
-// 	}
+	if err := c.ShouldBindJSON(&data); err != nil {
+		c.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
 
-// 	// TODO
-// 	// password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
+	var user models.User
 
-// 	user := models.User{
-// 		Email:    data["email"],
-// 		Password: data["password"],
-// 		Name:     data["name"],
-// 		Phone:    data["phone"],
-// 	}
+	models.DB.Where("email = ?", data["email"]).First(&user)
 
-// 	models.DB.Create(&user)
+	if user.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "user not found",
+		})
+		return
+	}
 
-// 	c.JSON(http.StatusOK, data)
-// }
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data["password"])); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "incorrect password",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+
+}
