@@ -4,8 +4,8 @@ import "time"
 
 type HistoryReward struct {
 	id         uint      `gorm:"primaryKey;autoIncrement" `
-	quantity   uint16    `gorm: "not_null"`
-	pointsPaid uint32    `gorm: "not_null"`
+	Quantity   uint16    `gorm: "not_null"`
+	PointsPaid uint32    `gorm: "not_null"`
 	CreatedAt  time.Time `json:"createdAt"`
 	UpdatedAt  time.Time `json:"updatedAt"`
 
