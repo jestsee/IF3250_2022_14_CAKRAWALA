@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/circle_profile_icon.dart';
 import 'package:cakrawala_mobile/components/enter_amount_input.dart';
 import 'package:cakrawala_mobile/components/rounded_button.dart';
@@ -27,8 +28,12 @@ class Body extends StatelessWidget {
           fontSize: 20),),
         backgroundColor: blue,
         elevation: 0,
-        // TODO kasih padding atas
-        // TODO tombol back nya belum
+        actions: <Widget>[
+          Padding(
+            padding:
+              EdgeInsets.symmetric(horizontal: 0.05 * size.width),
+              child: BackButton(),)
+        ],
       ),
       body: Column (
         children: <Widget>[
@@ -57,16 +62,7 @@ class Body extends StatelessWidget {
             hintText: "Enter the amount to transfers",
             onChanged: (value) {},
           ),
-          Expanded(
-            child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: RoundedButton(
-                text: "Confirm Transfer",
-                press: () {},
-                color: Colors.black,
-              ),
-            )
-          )
+          ButtonConfirmButton(text: "Confirm Transfer", press: (){})
         ],
       ),
     );
