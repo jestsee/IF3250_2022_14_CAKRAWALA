@@ -9,7 +9,7 @@ class RoundedInputField extends StatelessWidget {
   const RoundedInputField({
     Key? key,
     required this.hintText,
-    this.icon = Icons.person,
+    this.icon = Icons.mail_outline,
     required this.onChanged,
   }) : super(key: key);
 
@@ -17,15 +17,15 @@ class RoundedInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: black),
         onChanged: onChanged,
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: primaryColor,
+            color: black,
           ),
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: black),
           border: InputBorder.none,
         ),
       ),
