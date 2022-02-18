@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "SIGN UP",
+          "Register",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         SizedBox(
