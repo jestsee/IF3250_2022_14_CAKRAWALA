@@ -1,4 +1,5 @@
 import 'package:cakrawala_mobile/Screens/SplashScreen/splash_screen.dart';
+import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/transfer_screen.dart';
 import 'package:cakrawala_mobile/Screens/Welcome/welcome_screen.dart';
 import 'package:cakrawala_mobile/constants.dart';
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             primaryColor: primaryColor, scaffoldBackgroundColor: Colors.black),
-        home: const TransferScreen());
+        home: const ChooseTransferScreen());
   }
 }

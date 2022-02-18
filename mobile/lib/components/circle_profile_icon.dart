@@ -39,6 +39,7 @@ class CircleIcon extends StatelessWidget {
             ),
           ),
           Container(
+            margin: EdgeInsets.symmetric(vertical: 2),
             alignment: Alignment.center,
             width: size.width,
             height: 20,

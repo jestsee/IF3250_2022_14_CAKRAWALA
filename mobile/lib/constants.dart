@@ -19,3 +19,4 @@ extension HexColor on Color {
 
 const primaryColor = Color(0xFFFFD335);
 const primaryLightColor = Color(0xFF2B2B2B);
+const primaryBlue = Color.fromRGBO(0, 162, 237, 1);
