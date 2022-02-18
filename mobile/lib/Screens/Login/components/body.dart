@@ -44,9 +44,10 @@ class Body extends StatelessWidget {
               onChanged: (value) {},
             ),
             RoundedButton(
-              text: "LOGIN",
+              text: "Login",
               press: () {},
-              textColor: Colors.black,
+              color: black,
+              textColor: white,
             ),
             SizedBox(
               height: size.height * 0.03,
