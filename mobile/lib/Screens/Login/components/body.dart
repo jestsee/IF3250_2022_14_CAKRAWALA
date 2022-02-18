@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "LOGIN",
+              "Login",
               style:
                   TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
