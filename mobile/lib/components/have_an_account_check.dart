@@ -21,7 +21,7 @@ class HaveAnAccountCheck extends StatelessWidget {
         ),
         GestureDetector(
           onTap: press,
-          child: Text(login ? "Sign Up" : "Sign In",
+          child: Text(login ? "Register" : "Login",
               style: TextStyle(color: black, fontWeight: FontWeight.bold)),
         )
       ],
