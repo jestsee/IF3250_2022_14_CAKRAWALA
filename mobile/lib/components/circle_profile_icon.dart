@@ -21,9 +21,8 @@ class CircleIcon extends StatelessWidget {
     return Column(children: <Widget>[
       Container(
         alignment: Alignment.center,
-        width: 60.0,
-        // TODO dibikin jadi perbandingan
-        height: 60.0,
+        width: size.height * 0.1,
+        height: size.height * 0.1,
         decoration: new BoxDecoration(
           color: slateGray,
           shape: BoxShape.circle,
