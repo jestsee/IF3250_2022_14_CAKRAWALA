@@ -4,6 +4,7 @@ import 'package:cakrawala_mobile/components/have_an_account_check.dart';
 import 'package:cakrawala_mobile/components/rounded_button.dart';
 import 'package:cakrawala_mobile/components/rounded_input_field.dart';
 import 'package:cakrawala_mobile/components/rounded_password_field.dart';
+import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatelessWidget {
@@ -31,12 +32,17 @@ class Body extends StatelessWidget {
         ),
         RoundedInputField(hintText: "Email", onChanged: (value) {}),
         RoundedPasswordField(onChanged: (value) {}),
-        RoundedInputField(hintText: "Full Name", onChanged: (value) {}),
-        RoundedInputField(hintText: "Phone Number", onChanged: (value) {}),
+        RoundedInputField(
+            hintText: "Full Name", onChanged: (value) {}, icon: Icons.person),
+        RoundedInputField(
+            hintText: "Phone Number",
+            onChanged: (value) {},
+            icon: Icons.local_phone_outlined),
         RoundedButton(
-          text: "SIGN UP",
+          text: "Register",
           press: () {},
-          textColor: Colors.black,
+          textColor: white,
+          color: black,
         ),
         HaveAnAccountCheck(
           login: false,
