@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"cakrawala.id/m/utils"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/joho/godotenv"
 	"net/http"
@@ -11,10 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
-
-func errorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
-}
 
 func getenv(key string) string {
 	err := godotenv.Load(".env")
@@ -30,7 +27,7 @@ func Register(c *gin.Context) {
 	var data map[string]string
 
 	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(http.StatusBadRequest, errorResponse(err))
+		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
 
@@ -75,7 +72,7 @@ func Login(c *gin.Context) {
 	var data map[string]string
 
 	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(http.StatusBadRequest, errorResponse(err))
+		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
 
@@ -114,7 +111,7 @@ func Login(c *gin.Context) {
 		})
 	}
 
-	if err != nil {
+	if err == nil {
 		token.ExpiredAt = expiryDate
 		token.Token = tokenStr
 		models.DB.Updates(&token)
@@ -133,4 +130,15 @@ func Login(c *gin.Context) {
 		"expire": expiryDate,
 	})
 
+}
+
+func UserInfo(c *gin.Context) {
+	usr := c.MustGet("user").(models.User)
+	var user models.User
+	err := models.DB.Where("email = ?", usr.Email).First(&user)
+	if err == nil {
+		c.JSON(http.StatusOK, user)
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
+	}
 }
