@@ -97,15 +97,11 @@ class BodyChoose extends StatelessWidget {
         //     ],
         //   ),
         // ),
-        Expanded(
-          child: ListView(
-            children: <Widget>[
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: ChooseAccountTable(),
-              )
-            ],
-          ),
+        Container(
+          width: .8 * size.width,
+          height: .639 * size.height,
+          child: SingleChildScrollView(
+            child: ChooseAccountTable()),
         ),
         ButtonConfirmButton(
           text: "Continue to Transfer",
