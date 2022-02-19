@@ -5,14 +5,18 @@ import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
 
 class User {
+  int id;
   String name;
   String phone;
   int exp;
+  bool selected = false;
   // TODO kayaknya harus ada atribut id buat nandain user yang mana nanti
+  // TODO containernya berubah pas muncul keyboard
 
-  User(this.name, this.phone, this.exp);
+  User(this.id, this.name, this.phone, this.exp);
   factory User.fromJson(dynamic json) {
     return User(
+        json['id'] as int,
         json['name'] as String,
         json['phone'] as String,
         json['exp'] as int);
@@ -20,7 +24,7 @@ class User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.name}, ${this.phone}, ${this.exp}}';
+    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}}';
   }
 }
 
@@ -28,12 +32,12 @@ class ChooseAccountTable extends StatefulWidget {
   ChooseAccountTable({Key? key}) : super(key: key);
 
   static const dummyData = [
-    {"name": "Zerso", "phone": "0812345670", "exp": 15000},
-    {"name": "Satu", "phone": "0812345671", "exp": 18000},
-    {"name": "Dua", "phone": "0812345672", "exp": 25000},
-    {"name": "Satu", "phone": "0812345670", "exp": 15000},
-    {"name": "Satu", "phone": "0812345671", "exp": 18000},
-    {"name": "Dua", "phone": "0812345672", "exp": 25000},
+    {"id": 0, "name": "Zerso", "phone": "0812345670", "exp": 15000},
+    {"id": 1, "name": "Satu", "phone": "0812345671", "exp": 18000},
+    {"id": 2,"name": "Dua", "phone": "0812345672", "exp": 25000},
+    {"id": 3,"name": "Satu", "phone": "0812345670", "exp": 15000},
+    {"id": 4,"name": "Satu", "phone": "0812345671", "exp": 18000},
+    {"id": 5,"name": "Dua", "phone": "0812345672", "exp": 25000},
   ];
 
   @override
@@ -57,6 +61,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
     int selectedIndex = -1;
+    bool isSelected = false;
     log('data: $_searchResult');
     // dataToTable(size);
 
@@ -78,7 +83,6 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
           height: .6598 * size.height,
           child: SingleChildScrollView (
             child: DataTable(
-                border: TableBorder.all(color: primaryBlue),
                 dividerThickness: 0,
                 dataRowHeight: 0.12 * size.height,
                 headingRowHeight: 0,
@@ -92,14 +96,40 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                   DataColumn(label: Text('asd')),
                 ],
                 rows: List.generate(usersFiltered.length, (index) =>
-                  DataRow(
-                    selected: 0 == selectedIndex,
+                    DataRow(
+                    selected: usersFiltered[index].selected,
                     onSelectChanged: (val) {
                       setState(() {
+                        log('-------');
+                        log('val: $val');
+                        for (var u in usersFiltered) {
+                          log('${u.id}: ${u.selected}');
+                        }
+                        log('bfr: $index ${usersFiltered[index].selected}');
                         selectedIndex = index;
-                        log('idx: $index');
+
+                        // reset all selected when clicked
+                        for (var u in users) {
+                          u.selected = false;
+                        }
+
+                        // assign new selected value
+                        if (usersFiltered[index].selected == false && val == false) {
+                          log('masuk sini gan');
+                          usersFiltered[index].selected = true;
+                        } else {
+                          usersFiltered[index].selected = val!;
+                        }
+                        log('aftr: $index ${usersFiltered[index].selected}');
+                        log('s: $selectedIndex');
+                        // TODO get id dari user berdasarkan selectedindex, pass ke BE
                       });
                     },
+                    color: MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.selected)) {
+                        return Colors.amber;
+                      }
+                    }),
                     cells: <DataCell>[
                       DataCell(
                             Align (
@@ -115,9 +145,9 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                               ),
                             ),
                           ),
-                          DataCell(TextName(text: usersFiltered[index].name)),
-                          DataCell(TextPhone(text:  usersFiltered[index].phone)),
-                          DataCell(TextExp(text:  usersFiltered[index].exp.toString())),
+                      DataCell(TextName(text: usersFiltered[index].name)),
+                      DataCell(TextPhone(text:  usersFiltered[index].phone)),
+                      DataCell(TextExp(text:  usersFiltered[index].exp.toString())),
                     ]
                   )
                 )
