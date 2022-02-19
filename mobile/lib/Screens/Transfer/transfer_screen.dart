@@ -12,7 +12,7 @@ class TransferScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryBlue,
       appBar: CustomAppBar(text: "Transfer"),
-    body: Body()
+      body: Body()
     );
   }
 }

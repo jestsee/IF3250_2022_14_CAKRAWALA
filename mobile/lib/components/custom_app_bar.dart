@@ -20,6 +20,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
         .size; // Screen height and width
 
     return AppBar(
+      automaticallyImplyLeading: false,
       titleSpacing: 0.1 * size.width,
       title:
       Text (

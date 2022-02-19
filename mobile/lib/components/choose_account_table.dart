@@ -8,6 +8,7 @@ class User {
   String name;
   String phone;
   int exp;
+  // TODO kayaknya harus ada atribut id buat nandain user yang mana nanti
 
   User(this.name, this.phone, this.exp);
   factory User.fromJson(dynamic json) {
@@ -55,7 +56,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
-    double rowHeight = 0.05 * size.height;
+    int selectedIndex = -1;
     log('data: $_searchResult');
     // dataToTable(size);
 
@@ -83,6 +84,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                 headingRowHeight: 0,
                 horizontalMargin: 0,
                 columnSpacing: 0,
+                showCheckboxColumn: false,
                 columns: const <DataColumn> [
                   DataColumn(label: Text('a')),
                   DataColumn(label: Text('asd')),
@@ -91,6 +93,13 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                 ],
                 rows: List.generate(usersFiltered.length, (index) =>
                   DataRow(
+                    selected: 0 == selectedIndex,
+                    onSelectChanged: (val) {
+                      setState(() {
+                        selectedIndex = index;
+                        log('idx: $index');
+                      });
+                    },
                     cells: <DataCell>[
                       DataCell(
                             Align (
