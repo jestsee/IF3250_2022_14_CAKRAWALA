@@ -24,8 +24,7 @@ class SearchBox extends StatelessWidget {
             width: 2),
           borderRadius: BorderRadius.circular(10)),
       child: TextField(
-        keyboardType: TextInputType.number,
-        style: const TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.white),
         onChanged: onChanged,
         decoration: InputDecoration(
           hintText: hintText,
