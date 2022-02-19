@@ -10,8 +10,6 @@ class User {
   String phone;
   int exp;
   bool selected = false;
-  // TODO kayaknya harus ada atribut id buat nandain user yang mana nanti
-  // TODO containernya berubah pas muncul keyboard
 
   User(this.id, this.name, this.phone, this.exp);
   factory User.fromJson(dynamic json) {
@@ -57,6 +55,14 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
     usersFiltered = users;
   }
 
+  double handleOverflow(BuildContext context) {
+    var bottom = MediaQuery.of(context).viewInsets.bottom;
+    log('m: ${bottom}');
+    if (bottom > 0) {
+      return bottom - 0.42 * bottom;
+    } else { return 0; }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
@@ -81,8 +87,13 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
         Container(
           width: .8 * size.width,
           height: .6598 * size.height,
+          padding: EdgeInsets.only (
+            // change 1
+            bottom: handleOverflow(context),
+          ),
           child: SingleChildScrollView (
             child: DataTable(
+              // border: TableBorder.all(color: Colors.black),
                 dividerThickness: 0,
                 dataRowHeight: 0.12 * size.height,
                 headingRowHeight: 0,
