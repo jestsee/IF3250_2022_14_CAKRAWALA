@@ -14,22 +14,16 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size; // Screen height and width
     return Background(
         child: SingleChildScrollView(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  "WELCOME",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: size.height * 0.03),
-                Image.asset("assets/images/cakrawala.png"),
-                SizedBox(height: size.height * 0.05),
-                Text(
-                  "Cakrwala 2022, All Right Reserved",
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-                )
-
-              ]),
-        ));
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: size.height * 0.03),
+            Image.asset("assets/images/cakrawala.png"),
+            SizedBox(height: size.height * 0.05),
+            Text("Cakrwala 2022, All Right Reserved",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
+          ]),
+    ));
   }
 }
