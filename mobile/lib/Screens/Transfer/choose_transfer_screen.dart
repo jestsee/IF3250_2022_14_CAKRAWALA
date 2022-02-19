@@ -11,9 +11,9 @@ class ChooseTransferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: primaryBlue,
-        appBar: CustomAppBar(text: "Choose Account"),
-        body: BodyChoose()
+      backgroundColor: primaryBlue,
+      appBar: CustomAppBar(text: "Choose Account"),
+      body: BodyChoose()
     );
   }
 }
