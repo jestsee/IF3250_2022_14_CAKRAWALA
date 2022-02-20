@@ -47,7 +47,6 @@ func CheckRegister() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 			return
 		}
-
 		var cols = [4]string{"email", "password", "name", "phone"}
 		for i := range cols {
 			if val, ok := data[cols[i]]; !ok {
@@ -55,12 +54,12 @@ func CheckRegister() gin.HandlerFunc {
 				return
 			}
 		}
-
 		var user models.User
-		err := models.DB.Where("email = ?", data["emaill"]).First(&user)
+		err := models.DB.Where("email = ?", data["email"]).First(&user).Error
 		if err == nil {
-			c.JSON(http.StatusBadRequest, utils.ExceptionResponse("Email sudah pernah dipakai"))
-			return
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+				"message": "email sudah pernah dipakai",
+			})
 		}
 		c.Next()
 	}

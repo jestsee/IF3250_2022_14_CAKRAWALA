@@ -17,6 +17,7 @@ func userRoutes(e *gin.Engine) {
 				"message": "tampan dan pemberani",
 			})
 		})
+		gr.GET("/self", middleware.IsAuthrorized(), controllers.UserInfo)
 
 		gr.POST("/top-up", middleware.IsAuthrorized(), transactions.TopUpRequest)
 	}
