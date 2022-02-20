@@ -8,43 +8,41 @@ import (
 	"net/http"
 )
 
-package transactions
-
 type TopUpBody struct {
 	Amount uint64 `json:"amount"`
 }
 
-func TopUpRequest(c *gin.Context){
+func TopUpRequest(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 	body := TopUpBody{}
-	if err:=c.BindJSON(&body);err!=nil{
+	if err := c.BindJSON(&body); err != nil {
 		c.AbortWithError(400, err)
 		return
 	}
 	bonus := service.TopUpBonusService(user, int64(body.Amount))
 	transaksi := models.Transaksi{
-		Amount: body.Amount,
-		Exp: uint32(bonus),
-		Cashback: 0,
-		UserID: user.ID,
+		Amount:     body.Amount,
+		Exp:        uint32(bonus),
+		Cashback:   0,
+		UserID:     user.ID,
 		MerchantID: nil,
-		FriendID: nil,
-		Status: "pending",
+		FriendID:   nil,
+		Status:     "pending",
 	}
 	e := models.DB.Create(&transaksi)
-	if e!=nil{
+	if e != nil {
 		c.AbortWithStatus(500)
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message" : "berhasil request topup",
-		"data" : transaksi,
+		"message": "berhasil request topup",
+		"data":    transaksi,
 	})
 
 }
 
-func ApproveTopUp(c *gin.Context){
+func ApproveTopUp(c *gin.Context) {
 	//Cek apakah ada topup dengan id itu
 	var transaksi models.Transaksi
 	e := models.DB.Preload("User").Where("id = ?", c.Param("id")).First(&transaksi).Error
@@ -60,10 +58,10 @@ func ApproveTopUp(c *gin.Context){
 	transaksi.User.Point += transaksi.Exp
 
 	err := models.DB.Transaction(func(tx *gorm.DB) error {
-		if e:=tx.Updates(&transaksi).Error; e != nil {
+		if e := tx.Updates(&transaksi).Error; e != nil {
 			return e
 		}
-		if e:=tx.Updates(&transaksi.User).Error; e!= nil {
+		if e := tx.Updates(&transaksi.User).Error; e != nil {
 			return e
 		}
 		return nil
@@ -75,12 +73,12 @@ func ApproveTopUp(c *gin.Context){
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message" : "Berhasil accept saldo",
-		"data" : transaksi,
+		"message": "Berhasil accept saldo",
+		"data":    transaksi,
 	})
 }
 
-func getTopUpRequest(c *gin.Context){
+func GetTopUpRequest(c *gin.Context) {
 	var topupReq []models.Transaksi
 	err := models.DB.Where("merchant_id IS NULL AND friend_id IS NULL AND status != 'completed'").Find(&topupReq).Error
 	if err != nil {
@@ -88,8 +86,7 @@ func getTopUpRequest(c *gin.Context){
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message" : "berhasil get top up requests",
-		"data" : topupReq,
+		"message": "berhasil get top up requests",
+		"data":    topupReq,
 	})
 }
-
