@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
         style: TextStyle(fontWeight: FontWeight.w900,
             color: Colors.white,
             fontSize: 20),),
-      backgroundColor: primaryBlue,
+      backgroundColor: deepSkyBlue,
       elevation: 0,
       actions: <Widget>[
         Padding(

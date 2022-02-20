@@ -61,7 +61,6 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
   List<User> usersFiltered = [];
   TextEditingController controller = TextEditingController();
   String _searchResult = '';
-  int selectedIndex = -1;
   
   @override
   void initState() {
@@ -76,14 +75,9 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
     } else { return 0; }
   }
 
-  int getUserIndex() {
-    return selectedIndex;
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
-    bool isSelected = false;
 
     return Column(
       children: [

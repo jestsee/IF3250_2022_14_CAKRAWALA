@@ -2,7 +2,7 @@ class dummyData {
   List<Map<String,Object>> data = [
     {
       "id": 0,
-      "name": "Zero",
+      "name": "Satu",
       "phone": "0812345670",
       "exp": 15000,
       "address": "Jl. Contoh Alamat No. 0",

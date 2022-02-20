@@ -12,7 +12,7 @@ class TransferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryBlue,
+      backgroundColor: deepSkyBlue,
       appBar: CustomAppBar(text: "Transfer"),
       body: Body(choosenUser: choosenUser)
     );
