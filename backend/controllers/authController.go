@@ -135,7 +135,7 @@ func Login(c *gin.Context) {
 func UserInfo(c *gin.Context) {
 	usr := c.MustGet("user").(models.User)
 	var user models.User
-	err := models.DB.Where("email = ?", usr.Email).First(&user)
+	err := models.DB.Where("email = ?", usr.Email).First(&user).Error
 	if err == nil {
 		c.JSON(http.StatusOK, user)
 	} else {

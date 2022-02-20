@@ -14,11 +14,12 @@ type TopUpBody struct {
 
 func TopUpRequest(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
-	body := TopUpBody{}
+	var body TopUpBody
 	if err := c.BindJSON(&body); err != nil {
 		c.AbortWithError(400, err)
 		return
 	}
+
 	bonus := service.TopUpBonusService(user, int64(body.Amount))
 	transaksi := models.Transaksi{
 		Amount:     body.Amount,
@@ -29,7 +30,7 @@ func TopUpRequest(c *gin.Context) {
 		FriendID:   nil,
 		Status:     "pending",
 	}
-	e := models.DB.Create(&transaksi)
+	e := models.DB.Create(&transaksi).Error
 	if e != nil {
 		c.AbortWithStatus(500)
 		return
@@ -45,9 +46,11 @@ func TopUpRequest(c *gin.Context) {
 func ApproveTopUp(c *gin.Context) {
 	//Cek apakah ada topup dengan id itu
 	var transaksi models.Transaksi
-	e := models.DB.Preload("User").Where("id = ?", c.Param("id")).First(&transaksi).Error
+	e := models.DB.Preload("User").Where("id = ? AND status != 'completed'", c.Param("id")).First(&transaksi).Error
 	if e != nil {
-		c.AbortWithError(500, e)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "request topup tidak ditemukan",
+		})
 		return
 	}
 	//Ubah Status
