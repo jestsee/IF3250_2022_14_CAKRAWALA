@@ -1,53 +1,67 @@
 import 'dart:developer';
+import 'package:cakrawala_mobile/Screens/Transfer/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/components/text_account_attribute.dart';
-import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
+
+// global variable
+User currentUser = User.fromJson(
+    {
+      "id": -1,
+      "name": "Unknown",
+      "phone": "-1",
+      "exp": 0,
+      "address": "Unknown",
+      "email" : "Unknown"
+    }
+);
 
 class User {
   int id;
   String name;
   String phone;
   int exp;
+  String address;
+  String email;
   bool selected = false;
 
-  User(this.id, this.name, this.phone, this.exp);
+  User(this.id, this.name, this.phone, this.exp, this.address, this.email);
   factory User.fromJson(dynamic json) {
     return User(
         json['id'] as int,
         json['name'] as String,
         json['phone'] as String,
-        json['exp'] as int);
+        json['exp'] as int,
+        json['address'] as String,
+        json['email'] as String)
+    ;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}}';
+    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.address}, ${this.email}}';
+  }
+
+  static User getSelectedUser() {
+    log('selected:$currentUser');
+    return currentUser;
   }
 }
 
 class ChooseAccountTable extends StatefulWidget {
   ChooseAccountTable({Key? key}) : super(key: key);
 
-  static const dummyData = [
-    {"id": 0, "name": "Zerso", "phone": "0812345670", "exp": 15000},
-    {"id": 1, "name": "Satu", "phone": "0812345671", "exp": 18000},
-    {"id": 2,"name": "Dua", "phone": "0812345672", "exp": 25000},
-    {"id": 3,"name": "Satu", "phone": "0812345670", "exp": 15000},
-    {"id": 4,"name": "Satu", "phone": "0812345671", "exp": 18000},
-    {"id": 5,"name": "Dua", "phone": "0812345672", "exp": 25000},
-  ];
-
   @override
   State<ChooseAccountTable> createState() => _ChooseAccountTableState();
 }
 
 class _ChooseAccountTableState extends State<ChooseAccountTable> {
-  List<User> users = ChooseAccountTable.dummyData.map((e) =>
+  List<User> users = dummyData().data.map((e) =>
       User.fromJson(e)).toList();
   List<User> usersFiltered = [];
   TextEditingController controller = TextEditingController();
   String _searchResult = '';
+  int selectedIndex = -1;
   
   @override
   void initState() {
@@ -57,19 +71,19 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
 
   double handleOverflow(BuildContext context) {
     var bottom = MediaQuery.of(context).viewInsets.bottom;
-    log('m: ${bottom}');
     if (bottom > 0) {
       return bottom - 0.42 * bottom;
     } else { return 0; }
   }
 
+  int getUserIndex() {
+    return selectedIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
-    int selectedIndex = -1;
     bool isSelected = false;
-    log('data: $_searchResult');
-    // dataToTable(size);
 
     return Column(
       children: [
@@ -85,15 +99,14 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
             }
         ),
         Container(
-          width: .8 * size.width,
+          width: size.width,
           height: .6598 * size.height,
           padding: EdgeInsets.only (
-            // change 1
             bottom: handleOverflow(context),
           ),
           child: SingleChildScrollView (
             child: DataTable(
-              // border: TableBorder.all(color: Colors.black),
+                // border: TableBorder.all(color: Colors.black),
                 dividerThickness: 0,
                 dataRowHeight: 0.12 * size.height,
                 headingRowHeight: 0,
@@ -101,23 +114,20 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                 columnSpacing: 0,
                 showCheckboxColumn: false,
                 columns: const <DataColumn> [
+                  DataColumn(label: Text('p')),
                   DataColumn(label: Text('a')),
                   DataColumn(label: Text('asd')),
                   DataColumn(label: Text('asd')),
                   DataColumn(label: Text('asd')),
+                  DataColumn(label: Text('p')),
                 ],
                 rows: List.generate(usersFiltered.length, (index) =>
                     DataRow(
                     selected: usersFiltered[index].selected,
                     onSelectChanged: (val) {
                       setState(() {
-                        log('-------');
-                        log('val: $val');
-                        for (var u in usersFiltered) {
-                          log('${u.id}: ${u.selected}');
-                        }
-                        log('bfr: $index ${usersFiltered[index].selected}');
-                        selectedIndex = index;
+                        currentUser = usersFiltered[index];
+                        log('$currentUser');
 
                         // reset all selected when clicked
                         for (var u in users) {
@@ -131,17 +141,13 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                         } else {
                           usersFiltered[index].selected = val!;
                         }
-                        log('aftr: $index ${usersFiltered[index].selected}');
-                        log('s: $selectedIndex');
-                        // TODO get id dari user berdasarkan selectedindex, pass ke BE
                       });
                     },
                     color: MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return Colors.amber;
-                      }
+                      if (states.contains(MaterialState.selected)) {return Colors.amber;}
                     }),
                     cells: <DataCell>[
+                      DataCell(Container(width: 0.08 * size.width,)),
                       DataCell(
                             Align (
                               alignment: Alignment.centerLeft,
@@ -159,6 +165,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                       DataCell(TextName(text: usersFiltered[index].name)),
                       DataCell(TextPhone(text:  usersFiltered[index].phone)),
                       DataCell(TextExp(text:  usersFiltered[index].exp.toString())),
+                      DataCell(Container(width: 0.08 * size.width,)),
                     ]
                   )
                 )
