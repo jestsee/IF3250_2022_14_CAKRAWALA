@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
+import 'package:cakrawala_mobile/components/choose_account_table.dart';
 import 'package:cakrawala_mobile/components/circle_profile_icon.dart';
 import 'package:cakrawala_mobile/components/enter_amount_input.dart';
 import 'package:cakrawala_mobile/components/user_profile_container.dart';
@@ -7,7 +8,8 @@ import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import "package:flutter/material.dart";
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  final User choosenUser;
+  const Body({Key? key, required this.choosenUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class Body extends StatelessWidget {
             height: size.height * 0.05,
           ),
           CircleIcon(
-            textName: "Contoh",
+            textName: choosenUser.name,
             press: () {},
             textColor: Colors.white,
           ),
@@ -28,9 +30,9 @@ class Body extends StatelessWidget {
           ),
           WhiteFieldContainer(
             child: UserProfileContainer(
-              name: "Contoh Nama",
-              address: "Jl. Contoh Alamat No. 10",
-              email: "ContohEmail@gmail.com"
+              name: choosenUser.name,
+              address: choosenUser.address,
+              email: choosenUser.email
             )
           ),
           SizedBox(

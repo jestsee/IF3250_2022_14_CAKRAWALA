@@ -35,9 +35,8 @@ class BodyChoose extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) {
-                  return TransferScreen();
-                },
+                builder: (context) =>
+                    TransferScreen(choosenUser: User.getSelectedUser())
               ),
             );
           },
