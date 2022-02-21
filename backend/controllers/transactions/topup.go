@@ -12,6 +12,15 @@ type TopUpBody struct {
 	Amount uint64 `json:"amount"`
 }
 
+// TopUpRequest Login godoc
+// @Summary TopUpRequest.
+// @Description Add New User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body TopUpBody true "Inputan yang benar"
+// @Success 200 {string} Login
+// @Router /v1/top-up [post]
 func TopUpRequest(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 	var body TopUpBody
