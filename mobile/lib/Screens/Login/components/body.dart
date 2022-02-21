@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cakrawala_mobile/Screens/Homepage/homepage_screen.dart';
 import 'package:cakrawala_mobile/Screens/Login/components/components.dart';
 import 'package:cakrawala_mobile/Screens/Signup/signup_screen.dart';
 import 'package:cakrawala_mobile/components/have_an_account_check.dart';
@@ -45,7 +46,16 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Homepage();
+                    },
+                  ),
+                );
+              },
               textColor: Colors.black,
             ),
             SizedBox(

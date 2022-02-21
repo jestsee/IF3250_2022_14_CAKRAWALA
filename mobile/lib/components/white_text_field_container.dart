@@ -1,9 +1,8 @@
-import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
 
-class TextFieldContainer extends StatelessWidget {
+class WhiteFieldContainer extends StatelessWidget {
   final Widget child;
-  const TextFieldContainer({
+  const WhiteFieldContainer({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -14,10 +13,11 @@ class TextFieldContainer extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-          color: white, borderRadius: BorderRadius.circular(29)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10)),
       child: child,
     );
   }

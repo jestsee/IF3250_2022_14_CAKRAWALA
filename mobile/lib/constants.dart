@@ -17,5 +17,11 @@ extension HexColor on Color {
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
 
+const deepSkyBlue = Color(0xFF00A2ED);
+const slateGray = Color(0xFF666892);
+const black = Color(0xFF202225);
+const white = Color(0xFFFFFFFF);
 const primaryColor = Color(0xFFFFD335);
-const primaryLightColor = Color(0xFF2B2B2B);
+// const primaryLightColor = Color(0xFF2B2B2B);
+// const primaryColor = Color(0xFFFFD335);
+// const primaryLightColor = Color(0xFF2B2B2B);
