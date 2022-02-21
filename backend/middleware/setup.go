@@ -2,10 +2,7 @@ package middleware
 
 import (
 	"cakrawala.id/m/models"
-	"cakrawala.id/m/utils"
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"time"
 )
 
@@ -36,31 +33,6 @@ func IsAuthrorized() gin.HandlerFunc {
 			return
 		}
 		c.Set("user", auth.User)
-		c.Next()
-	}
-}
-
-func CheckRegister() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var data map[string]string
-		if err := c.ShouldBindJSON(&data); err != nil {
-			c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
-			return
-		}
-		var cols = [4]string{"email", "password", "name", "phone"}
-		for i := range cols {
-			if val, ok := data[cols[i]]; !ok {
-				c.JSON(http.StatusBadRequest, utils.ExceptionResponse(fmt.Sprint("col %s has no value, val: %s", cols[i], val)))
-				return
-			}
-		}
-		var user models.User
-		err := models.DB.Where("email = ?", data["email"]).First(&user).Error
-		if err == nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-				"message": "email sudah pernah dipakai",
-			})
-		}
 		c.Next()
 	}
 }
