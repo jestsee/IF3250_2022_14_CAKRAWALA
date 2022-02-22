@@ -2,6 +2,7 @@ package routes
 
 import (
 	"cakrawala.id/m/controllers"
+	"cakrawala.id/m/controllers/transactions"
 	"cakrawala.id/m/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -16,5 +17,8 @@ func userRoutes(e *gin.Engine) {
 				"message": "tampan dan pemberani",
 			})
 		})
+		gr.GET("/self", middleware.IsAuthrorized(), controllers.UserInfo)
+
+		gr.POST("/top-up", middleware.IsAuthrorized(), transactions.TopUpRequest)
 	}
 }

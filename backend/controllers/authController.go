@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"cakrawala.id/m/utils"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/joho/godotenv"
 	"net/http"
@@ -12,10 +13,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func errorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
-}
-
 func getenv(key string) string {
 	err := godotenv.Load(".env")
 
@@ -26,25 +23,52 @@ func getenv(key string) string {
 	return os.Getenv(key)
 }
 
-func Register(c *gin.Context) {
-	var data map[string]string
+type RegisterReqBody struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+}
 
-	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(http.StatusBadRequest, errorResponse(err))
+// Register godoc
+// @Summary Register.
+// @Description Add New User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body RegisterReqBody true "Inputan yang benar"
+// @Success 200 {string} Register
+// @Router /register [post]
+func Register(c *gin.Context) {
+	data := new(RegisterReqBody)
+
+	if err := c.ShouldBind(data); err != nil {
+		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
 
-	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
-
+	var u models.User
+	err := models.DB.Where("email = ?", data.Email).First(&u).Error
+	if err == nil {
+		c.JSON(400, gin.H{
+			"message": "email sudah pernah dipakai",
+		})
+		c.Abort()
+		return
+	}
+	password, _ := bcrypt.GenerateFromPassword([]byte(data.Password), 14)
 	user := models.User{
-		Email:    data["email"],
+		Email:    data.Email,
 		Password: string(password),
-		Name:     data["name"],
-		Phone:    data["phone"],
+		Name:     data.Name,
+		Phone:    data.Phone,
 	}
 
-	models.DB.Create(&user)
-
+	er := models.DB.Create(&user).Error
+	if er != nil {
+		_ = c.AbortWithError(500, er)
+		return
+	}
 	expiryDate := time.Now().AddDate(0, 0, 10)
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"expire":    expiryDate,
@@ -71,17 +95,31 @@ func Register(c *gin.Context) {
 	})
 }
 
+type LoginBody struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+// Login godoc
+// @Summary Login.
+// @Description Add New User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body LoginBody true "Inputan yang benar"
+// @Success 200 {string} Login
+// @Router /v1/login [post]
 func Login(c *gin.Context) {
-	var data map[string]string
+	var data LoginBody
 
 	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(http.StatusBadRequest, errorResponse(err))
+		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
 
 	var user models.User
 
-	models.DB.Where("email = ?", data["email"]).First(&user)
+	models.DB.Where("email = ?", data.Email).First(&user)
 
 	if user.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -90,7 +128,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data["password"])); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password)); err != nil {
 		c.JSON(http.StatusForbidden, gin.H{
 			"message": "incorrect password",
 		})
@@ -114,7 +152,7 @@ func Login(c *gin.Context) {
 		})
 	}
 
-	if err != nil {
+	if err == nil {
 		token.ExpiredAt = expiryDate
 		token.Token = tokenStr
 		models.DB.Updates(&token)
@@ -133,4 +171,23 @@ func Login(c *gin.Context) {
 		"expire": expiryDate,
 	})
 
+}
+
+// UserInfo godoc
+// @Summary UserInfo.
+// @Description Add New User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Success 200 {string} UserInfo
+// @Router /v1/self [get]
+func UserInfo(c *gin.Context) {
+	usr := c.MustGet("user").(models.User)
+	var user models.User
+	err := models.DB.Where("email = ?", usr.Email).First(&user).Error
+	if err == nil {
+		c.JSON(http.StatusOK, user)
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
+	}
 }
