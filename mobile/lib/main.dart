@@ -19,6 +19,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             primaryColor: primaryColor, scaffoldBackgroundColor: Colors.black),
-        home: const ChooseTransferScreen());
+        home: const SplashScreen());
   }
 }
