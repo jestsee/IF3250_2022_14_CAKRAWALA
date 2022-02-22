@@ -5,7 +5,7 @@ services:
     container_name: pg
     environment:
       POSTGRESQL_USERNAME: cakrawala
-      POSTGRESQL_PASSWORD: c4kr4wal4
+      POSTGRESQL_PASSWORD: c4kr4w4l4
       POSTGRESQL_DATABASE: cakrawala
       TZ: 'GMT+7'
       PGTZ: 'GMT+7'
@@ -18,14 +18,21 @@ services:
 
   golang-rest-api:
     build:
-        context: ./
+        context: .
         dockerfile: Dockerfile
     container_name: golang-rest-api
     ports:
       - "8080:8080"
     volumes:
       - ".:/app"
-    restart: 'unless-stopped'
+    environment:
+      - DBHOST=pg
+      - DBPORT=5432
+      - DBUSN=cakrawala
+      - DBPASS=c4kr4w4l4
+      - DBNAME=cakrawala
+      - JWTKEY=dxio8b3xuiiynxmu
+    restart: unless-stopped
     links:
       - pg
     depends_on:
