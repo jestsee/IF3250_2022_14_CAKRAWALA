@@ -4,9 +4,9 @@ services:
     image: bitnami/postgresql:11-debian-9
     container_name: pg
     environment:
-      POSTGRESQL_USERNAME: stdboard2021
-      POSTGRESQL_PASSWORD: Q24BDeJmDmuWHe7YGznm
-      POSTGRESQL_DATABASE: studyboard
+      POSTGRESQL_USERNAME: cakrawala
+      POSTGRESQL_PASSWORD: c4kr4wal4
+      POSTGRESQL_DATABASE: cakrawala
       TZ: 'GMT+7'
       PGTZ: 'GMT+7'
     ports:
