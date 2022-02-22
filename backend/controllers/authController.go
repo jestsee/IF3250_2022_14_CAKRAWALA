@@ -56,9 +56,7 @@ func Register(c *gin.Context) {
 		c.Abort()
 		return
 	}
-
 	password, _ := bcrypt.GenerateFromPassword([]byte(data.Password), 14)
-
 	user := models.User{
 		Email:    data.Email,
 		Password: string(password),
@@ -66,8 +64,11 @@ func Register(c *gin.Context) {
 		Phone:    data.Phone,
 	}
 
-	models.DB.Create(&user)
-
+	er := models.DB.Create(&user).Error
+	if er != nil {
+		_ = c.AbortWithError(500, er)
+		return
+	}
 	expiryDate := time.Now().AddDate(0, 0, 10)
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"expire":    expiryDate,
@@ -127,7 +128,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Email)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password)); err != nil {
 		c.JSON(http.StatusForbidden, gin.H{
 			"message": "incorrect password",
 		})
