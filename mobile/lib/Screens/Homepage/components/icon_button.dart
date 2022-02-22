@@ -21,7 +21,7 @@ class CustomIconButton extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
-      width: size.width * 0.25,
+      width: size.width * 0.27,
       decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(50)),
@@ -29,7 +29,7 @@ class CustomIconButton extends StatelessWidget {
         icon: Icon(icon_,color: white),
         label: Text(
           text,
-          style: TextStyle(color: textColor)),
+          style: TextStyle(color: textColor, fontFamily: 'Mulish', fontSize: 15, fontWeight: FontWeight.w700)),
         
         onPressed: press,
       ),

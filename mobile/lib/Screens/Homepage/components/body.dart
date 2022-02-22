@@ -1,9 +1,9 @@
+import 'dart:ui';
 
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/constants.dart';
-
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -20,17 +20,27 @@ class Body extends StatelessWidget {
               fontWeight: FontWeight.w900, color: Colors.white, fontSize: 20),
         ),
       ),
-
-      body: Column(
-        children: const <Widget>[
-          WhiteFieldContainer(
-            child: 
-            WalletInfo(),
-          ),
-          Text("Transactions"),
-
-        ]
-      ),
+      body: Column(children:  <Widget>[
+        const WhiteFieldContainer(
+          child: WalletInfo(),
+        ),
+        Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 5, 0, 10),
+              child: Text(
+                "Transactions",
+                style: TextStyle(
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }

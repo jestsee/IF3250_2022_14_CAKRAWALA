@@ -1,6 +1,7 @@
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
 import 'package:cakrawala_mobile/constants.dart';
+
 import "package:flutter/material.dart";
 
 class WalletInfo extends StatelessWidget {
@@ -8,6 +9,9 @@ class WalletInfo extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   static const double pad = 0.035;
+  static const balance = 50000;
+  static const points = 6000;
+  static const rewards = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -16,21 +20,46 @@ class WalletInfo extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-          const Text("Wallet Balance"),
+          const Text("Wallet Balance", 
+          style: TextStyle(
+            fontFamily: 'Mulish',
+            fontWeight: FontWeight.bold,
+            fontSize: 16)),
           SizedBox(height: size.height * pad),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              Text("16,000"),
-              Text("idr"),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: Text(balance.toString(), 
+                style: const TextStyle(
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.w900,
+                  fontSize: 30)),
+              ),
+              const Text("IDR",
+              style: TextStyle(
+                fontFamily: 'Mulish',
+                fontWeight: FontWeight.bold,
+                fontSize: 14)),
             ],
           ),
           SizedBox(height: size.height * pad),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const <Widget>[
-              Text("6000 points"),
-              Text("50 rewards"),
+              Text("$points points",
+                style: TextStyle(
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),),
+              Text("$rewards rewards",
+                style: TextStyle(
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                )),
             ],
           ),
           Row(
