@@ -17,9 +17,9 @@ func IsAuthrorized() gin.HandlerFunc {
 			return
 		}
 		var auth models.Auth
-		err := models.DB.Preload("User").Where("token = ?", token).First(&auth)
+		err := models.DB.Preload("User").Where("token = ?", token).First(&auth).Error
 		println(auth.ID)
-		if err == nil {
+		if err != nil {
 			c.AbortWithStatusJSON(401, gin.H{
 				"message": "Token tidak ada",
 			})

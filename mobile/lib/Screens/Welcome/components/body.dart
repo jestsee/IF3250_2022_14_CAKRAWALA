@@ -18,10 +18,6 @@ class Body extends StatelessWidget {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              "WELCOME",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: size.height * 0.03),
             Image.asset("assets/images/cakrawala.png"),
             SizedBox(height: size.height * 0.05),
