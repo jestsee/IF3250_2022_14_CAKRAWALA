@@ -8,7 +8,11 @@ class SharedPreferenceHandler {
   }
 
   void init() async{
-    this.sp = await SharedPreferences.getInstance();
+    sp = await SharedPreferences.getInstance();
+  }
+
+  void  setSharedPreference(SharedPreferences sharedPreferences){
+    sp = sharedPreferences;
   }
 
   Future<bool> setToken(token) async {
@@ -31,13 +35,17 @@ class SharedPreferenceHandler {
 
   Future<bool> isTokenActive() async{
     var token = getToken();
-    var response = await http.get(
-      Uri.parse(Constant.URL_BE + "/test"),
-      headers: {
-        "Authorization" : token
-      }
-    );
-    return response.statusCode == 200;
+    try{
+      var response = await http.get(
+          Uri.parse(Constant.URL_BE + "/test"),
+          headers: {
+            "Authorization" : token
+          }
+      );
+      return response.statusCode == 200;
+    } on Exception catch(e){
+      return false;
+    }
   }
 
   Future<bool> revokeToken() async{
@@ -50,7 +58,9 @@ class SharedPreferenceHandler {
     }
   }
 
-  static SharedPreferenceHandler getHandler(){
-    return SharedPreferenceHandler();
+  static Future<SharedPreferenceHandler> getHandler() async {
+    var sp = SharedPreferenceHandler();
+    sp.setSharedPreference(await SharedPreferences.getInstance());
+    return sp;
   }
 }

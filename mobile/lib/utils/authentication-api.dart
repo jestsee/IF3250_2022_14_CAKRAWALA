@@ -13,6 +13,7 @@ class AuthenticationApi {
   };
 
   static Future<CustomHttpResponse<Map<String, dynamic>>> loginRequest(email, password) async {
+    var sp = await SharedPreferenceHandler.getHandler();
     var data = {
       "email": email,
       "password" : password,
@@ -26,7 +27,7 @@ class AuthenticationApi {
     if(response.statusCode<500){
       var bodyresp = json.decode(response.body) as Map<String, dynamic>;
       if(response.statusCode == 200){
-        SharedPreferenceHandler.getHandler().setToken(bodyresp["token"]);
+        sp.setToken(bodyresp["token"]);
         return CustomHttpResponse(response.statusCode, bodyresp["token"], bodyresp);
       }
       print(response.body);
@@ -51,7 +52,7 @@ class AuthenticationApi {
     if(response.statusCode<500){
       var bodyresp = json.decode(response.body) as Map<String, dynamic>;
       if(response.statusCode == 200){
-        SharedPreferenceHandler.getHandler().setToken(bodyresp["token"]);
+        await (await SharedPreferenceHandler.getHandler()).setToken(bodyresp["token"]);
         return CustomHttpResponse(response.statusCode, bodyresp["token"], bodyresp);
       }
       return CustomHttpResponse(response.statusCode, bodyresp["message"], blankResp);
