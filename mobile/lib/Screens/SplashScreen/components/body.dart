@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             Image.asset("assets/images/cakrawala.png"),
             SizedBox(height: size.height * 0.05),
-            Text("Cakrwala 2022, All Right Reserved",
+            const Text("Cakrwala 2022, All Right Reserved",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold))
           ]),
