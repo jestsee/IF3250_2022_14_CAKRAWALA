@@ -74,7 +74,7 @@ class _BodyState extends State<Body> {
                       buttonText = "Login Berhasil!";
                     });
                     Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => TopUpScreen()
+                        builder: (context) => Homepage()
                     ));
                   }else{
                     setState((){
