@@ -1,0 +1,121 @@
+basePath: /
+definitions:
+  controllers.LoginBody:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  controllers.RegisterReqBody:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  transactions.TopUpBody:
+    properties:
+      amount:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Kelompok 14
+  description: This is a API for cakrawala.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Cakrawala API
+  version: "1.0"
+paths:
+  /register:
+    post:
+      consumes:
+      - '*/*'
+      description: Add New User.
+      parameters:
+      - description: Inputan yang benar
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.RegisterReqBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Register.
+      tags:
+      - authentication
+  /v1/login:
+    post:
+      consumes:
+      - '*/*'
+      description: Add New User.
+      parameters:
+      - description: Inputan yang benar
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Login.
+      tags:
+      - authentication
+  /v1/self:
+    get:
+      consumes:
+      - '*/*'
+      description: Add New User.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: UserInfo.
+      tags:
+      - authentication
+  /v1/top-up:
+    post:
+      consumes:
+      - '*/*'
+      description: Add New User.
+      parameters:
+      - description: Inputan yang benar
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/transactions.TopUpBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: TopUpRequest.
+      tags:
+      - authentication
+schemes:
+- http
+swagger: "2.0"
