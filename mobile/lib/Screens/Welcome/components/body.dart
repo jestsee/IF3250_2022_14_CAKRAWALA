@@ -22,9 +22,9 @@ class Body extends StatelessWidget {
             Image.asset("assets/images/cakrawala.png"),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: "Login",
+              text: "LOGIN",
               color: white,
-              textColor: black,
+              textColor: Colors.black,
               press: () {
                 Navigator.push(
                   context,
@@ -37,7 +37,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "Register",
+              text: "SIGN UP",
               color: black,
               textColor: Colors.white,
               press: () {
