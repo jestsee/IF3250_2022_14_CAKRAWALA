@@ -20,7 +20,7 @@ class SearchBox extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white.withOpacity(0),
           border: Border.all(
-            color: Color(0xFF494C80),
+            color: Colors.white,
             width: 2),
           borderRadius: BorderRadius.circular(10)),
       child: TextField(
@@ -30,7 +30,7 @@ class SearchBox extends StatelessWidget {
           hintText: hintText,
           hintStyle:
           const TextStyle(
-              color: Color(0xFF666892),
+              color: Colors.white,
               fontWeight: FontWeight.w700,
               fontSize: 12,
           ),
