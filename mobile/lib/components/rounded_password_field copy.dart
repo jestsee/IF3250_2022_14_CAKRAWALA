@@ -28,13 +28,13 @@ class RoundedPasswordFieldState extends State<RoundedPasswordField> {
         child: TextField(
       obscureText: _isVisible ? false : true,
       onChanged: widget.onChanged,
-      style: TextStyle(color: black),
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
           hintText: "Password",
-          hintStyle: TextStyle(color: black),
+          hintStyle: TextStyle(color: Colors.white),
           icon: Icon(
             Icons.lock,
-            color: black,
+            color: primaryColor,
           ),
           suffixIcon: IconButton(
             onPressed: () => handleVisibility(),
@@ -42,7 +42,7 @@ class RoundedPasswordFieldState extends State<RoundedPasswordField> {
             highlightColor: Colors.transparent,
             icon: Icon(
               _isVisible ? Icons.visibility : Icons.visibility_off,
-              color: black,
+              color: primaryColor,
             ),
           ),
           border: InputBorder.none),
