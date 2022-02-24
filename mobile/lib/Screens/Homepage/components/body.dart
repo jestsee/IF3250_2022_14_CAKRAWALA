@@ -41,6 +41,30 @@ class Body extends StatelessWidget {
           ],
         ),
       ]),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.black
+            ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.camera),
+              label: 'Scan',
+              backgroundColor: Colors.black
+            ),
+
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Account',
+              backgroundColor: Colors.black
+            ),
+        ],
+      ),
     );
   }
 }
+
