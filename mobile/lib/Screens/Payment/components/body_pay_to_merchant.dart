@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/Screens/Payment/confirm_payment.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
 import "package:flutter/material.dart";
@@ -23,7 +24,13 @@ class BodyPayToMerchant extends StatelessWidget {
           ),
         ),
         ChooseMerchantTable(),
-        ButtonConfirmButton(text: "Continue To Payment", press: () {})
+        ButtonConfirmButton(text: "Continue To Payment", press: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  ConfirmPaymentScreen(
+                      choosenMerchant: Merchant.getSelectedMerchant())));
+        })
       ],
     );
   }
