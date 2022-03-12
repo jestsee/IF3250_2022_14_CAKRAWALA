@@ -8,6 +8,7 @@ Merchant currentMerchant = Merchant.fromJson(
     {
       "id_merchant": -1,
       "nama_merchant": "Unknown",
+      "alamat_merchant": "Unknown",
       "no_rekening": -1,
     }
 );
@@ -15,19 +16,26 @@ Merchant currentMerchant = Merchant.fromJson(
 class Merchant {
   int id;
   String name;
+  String alamat;
   int no_rek;
 
-  Merchant(this.id, this.name, this.no_rek);
+  Merchant(this.id, this.name, this.alamat, this.no_rek);
   factory Merchant.fromJson(dynamic json) {
     return Merchant(
       json['id_merchant'] as int,
       json['nama_merchant'] as String,
+      json['alamat'] as String,
       json['no_rekening'] as int);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return '{${this.id}, ${this.name}, ${this.no_rek}}';
+  }
+
+  static Merchant getSelectedMerchant() {
+    log('selected:${currentMerchant.name}');
+    return currentMerchant;
   }
 }
 
@@ -78,7 +86,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                 });
               }
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Expanded(
@@ -107,7 +115,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                     ),
                     title: Text(
                         merchantsFiltered[index].name,
-                      style: TextStyle (
+                      style: const TextStyle (
                         fontSize: 18,
                         fontWeight: FontWeight.w600
                       ),
@@ -116,6 +124,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                       setState(() {
                         selectedIndex = index;
                         FocusScope.of(context).requestFocus(new FocusNode());
+                        currentMerchant = merchantsFiltered[index];
                         log("selected merchant: ${merchantsFiltered[index].name}");
                       });
                     },

@@ -5,7 +5,12 @@ import 'package:flutter/cupertino.dart';
 import '../Screens/Homepage/components/white_text_field_container.dart';
 
 class RoundedPaymentDetail extends StatelessWidget {
-  const RoundedPaymentDetail({Key? key}) : super(key: key);
+  final String nama;
+  final double nominal;
+  final double points;
+  const RoundedPaymentDetail(
+      {Key? key, required this.nama, required this.nominal, required this.points}
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +28,8 @@ class RoundedPaymentDetail extends StatelessWidget {
             SizedBox(
               height: .02 * size.height,
             ),
-            const TextAccountTemplate(
-              text: "Merchant 1",
+            TextAccountTemplate(
+              text: nama,
               align: TextAlign.center,
               weight: FontWeight.w400,
               size: 22,
@@ -35,9 +40,9 @@ class RoundedPaymentDetail extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
+              children: <Widget>[
                 TextAccountTemplate(
-                  text: "1,032.69",
+                  text: nominal.toString(),
                   align: TextAlign.center,
                   weight: FontWeight.w800,
                   size: 30,
@@ -58,8 +63,8 @@ class RoundedPaymentDetail extends StatelessWidget {
             SizedBox(
               height: .005 * size.height,
             ),
-            const TextAccountTemplate(
-              text: "Get 1000 points",
+            TextAccountTemplate(
+              text: "Get $points points",
               align: TextAlign.center,
               weight: FontWeight.w400,
               size: 17,
