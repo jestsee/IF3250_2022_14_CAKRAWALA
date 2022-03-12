@@ -8,7 +8,7 @@ Merchant currentMerchant = Merchant.fromJson(
     {
       "id_merchant": -1,
       "nama_merchant": "Unknown",
-      "alamat_merchant": "Unknown",
+      "alamat": "Unknown",
       "no_rekening": -1,
     }
 );
@@ -125,7 +125,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                         selectedIndex = index;
                         FocusScope.of(context).requestFocus(new FocusNode());
                         currentMerchant = merchantsFiltered[index];
-                        log("selected merchant: ${merchantsFiltered[index].name}");
+                        log("selected merchant: $currentMerchant");
                       });
                     },
                   ),

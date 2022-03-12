@@ -1,8 +1,5 @@
 import 'package:cakrawala_mobile/Screens/Payment/components/body_confirm_payment.dart';
-import 'package:cakrawala_mobile/Screens/Payment/components/body_pay_to_merchant.dart';
-import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
 import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/custom_app_bar.dart';

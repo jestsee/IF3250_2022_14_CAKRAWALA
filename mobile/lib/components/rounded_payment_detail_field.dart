@@ -2,8 +2,6 @@ import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../Screens/Homepage/components/white_text_field_container.dart';
-
 class RoundedPaymentDetail extends StatelessWidget {
   final String nama;
   final double nominal;
