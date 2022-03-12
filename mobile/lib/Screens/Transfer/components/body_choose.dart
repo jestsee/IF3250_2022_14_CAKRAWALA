@@ -23,7 +23,7 @@ class BodyChoose extends StatelessWidget {
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.grey,
+                  backgroundColor: Colors.black54,
                   textColor: Colors.white,
                   fontSize: 14.0
               );

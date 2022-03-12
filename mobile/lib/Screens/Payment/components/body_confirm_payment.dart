@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/Screens/Payment/transaction_successful.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
 import 'package:cakrawala_mobile/components/rounded_payment_detail_field.dart';
@@ -5,6 +6,7 @@ import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class BodyConfirmPayment extends StatelessWidget {
   final Merchant choosenMerchant;
@@ -72,7 +74,11 @@ class BodyConfirmPayment extends StatelessWidget {
         ),
         ButtonConfirmButton(
             text: "Finish Payment",
-            press: () {})
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen()));
+            })
       ],
     );
   }

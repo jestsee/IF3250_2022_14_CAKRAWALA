@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:cakrawala_mobile/Screens/Payment/confirm_payment.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
 import "package:flutter/material.dart";
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BodyPayToMerchant extends StatelessWidget {
   const BodyPayToMerchant({Key? key}) : super(key: key);
@@ -25,11 +28,24 @@ class BodyPayToMerchant extends StatelessWidget {
         ),
         ChooseMerchantTable(),
         ButtonConfirmButton(text: "Continue To Payment", press: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) =>
-                  ConfirmPaymentScreen(
-                      choosenMerchant: Merchant.getSelectedMerchant())));
+          if (Merchant.getSelectedMerchant().id == -1) {
+            log("masuk else");
+            Fluttertoast.showToast(
+                msg: "Please choose merchant before continue",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black54,
+                textColor: Colors.white,
+                fontSize: 14.0
+            );
+          } else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    ConfirmPaymentScreen(
+                        choosenMerchant: Merchant.getSelectedMerchant())));
+          }
         })
       ],
     );
