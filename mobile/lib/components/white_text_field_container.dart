@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class WhiteFieldContainer extends StatelessWidget {
   final Widget child;
+  final double round;
   const WhiteFieldContainer({
     Key? key,
     required this.child,
+    this.round = 10,
   }) : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class WhiteFieldContainer extends StatelessWidget {
       width: size.width * 0.8,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(round)),
       child: child,
     );
   }

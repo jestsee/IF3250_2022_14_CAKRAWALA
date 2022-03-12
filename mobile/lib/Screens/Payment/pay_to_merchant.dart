@@ -9,12 +9,13 @@ class PayToMerchantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: deepSkyBlue,
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         text: "Pay To Merchant",
         center: true,
+        backButton: false,
       ),
       body: BodyPayToMerchant(),
     );
