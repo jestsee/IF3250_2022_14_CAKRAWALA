@@ -12,7 +12,7 @@ class BodyPayToMerchant extends StatelessWidget {
       children: <Widget>[
         Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 0, bottom: 15),
+          padding: EdgeInsets.only(top: 10,bottom: 20),
           child: Text(
             "Choose the merchant that you want to pay.",
             style: TextStyle(

@@ -11,6 +11,7 @@ class PayToMerchantScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: deepSkyBlue,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         text: "Pay To Merchant",
         center: true,
