@@ -1,6 +1,7 @@
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
+import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/userinfo-api.dart';
 import 'package:cakrawala_mobile/value-store/constant.dart';
@@ -111,7 +112,8 @@ class _WalletInfoState extends State<WalletInfo> {
                 textColor: white,
                 color: black,
                 press: () {
-                  _showDialog(context, "Coming Soon", "this feature coming soon");
+                  // _showDialog(context, "Coming Soon", "this feature coming soon");
+                  ChooseTransferScreen();
                 },
               ),
               CustomIconButton(

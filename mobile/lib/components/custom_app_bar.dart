@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +8,11 @@ import '../constants.dart';
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
   final String text;
   final Color color, textColor;
+  final bool center;
   const CustomAppBar(
       {Key? key,
         required this.text,
+        this.center = false,
         this.color = primaryColor,
         this.textColor = Colors.white})
       : super(key: key);
@@ -20,8 +24,8 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget{
         .size; // Screen height and width
 
     return AppBar(
-      automaticallyImplyLeading: false,
-      titleSpacing: 0.1 * size.width,
+      centerTitle: center,
+      // automaticallyImplyLeading: false,
       title:
       Text (
         text,

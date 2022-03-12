@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
 import 'package:cakrawala_mobile/Screens/SplashScreen/splash_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/transfer_screen.dart';
@@ -19,6 +20,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
             primaryColor: white, scaffoldBackgroundColor: deepSkyBlue),
-        home: const SplashScreen());
+        home: const PayToMerchantScreen());
   }
 }
