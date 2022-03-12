@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Transfer/components/dummy_data.dart';
+import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/components/text_account_attribute.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class User {
   }
 
   static User getSelectedUser() {
-    log('selected:$currentUser');
+    log('selected:${currentUser.name}');
     return currentUser;
   }
 }
@@ -120,6 +121,9 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                     selected: usersFiltered[index].selected,
                     onSelectChanged: (val) {
                       setState(() {
+                        // hide keyboard when user selected
+                        FocusScope.of(context).requestFocus(new FocusNode());
+
                         currentUser = usersFiltered[index];
                         log('$currentUser');
 
