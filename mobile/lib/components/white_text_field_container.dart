@@ -14,9 +14,9 @@ class WhiteFieldContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size; // Screen height and width
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      width: size.width * 0.8,
+      width: size.width * 0.9,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(round)),

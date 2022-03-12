@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/Screens/Payment/invoice.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,11 @@ class BodyTransactionSuccessful extends StatelessWidget {
         ),
         ButtonConfirmButton(
             text: "See Invoice",
-            press: () {},
+            press: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InvoiceScreen()));
+            },
         )
       ],
     );

@@ -1,14 +1,43 @@
 import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class RoundedPaymentDetail extends StatelessWidget {
   final String nama;
   final double nominal;
   final double points;
+  final bool amount;
   const RoundedPaymentDetail(
-      {Key? key, required this.nama, required this.nominal, required this.points}
+      {
+        Key? key,
+        required this.nama,
+        required this.nominal,
+        required this.points,
+        this.amount = false
+      }
   ) : super(key: key);
+
+  Widget amountOrMerchant() {
+    if(amount == false) {
+      return TextAccountTemplate(
+        text: nama,
+        align: TextAlign.center,
+        weight: FontWeight.w400,
+        size: 22,
+        color: black,
+      );
+    } else {
+      return TextAccountTemplate(
+        text: nama,
+        align: TextAlign.center,
+        weight: FontWeight.w400,
+        size: 13,
+        color: Color(0xFF565656),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +55,7 @@ class RoundedPaymentDetail extends StatelessWidget {
             SizedBox(
               height: .02 * size.height,
             ),
-            TextAccountTemplate(
-              text: nama,
-              align: TextAlign.center,
-              weight: FontWeight.w400,
-              size: 22,
-              color: black,
-            ),
+            amountOrMerchant(),
             SizedBox(
               height: .01 * size.height,
             ),
@@ -66,7 +89,7 @@ class RoundedPaymentDetail extends StatelessWidget {
               align: TextAlign.center,
               weight: FontWeight.w400,
               size: 17,
-              color: black,
+              color: Color(0xFF565656),
             ),
             SizedBox(
               height: .02 * size.height,
