@@ -1,49 +1,16 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Payment/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
-import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:flutter/material.dart';
 
 // global variable
-User currentMerchant = User.fromJson(
+Merchant currentMerchant = Merchant.fromJson(
     {
       "id_merchant": -1,
       "nama_merchant": "Unknown",
       "no_rekening": -1,
     }
 );
-
-class User {
-  int id;
-  String name;
-  String phone;
-  int exp;
-  String address;
-  String email;
-  bool selected = false;
-
-  User(this.id, this.name, this.phone, this.exp, this.address, this.email);
-  factory User.fromJson(dynamic json) {
-    return User(
-        json['id'] as int,
-        json['name'] as String,
-        json['phone'] as String,
-        json['exp'] as int,
-        json['address'] as String,
-        json['email'] as String)
-    ;
-  }
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.address}, ${this.email}}';
-  }
-
-  static User getSelectedUser() {
-    log('selected:${currentMerchant.name}');
-    return currentMerchant;
-  }
-}
 
 class Merchant {
   int id;
@@ -77,6 +44,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
   List<Merchant> merchantsFiltered = [];
   TextEditingController controller = TextEditingController();
   String _searchResult = '';
+  int selectedIndex = -1;
 
   @override
   void initState() {
@@ -96,8 +64,8 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
     Size size = MediaQuery.of(context).size; // Screen height and width
 
     return Container (
-      height: .7 * size.height,
       width: .9 * size.width,
+      height: .7 * size.height,
       child: Column(
         children: [
           SearchBox(
@@ -114,35 +82,44 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
             height: 16,
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: merchantsFiltered.length,
-              itemBuilder: (context, index) => Card(
-                shape: RoundedRectangleBorder (
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                // key: ValueKey(merchantsFiltered[index].id),
-                color: Colors.white,
-                elevation: 3,
-                margin: const EdgeInsets.only(bottom: 14),
-                child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child:
-                    Image.network(
-                      'https://picsum.photos/250?image=$index',
-                      height: 0.095 * size.width,
-                      width: 0.095 * size.width,
-                    ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: handleOverflow(context)
+              ),
+              child: ListView.builder(
+                itemCount: merchantsFiltered.length,
+                itemBuilder: (context, index) => Card(
+                  shape: RoundedRectangleBorder (
+                    borderRadius: BorderRadius.circular(10)
                   ),
-                  title: Text(
-                      merchantsFiltered[index].name,
-                    style: TextStyle (
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600
+                  color: selectedIndex == index? Color(0xFFD6D6D6): Colors.white,
+                  elevation: 3,
+                  margin: const EdgeInsets.only(bottom: 15),
+                  child: ListTile(
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child:
+                      Image.network(
+                        'https://picsum.photos/250?image=$index',
+                        height: 0.095 * size.width,
+                        width: 0.095 * size.width,
+                      ),
                     ),
-                  )
-                  // subtitle: Text(
-                  //     '${_foundUsers[index]["age"].toString()} years old'),
+                    title: Text(
+                        merchantsFiltered[index].name,
+                      style: TextStyle (
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        log("selected merchant: ${merchantsFiltered[index].name}");
+                      });
+                    },
+                  ),
                 ),
               ),
             )

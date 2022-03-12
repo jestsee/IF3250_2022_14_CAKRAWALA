@@ -82,16 +82,19 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
 
     return Column(
       children: [
-        SearchBox(
-            hintText: 'Search account', 
-            onChanged: (value) {
-              setState(() {
-                _searchResult = value;
-                usersFiltered = users.where((user) =>
-                    (user.name.toLowerCase().contains(_searchResult))||
-                        user.phone.contains(_searchResult)).toList();
-              });
-            }
+        Container(
+          width: .8 * size.width,
+          child: SearchBox(
+              hintText: 'Search account',
+              onChanged: (value) {
+                setState(() {
+                  _searchResult = value;
+                  usersFiltered = users.where((user) =>
+                      (user.name.toLowerCase().contains(_searchResult))||
+                          user.phone.contains(_searchResult)).toList();
+                });
+              }
+          ),
         ),
         Container(
           width: size.width,
