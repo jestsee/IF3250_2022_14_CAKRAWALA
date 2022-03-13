@@ -57,7 +57,7 @@ class ChooseAccountTable extends StatefulWidget {
 }
 
 class _ChooseAccountTableState extends State<ChooseAccountTable> {
-  List<User> users = dummyData().data.map((e) =>
+  List<User> users = DummyData().data.map((e) =>
       User.fromJson(e)).toList();
   List<User> usersFiltered = [];
   TextEditingController controller = TextEditingController();
@@ -137,7 +137,6 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
 
                         // assign new selected value
                         if (usersFiltered[index].selected == false && val == false) {
-                          log('masuk sini gan');
                           usersFiltered[index].selected = true;
                         } else {
                           usersFiltered[index].selected = val!;

@@ -106,15 +106,17 @@ class BodyInvoice extends StatelessWidget {
   final double nominal;
   final double points;
   final String namaMerchant;
+  final String time;
   const BodyInvoice({
     Key? key,
     required this.nominal,
     required this.points,
-    required this.namaMerchant
+    required this.namaMerchant,
+    required this.time,
   }) : super(key: key);
   
  List<Widget> showProduct() {
-    List<Product> list = dummyDataProducts().data.map((e) => 
+    List<Product> list = DummyDataProducts().data.map((e) =>
       Product.fromJson(e)).toList();
     List<Widget> widgets = List.generate(list.length, (index) =>
         ProductsDetail(
@@ -144,7 +146,7 @@ class BodyInvoice extends StatelessWidget {
         SizedBox(height: .05 * size.width),
         WhiteInvoiceContainer(title: "Merchant", subtitle: namaMerchant),
         WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"), // TODO id invoice
-        WhiteInvoiceContainer(title: "Time", subtitle: "03 Dec 2021 16:26:09"), // TODO waktu transaksi
+        WhiteInvoiceContainer(title: "Time", subtitle: time), // TODO waktu transaksi
         WhiteFieldContainer(
             child: ConstrainedBox(
               constraints: BoxConstraints(

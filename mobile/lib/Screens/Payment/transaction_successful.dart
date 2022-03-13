@@ -7,11 +7,13 @@ class TransactionSuccessfulScreen extends StatelessWidget {
   final double nominal;
   final double points;
   final String namaMerchant;
+  final String time;
   const TransactionSuccessfulScreen({
     Key? key,
     required this.nominal,
     required this.points,
-    required this.namaMerchant
+    required this.namaMerchant,
+    required this.time,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class TransactionSuccessfulScreen extends StatelessWidget {
           nominal: nominal,
           points: points,
           namaMerchant: namaMerchant,
+          time: time,
         ),
       ),
     );
