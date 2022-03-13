@@ -11,13 +11,13 @@ class BodyPayToMerchant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size; // Screen height and width
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(top: 10,bottom: 20),
-          child: Text(
+          child: const Text(
             "Choose the merchant that you want to pay.",
             style: TextStyle(
               color: Color(0xE5E5E5E5),
@@ -44,7 +44,13 @@ class BodyPayToMerchant extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) =>
                     ConfirmPaymentScreen(
-                        choosenMerchant: Merchant.getSelectedMerchant())));
+                      choosenMerchant: Merchant.getSelectedMerchant(),
+                      // TODO points dan nominal transaksi
+                      points: 100,
+                      nominal: 1035.69,
+                    )
+                )
+            );
           }
         })
       ],

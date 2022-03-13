@@ -7,14 +7,25 @@ import '../../constants.dart';
 
 class ConfirmPaymentScreen extends StatelessWidget {
   final Merchant choosenMerchant;
-  const ConfirmPaymentScreen({Key? key, required this.choosenMerchant}) : super(key: key);
+  final double nominal;
+  final double points;
+  const ConfirmPaymentScreen(
+      {Key? key,
+        required this.choosenMerchant,
+        required this.nominal,
+        required this.points
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: deepSkyBlue,
-      appBar: CustomAppBar(text: "Confirm Payment"),
-      body: BodyConfirmPayment(choosenMerchant: choosenMerchant)
+      appBar: const CustomAppBar(text: "Confirm Payment"),
+      body: BodyConfirmPayment(
+        choosenMerchant: choosenMerchant,
+        points: points,
+        nominal: nominal,
+      )
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
+import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/constants.dart';
@@ -103,7 +104,9 @@ class _WalletInfoState extends State<WalletInfo> {
                 textColor: white,
                 color: black,
                 press: () {
-                  _showDialog(context, "Coming Soon", "this feature coming soon");
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => PayToMerchantScreen()
+                  ));
                 },
               ),
               CustomIconButton(
@@ -112,8 +115,9 @@ class _WalletInfoState extends State<WalletInfo> {
                 textColor: white,
                 color: black,
                 press: () {
-                  // _showDialog(context, "Coming Soon", "this feature coming soon");
-                  ChooseTransferScreen();
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => ChooseTransferScreen()
+                  ));
                 },
               ),
               CustomIconButton(
