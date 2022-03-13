@@ -47,7 +47,7 @@ class ChooseMerchantTable extends StatefulWidget {
 }
 
 class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
-  List<Merchant> merchants = dummyData().data.map((e) =>
+  List<Merchant> merchants = dummyDataMerchant().data.map((e) =>
       Merchant.fromJson(e)).toList();
   List<Merchant> merchantsFiltered = [];
   TextEditingController controller = TextEditingController();
@@ -100,7 +100,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                   shape: RoundedRectangleBorder (
                     borderRadius: BorderRadius.circular(10)
                   ),
-                  color: selectedIndex == index? Color(0xFFD6D6D6): Colors.white,
+                  color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
                   elevation: 3,
                   margin: const EdgeInsets.only(bottom: 15),
                   child: ListTile(

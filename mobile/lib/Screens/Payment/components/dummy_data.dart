@@ -1,4 +1,4 @@
-class dummyData {
+class dummyDataMerchant {
   List<Map<String,Object>> data = [
     {
       "id_merchant": 0,
@@ -47,6 +47,31 @@ class dummyData {
       "nama_merchant": "Merchant 7",
       "alamat": "Jl. Merchant 7",
       "no_rekening": 123,
+    },
+  ];
+}
+
+class dummyDataProducts {
+  List<Map<String,Object>> data = [
+    {
+      "product_name": "20x can of soda milk",
+      "price": 200000,
+    },
+    {
+      "product_name": "Boda milk",
+      "price": 12000,
+    },
+    {
+      "product_name": "Boba milk",
+      "price": 30000,
+    },
+    {
+      "product_name": "Matcha latte",
+      "price": 30000,
+    },
+    {
+      "product_name": "Fresh milk",
+      "price": 15000,
     },
   ];
 }
