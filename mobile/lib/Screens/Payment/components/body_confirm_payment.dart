@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Payment/transaction_successful.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
+import 'package:cakrawala_mobile/components/formatter.dart';
 import 'package:cakrawala_mobile/components/rounded_payment_detail_field.dart';
 import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
@@ -19,6 +20,12 @@ class BodyConfirmPayment extends StatelessWidget {
     required this.nominal,
     required this.points
   }) : super(key: key);
+
+  getCurrentTime() {
+    DateTime now = DateTime.now();
+    DateFormatter formatted = DateFormatter(now.day, now.month, now.year, now.hour, now.minute, now.second);
+    return formatted.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +95,7 @@ class BodyConfirmPayment extends StatelessWidget {
                     namaMerchant: choosenMerchant.name,
                     nominal: nominal,
                     points: points,
+                    time: getCurrentTime(),
                   )
                 )
               );

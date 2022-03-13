@@ -47,7 +47,7 @@ class ChooseMerchantTable extends StatefulWidget {
 }
 
 class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
-  List<Merchant> merchants = dummyDataMerchant().data.map((e) =>
+  List<Merchant> merchants = DummyDataMerchant().data.map((e) =>
       Merchant.fromJson(e)).toList();
   List<Merchant> merchantsFiltered = [];
   TextEditingController controller = TextEditingController();

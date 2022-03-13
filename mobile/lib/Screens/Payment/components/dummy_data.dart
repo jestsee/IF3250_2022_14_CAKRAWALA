@@ -1,4 +1,4 @@
-class dummyDataMerchant {
+class DummyDataMerchant {
   List<Map<String,Object>> data = [
     {
       "id_merchant": 0,
@@ -51,7 +51,7 @@ class dummyDataMerchant {
   ];
 }
 
-class dummyDataProducts {
+class DummyDataProducts {
   List<Map<String,Object>> data = [
     {
       "product_name": "20x can of soda milk",

@@ -7,11 +7,13 @@ class BodyTransactionSuccessful extends StatelessWidget {
   final double nominal;
   final double points;
   final String namaMerchant;
+  final String time;
   const BodyTransactionSuccessful({
     Key? key,
     required this.nominal,
     required this.points,
-    required this.namaMerchant
+    required this.namaMerchant,
+    required this.time,
   }) : super(key: key);
 
   @override
@@ -42,6 +44,7 @@ class BodyTransactionSuccessful extends StatelessWidget {
                     namaMerchant: namaMerchant,
                     nominal: nominal,
                     points: points,
+                    time: time,
                   )
                 )
               );
