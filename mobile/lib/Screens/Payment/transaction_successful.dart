@@ -4,13 +4,28 @@ import 'package:flutter/material.dart';
 import 'components/body_transaction_successful.dart';
 
 class TransactionSuccessfulScreen extends StatelessWidget {
-  const TransactionSuccessfulScreen({Key? key}) : super(key: key);
+  final double nominal;
+  final double points;
+  final String namaMerchant;
+  const TransactionSuccessfulScreen({
+    Key? key,
+    required this.nominal,
+    required this.points,
+    required this.namaMerchant
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: deepSkyBlue,
-      body: BodyTransactionSuccessful(),
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Scaffold(
+        backgroundColor: deepSkyBlue,
+        body: BodyTransactionSuccessful(
+          nominal: nominal,
+          points: points,
+          namaMerchant: namaMerchant,
+        ),
+      ),
     );
   }
 }

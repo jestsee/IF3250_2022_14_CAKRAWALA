@@ -108,7 +108,8 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                       borderRadius: BorderRadius.circular(10),
                       child:
                       Image.network(
-                        'https://picsum.photos/250?image=$index',
+                        // TODO penyimpanan picture-nya nanti gimana ya?
+                        'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
                         height: 0.095 * size.width,
                         width: 0.095 * size.width,
                       ),
@@ -116,7 +117,8 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                     title: Text(
                         merchantsFiltered[index].name,
                       style: const TextStyle (
-                        fontSize: 18,
+                        fontSize: 16,
+                        letterSpacing: 0.1,
                         fontWeight: FontWeight.w600
                       ),
                     ),

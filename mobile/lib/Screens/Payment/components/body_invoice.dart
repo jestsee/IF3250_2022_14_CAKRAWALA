@@ -64,7 +64,15 @@ class WhiteInvoiceContainer extends StatelessWidget {
 }
 
 class BodyInvoice extends StatelessWidget {
-  const BodyInvoice({Key? key}) : super(key: key);
+  final double nominal;
+  final double points;
+  final String namaMerchant;
+  const BodyInvoice({
+    Key? key,
+    required this.nominal,
+    required this.points,
+    required this.namaMerchant
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +82,14 @@ class BodyInvoice extends StatelessWidget {
         SizedBox(height: .05 * size.width,),
         RoundedPaymentDetail(
             nama: "AMOUNT",
-            nominal: 1032.69,
-            points: 100,
+            nominal: nominal,
+            points: points,
             amount: true,
         ),
         SizedBox(height: .05 * size.width),
-        WhiteInvoiceContainer(title: "Merchant", subtitle: "Nama Merchant"),
-        WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"),
-        WhiteInvoiceContainer(title: "Time", subtitle: "03 Dec 2021 16:26:09"),
+        WhiteInvoiceContainer(title: "Merchant", subtitle: namaMerchant),
+        WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"), // TODO id invoice
+        WhiteInvoiceContainer(title: "Time", subtitle: "03 Dec 2021 16:26:09"), // TODO waktu transaksi
         WhiteFieldContainer(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
@@ -99,7 +107,7 @@ class BodyInvoice extends StatelessWidget {
         ButtonConfirmButton(text: "Back To Home", press: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Homepage()));
+              MaterialPageRoute(builder: (context) => const Homepage()));
         })
       ],
     );
