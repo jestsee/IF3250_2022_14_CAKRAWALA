@@ -1,0 +1,84 @@
+package transactions
+
+import (
+	"cakrawala.id/m/models"
+	"cakrawala.id/m/service"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"net/http"
+)
+
+type PayBody struct {
+	MerchantId  uint   `json:"merchant_id"`
+	Amount      uint64 `json:"amount"`
+	Address     string `json:"address"`
+	BankAccount string `json:"bankAccount"`
+}
+
+type BonusCheckerBody struct {
+	Amount uint64 `json:"amount"`
+}
+
+func PaymentController(c *gin.Context) {
+	user := c.MustGet("user").(models.User)
+	var body PayBody
+	if err := c.BindJSON(&body); err != nil {
+		c.AbortWithError(400, err)
+		return
+	}
+	bonus := service.PaymentBonusService(user, body.Amount)
+
+	if user.Balance < body.Amount {
+		c.AbortWithStatusJSON(400, gin.H{
+			"message": "insufficient balance",
+		})
+		return
+	}
+
+	transaksi := models.Transaksi{
+		Amount:     body.Amount,
+		Exp:        uint32(bonus),
+		Cashback:   uint32(uint64(service.GetUserLevelService(user)) / 100 * body.Amount),
+		UserID:     user.ID,
+		MerchantID: &body.MerchantId,
+		FriendID:   nil,
+		Status:     "completed",
+	}
+
+	user.Balance -= body.Amount
+	user.Exp += uint32(bonus)
+	user.Point += uint32(bonus)
+
+	err := models.DB.Transaction(func(tx *gorm.DB) error {
+		if e := tx.Save(&transaksi).Error; e != nil {
+			return e
+		}
+		if e := tx.Updates(&user).Error; e != nil {
+			return e
+		}
+		return nil
+	})
+
+	if err == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "berhasil  melakukan pembayaran di merchant",
+			"data":    transaksi,
+		})
+	} else {
+		_ = c.AbortWithError(500, err)
+	}
+
+}
+
+func BonusCheckController(c *gin.Context) {
+	user := c.MustGet("user").(models.User)
+	var body BonusCheckerBody
+	if err := c.BindJSON(&body); err != nil {
+		c.AbortWithError(400, err)
+		return
+	}
+	bonus := service.PaymentBonusService(user, body.Amount)
+	c.JSON(http.StatusOK, gin.H{
+		"points": bonus,
+	})
+}
