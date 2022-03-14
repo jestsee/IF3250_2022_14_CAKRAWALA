@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"cakrawala.id/m/utils"
-	"github.com/golang-jwt/jwt/v4"
-	"github.com/joho/godotenv"
 	"net/http"
 	"os"
 	"time"
+
+	"cakrawala.id/m/utils"
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
@@ -190,4 +191,14 @@ func UserInfo(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
 	}
+}
+
+type MerchantBody struct {
+	Name      string `json:"name"`
+	Address   string `json:"address"`
+	AccountId string `json:"accountId"`
+}
+
+func AddMerchant(c *gin.Context) {
+
 }
