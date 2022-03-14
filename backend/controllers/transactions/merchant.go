@@ -15,6 +15,15 @@ type AddMerchantBody struct {
 	AccountId string `json:"account_id"`
 }
 
+// AddMerchant godoc
+// @Summary AddMerchant.
+// @Description Add New Merchant.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body AddMerchantBody true "Inputan yang benar"
+// @Success 200 {string} AddMerchant
+// @Router /admin/add-merchant [post]
 func AddMerchant(c *gin.Context) {
 	var data AddMerchantBody
 
