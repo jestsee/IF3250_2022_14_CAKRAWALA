@@ -192,13 +192,3 @@ func UserInfo(c *gin.Context) {
 		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
 	}
 }
-
-type MerchantBody struct {
-	Name      string `json:"name"`
-	Address   string `json:"address"`
-	AccountId string `json:"accountId"`
-}
-
-func AddMerchant(c *gin.Context) {
-
-}
