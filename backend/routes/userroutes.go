@@ -20,5 +20,8 @@ func userRoutes(e *gin.Engine) {
 		gr.GET("/self", middleware.IsAuthrorized(), controllers.UserInfo)
 
 		gr.POST("/top-up", middleware.IsAuthrorized(), transactions.TopUpRequest)
+
+		gr.POST("/pay-merchant", middleware.IsAuthrorized(), transactions.PaymentController)
+		gr.POST("/pay-calculate-points", middleware.IsAuthrorized(), transactions.BonusCheckController)
 	}
 }
