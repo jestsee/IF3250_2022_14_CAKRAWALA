@@ -13,5 +13,10 @@ func adminRoutes(e *gin.Engine) {
 
 		gr.PATCH("/top-up/:id", transactions.ApproveTopUp)
 		gr.GET("/top-up/request", transactions.GetTopUpRequest)
+		gr.GET("/transaction-history-user/:id", transactions.GetTransactionHistoryUser)
+		gr.GET("/transaction-history-admin", transactions.GetTransactionHistoryAdmin)
+
+		// gr.POST("/transfer", transactions.Transfer)
+		// gr.POST("/pay-merchant", transactions.PayMerchant)
 	}
 }

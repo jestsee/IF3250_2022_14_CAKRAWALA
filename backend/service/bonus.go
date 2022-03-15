@@ -27,6 +27,12 @@ func GetUserLevelService(userData models.User) int {
 	}
 }
 
-func TransferBonus() {
+// func TransferBonus(userData models.User, payAmount int64) int {
+// 	initBonus := int(payAmount / 5000)
+// 	return initBonus + (GetUserLevelService(userData) * 2)
+// }
 
-}
+// func PayMerchantBonus(userData models.User, payAmount int64) int {
+// 	initBonus := int(payAmount / 5000)
+// 	return initBonus + (GetUserLevelService(userData) * 2)
+// }
