@@ -38,14 +38,14 @@ func PaymentController(c *gin.Context) {
 	transaksi := models.Transaksi{
 		Amount:     body.Amount,
 		Exp:        uint32(bonus),
-		Cashback:   uint32(uint64(service.GetUserLevelService(user)) / 100 * body.Amount),
+		Cashback:   uint32(float64(uint64(service.GetUserLevelService(user)+2)) / float64(100) * float64(body.Amount)),
 		UserID:     user.ID,
 		MerchantID: &body.MerchantId,
 		FriendID:   nil,
 		Status:     "completed",
 	}
 
-	user.Balance -= body.Amount
+	user.Balance -= (body.Amount - uint64(transaksi.Cashback))
 	user.Exp += uint32(bonus)
 	user.Point += uint32(bonus)
 
@@ -79,6 +79,7 @@ func BonusCheckController(c *gin.Context) {
 	}
 	bonus := service.PaymentBonusService(user, body.Amount)
 	c.JSON(http.StatusOK, gin.H{
-		"points": bonus,
+		"points":   bonus,
+		"cashback": float64(uint64(service.GetUserLevelService(user)+2)) / float64(100) * float64(body.Amount),
 	})
 }
