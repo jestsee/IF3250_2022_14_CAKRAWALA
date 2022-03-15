@@ -1,4 +1,4 @@
-class dummyData {
+class DummyData {
   List<Map<String,Object>> data = [
     {
       "id": 0,
