@@ -19,6 +19,15 @@ type BonusCheckerBody struct {
 	Amount uint64 `json:"amount"`
 }
 
+// PaymentController godoc
+// @Summary PaymentController.
+// @Description Payment into merchant.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body PayBody true "Inputan yang benar"
+// @Success 200 {string} PaymentController
+// @Router /v1/pay-merchant [post]
 func PaymentController(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 	var body PayBody
@@ -70,6 +79,15 @@ func PaymentController(c *gin.Context) {
 
 }
 
+// BonusCheckController godoc
+// @Summary BonusCheckController.
+// @Description Check estimation user cashback from payment to merchant.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body BonusCheckerBody true "Inputan yang benar"
+// @Success 200 {string} BonusCheckController
+// @Router /v1/pay-calculate-points [post]
 func BonusCheckController(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 	var body BonusCheckerBody
