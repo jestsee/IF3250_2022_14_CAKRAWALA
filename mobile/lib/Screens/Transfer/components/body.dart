@@ -44,7 +44,9 @@ class Body extends StatelessWidget {
           ),
           ButtonConfirmButton(
             text: "Confirm Transfer",
-            press: (){}),
+            press: (){
+              currentUser = User(-1, "Unknown", "-1", -1, "Unknown", "Unknown");
+            }),
         ],
     );
   }
