@@ -23,7 +23,7 @@ type AddMerchantBody struct {
 // @Produce json
 // @Param data body AddMerchantBody true "Inputan yang benar"
 // @Success 200 {string} AddMerchant
-// @Router /admin/add-merchant [post]
+// @Router /admin/merchant/add [post]
 func AddMerchant(c *gin.Context) {
 	var data AddMerchantBody
 
@@ -63,9 +63,42 @@ func AddMerchant(c *gin.Context) {
 	})
 }
 
-func GetAllMerchant(c *gin.Context) {
+// GetAllMerchantsAdmin godoc
+// @Summary GetAllMerchantsAdmin.
+// @Description Show All Merchants for Admin.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param true "Inputan yang benar"
+// @Success 200 {string} GetAllMerchantsAdmin
+// @Router /admin/merchant [get]
+func GetAllMerchantsAdmin(c *gin.Context) {
 	var merchants []models.Merchant
-	// err := models.DB.Where("user_id = ?", c.Param("id")).Find(&transactionHistoryReq).Error
+	err := models.DB.Find(&merchants).Error
+
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	data := merchants
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get all merchant",
+		"data":    data,
+	})
+}
+
+// GetAllMerchantsUser godoc
+// @Summary GetAllMerchantsUser.
+// @Description Show All Merchants for User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param true "Inputan yang benar"
+// @Success 200 {string} GetAllMerchantsUser
+// @Router /v1/merchant [get]
+func GetAllMerchantsUser(c *gin.Context) {
+	var merchants []models.Merchant
 	err := models.DB.Find(&merchants).Error
 
 	if err != nil {

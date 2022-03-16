@@ -21,6 +21,6 @@ func userRoutes(e *gin.Engine) {
 
 		gr.POST("/top-up", middleware.IsAuthrorized(), transactions.TopUpRequest)
 
-		gr.GET("/merchant", middleware.IsAuthrorized(), transactions.GetAllMerchant)
+		gr.GET("/merchant", middleware.IsAuthrorized(), transactions.GetAllMerchantsUser)
 	}
 }

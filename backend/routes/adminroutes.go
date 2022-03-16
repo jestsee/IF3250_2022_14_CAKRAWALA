@@ -15,6 +15,6 @@ func adminRoutes(e *gin.Engine) {
 		gr.GET("/top-up/request", transactions.GetTopUpRequest)
 
 		gr.POST("/merchant/add", transactions.AddMerchant)
-		gr.GET("/merchant", transactions.GetAllMerchant)
+		gr.GET("/merchant", transactions.GetAllMerchantsAdmin)
 	}
 }
