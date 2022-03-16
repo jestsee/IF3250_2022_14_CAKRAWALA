@@ -25,17 +25,10 @@ func GetTransactionHistoryUser(c *gin.Context)  {
 		return
 	}
 	data := transactionHistoryReq
-	if len(data) > 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil get transaction history user requests",
-			"data":    data,
-		})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil get transaction history user requests NO DATA",
-			"data":    "NO DATA USER YET",
-		})
-	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "berhasil get transaction history user requests",
+		"data":    data,
+	})
 }
 
 func GetTransactionHistoryAdmin(c *gin.Context)  {
@@ -50,16 +43,10 @@ func GetTransactionHistoryAdmin(c *gin.Context)  {
 	}
 
 	data := transactionHistoryReq
-	if len(data) > 0 {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil get transaction history admin requests",
-			"data":    data,
-		})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil get transaction history admin requests NO DATA",
-			"data":    "NO DATA ADMIN YET",
-		})
-	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "berhasil get transaction history admin requests",
+		"data":    data,
+	})
+	
 	
 }
