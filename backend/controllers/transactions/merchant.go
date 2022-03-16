@@ -37,6 +37,7 @@ func AddMerchant(c *gin.Context) {
 	err := models.DB.Where("account_id = ?", data.AccountId).First(&merchant).Error
 	if err == nil {
 		c.JSON(400, gin.H{
+			"success": false,
 			"message": "account id sudah pernah dipakai",
 		})
 		c.Abort()
@@ -49,9 +50,17 @@ func AddMerchant(c *gin.Context) {
 		AccountId: data.AccountId,
 	}
 
-	er := models.DB.Create(&merchant_add).Error
-	if er != nil {
-		_ = c.AbortWithError(500, er)
-		return
-	}
+	// er := models.DB.Create(&merchant_add).Error
+	// if er != nil {
+	// 	_ = c.AbortWithError(500, er)
+	// 	return
+	// }
+
+	models.DB.Create(&merchant_add)
+	c.JSON(http.StatusOK, gin.H{
+		"success":    true,
+		"message":    "Merchant added",
+		"name":       data.Name,
+		"account_id": data.AccountId,
+	})
 }
