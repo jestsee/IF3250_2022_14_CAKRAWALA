@@ -32,7 +32,6 @@ func GetUserLevelService(userData models.User) int {
 // 	return initBonus + (GetUserLevelService(userData) * 2)
 // }
 
-}
 
 func PaymentBonusService(userData models.User, paymentAmount uint64) int {
 	initBonus := int(paymentAmount / 10000)
