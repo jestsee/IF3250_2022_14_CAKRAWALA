@@ -1,4 +1,3 @@
-import 'package:cakrawala_mobile/Screens/Transfer/components/body.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/components/body_choose.dart';
 import "package:flutter/material.dart";
 
