@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"cakrawala.id/m/utils"
-	"github.com/golang-jwt/jwt/v4"
-	"github.com/joho/godotenv"
 	"net/http"
 	"os"
 	"time"
+
+	"cakrawala.id/m/utils"
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
