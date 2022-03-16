@@ -13,5 +13,8 @@ func adminRoutes(e *gin.Engine) {
 
 		gr.PATCH("/top-up/:id", transactions.ApproveTopUp)
 		gr.GET("/top-up/request", transactions.GetTopUpRequest)
+
+		gr.POST("/merchant/add", transactions.AddMerchant)
+		gr.GET("/merchant", transactions.GetAllMerchantsAdmin)
 	}
 }
