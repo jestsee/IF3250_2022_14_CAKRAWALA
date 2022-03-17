@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"cakrawala.id/m/models"
 )
 
@@ -35,5 +37,7 @@ func GetUserLevelService(userData models.User) int {
 
 func PaymentBonusService(userData models.User, paymentAmount uint64) int {
 	initBonus := int(paymentAmount / 10000)
+	fmt.Println(GetUserLevelService(userData))
+	fmt.Println(initBonus + (GetUserLevelService(userData) * 2))
 	return initBonus + (GetUserLevelService(userData) * 2)
 }

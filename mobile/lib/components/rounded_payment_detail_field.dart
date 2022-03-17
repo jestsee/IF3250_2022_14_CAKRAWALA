@@ -89,7 +89,7 @@ class RoundedPaymentDetail extends StatelessWidget {
               align: TextAlign.center,
               weight: FontWeight.w400,
               size: 17,
-              color: Color(0xFF565656),
+              color: const Color(0xFF565656),
             ),
             SizedBox(
               height: .02 * size.height,
