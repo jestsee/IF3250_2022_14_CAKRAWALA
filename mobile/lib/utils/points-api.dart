@@ -6,7 +6,7 @@ import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
 
-class PembayaranAPI{
+class PointsAPI{
   static Future<Map<String, String>> _getHeaders() async{
     var token = await SharedPreferenceHandler.getHandler();
     var map = {
@@ -16,17 +16,14 @@ class PembayaranAPI{
     return map;
   }
 
-  static Future<CustomHttpResponse<bool>> payToMerchant(int id, int amount, String address, String bank ) async {
+  static Future<CustomHttpResponse<bool>> payCalculatePoints(int amount) async {
     var header = await _getHeaders();
     var body = {
-      "address": address,
-      "amount": amount,
-      "bankAccount": bank,
-      "merchant_id": id
-    };
+    "amount": amount
+  };
 
     var response  = await http.post(
-        Uri.parse(Constant.URL_BE+"/pay-merchant"),
+        Uri.parse(Constant.URL_BE+"/pay-calculate-points"),
         body: json.encode(body),
         headers: header
     );

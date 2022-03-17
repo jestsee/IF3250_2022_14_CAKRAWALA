@@ -7,8 +7,8 @@ import '../../constants.dart';
 
 class ConfirmPaymentScreen extends StatelessWidget {
   final Merchant choosenMerchant;
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   const ConfirmPaymentScreen(
       {Key? key,
         required this.choosenMerchant,

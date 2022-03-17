@@ -4,8 +4,8 @@ import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
 
 class BodyTransactionSuccessful extends StatelessWidget {
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   final String namaMerchant;
   final String time;
   const BodyTransactionSuccessful({

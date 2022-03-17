@@ -11,7 +11,7 @@ Merchant currentMerchant = Merchant.fromJson(
       "id": -1,
       "Name": "Unknown",
       "Address": "Unknown",
-      "AccountId": -1,
+      "AccountId": "-1",
     }
 );
 

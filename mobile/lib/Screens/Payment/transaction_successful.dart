@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'components/body_transaction_successful.dart';
 
 class TransactionSuccessfulScreen extends StatelessWidget {
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   final String namaMerchant;
   final String time;
   const TransactionSuccessfulScreen({
