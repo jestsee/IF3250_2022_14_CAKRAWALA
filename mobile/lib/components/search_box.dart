@@ -16,7 +16,6 @@ class SearchBox extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 8),
-      width: size.width * 0.8,
       decoration: BoxDecoration(
           color: Colors.white.withOpacity(0),
           border: Border.all(

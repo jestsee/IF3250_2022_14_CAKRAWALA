@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Transfer/components/dummy_data.dart';
+import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/components/text_account_attribute.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class User {
   }
 
   static User getSelectedUser() {
-    log('selected:$currentUser');
+    log('selected:${currentUser.name}');
     return currentUser;
   }
 }
@@ -56,7 +57,7 @@ class ChooseAccountTable extends StatefulWidget {
 }
 
 class _ChooseAccountTableState extends State<ChooseAccountTable> {
-  List<User> users = dummyData().data.map((e) =>
+  List<User> users = DummyData().data.map((e) =>
       User.fromJson(e)).toList();
   List<User> usersFiltered = [];
   TextEditingController controller = TextEditingController();
@@ -81,16 +82,19 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
 
     return Column(
       children: [
-        SearchBox(
-            hintText: 'Search account', 
-            onChanged: (value) {
-              setState(() {
-                _searchResult = value;
-                usersFiltered = users.where((user) =>
-                    (user.name.toLowerCase().contains(_searchResult))||
-                        user.phone.contains(_searchResult)).toList();
-              });
-            }
+        Container(
+          width: .8 * size.width,
+          child: SearchBox(
+              hintText: 'Search account',
+              onChanged: (value) {
+                setState(() {
+                  _searchResult = value;
+                  usersFiltered = users.where((user) =>
+                      (user.name.toLowerCase().contains(_searchResult))||
+                          user.phone.contains(_searchResult)).toList();
+                });
+              }
+          ),
         ),
         Container(
           width: size.width,
@@ -120,6 +124,9 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                     selected: usersFiltered[index].selected,
                     onSelectChanged: (val) {
                       setState(() {
+                        // hide keyboard when user selected
+                        FocusScope.of(context).requestFocus(new FocusNode());
+
                         currentUser = usersFiltered[index];
                         log('$currentUser');
 
@@ -130,7 +137,6 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
 
                         // assign new selected value
                         if (usersFiltered[index].selected == false && val == false) {
-                          log('masuk sini gan');
                           usersFiltered[index].selected = true;
                         } else {
                           usersFiltered[index].selected = val!;
@@ -149,7 +155,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                                 borderRadius: BorderRadius.circular(10.0),
                                 child:
                                 Image.network(
-                                  'https://picsum.photos/250?image=9',
+                                  'https://picsum.photos/250?image=${usersFiltered[index].id}',
                                   height: 0.13 * size.width,
                                   width: 0.13 * size.width,
                                 ),
