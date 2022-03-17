@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cakrawala_mobile/Screens/Payment/transaction_successful.dart';
@@ -91,11 +92,9 @@ class BodyConfirmPayment extends StatelessWidget {
         ButtonConfirmButton(
             text: "Finish Payment",
             press: () async {
-              var respP = await PointsAPI.payCalculatePoints(nominal);
               var resp = await PembayaranAPI.payToMerchant(
                 choosenMerchant.id, nominal, choosenMerchant.alamat, choosenMerchant.no_rek);
-              if(resp.data && respP.data) {
-                log('points resp ${respP.data}');
+              if(resp.data) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
@@ -110,7 +109,9 @@ class BodyConfirmPayment extends StatelessWidget {
                 currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
               } else {
                 log('resp message: ${resp.message}');
-                _showDialog(context, "Gagal melakukan top-up", resp.message, null);
+                var msg = json.decode(resp.message) as Map<String, dynamic>;
+                var temp = msg['message'];
+                _showDialog(context, "Gagal melakukan pembayaran", temp, null);
               }
 
             })

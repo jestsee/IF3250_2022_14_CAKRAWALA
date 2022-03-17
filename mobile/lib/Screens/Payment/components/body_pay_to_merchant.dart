@@ -6,6 +6,8 @@ import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
 import "package:flutter/material.dart";
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../utils/points-api.dart';
+
 class BodyPayToMerchant extends StatelessWidget {
   const BodyPayToMerchant({Key? key}) : super(key: key);
 
@@ -27,7 +29,7 @@ class BodyPayToMerchant extends StatelessWidget {
           ),
         ),
         ChooseMerchantTable(),
-        ButtonConfirmButton(text: "Continue To Payment", press: () {
+        ButtonConfirmButton(text: "Continue To Payment", press: () async {
           if (Merchant.getSelectedMerchant().id == -1) {
             log("masuk else");
             Fluttertoast.showToast(
@@ -40,14 +42,17 @@ class BodyPayToMerchant extends StatelessWidget {
                 fontSize: 14.0
             );
           } else {
+            // TODO nominal masih statis
+            int nominal = 900000;
+            int points = await PointsAPI.payCalculatePoints(nominal);
+            log("points: $points");
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>
                     ConfirmPaymentScreen(
                       choosenMerchant: Merchant.getSelectedMerchant(),
-                      // TODO points dan nominal transaksi
-                      points: 100,
-                      nominal: 12000,
+                      points: points,
+                      nominal: nominal,
                     )
                 )
             );

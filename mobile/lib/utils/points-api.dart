@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cakrawala_mobile/utils/custom-http-response.dart';
@@ -16,7 +17,7 @@ class PointsAPI{
     return map;
   }
 
-  static Future<CustomHttpResponse<bool>> payCalculatePoints(int amount) async {
+  static Future<int> payCalculatePoints(int amount) async {
     var header = await _getHeaders();
     var body = {
     "amount": amount
@@ -27,6 +28,11 @@ class PointsAPI{
         body: json.encode(body),
         headers: header
     );
-    return CustomHttpResponse(response.statusCode, response.body, response.statusCode==200);
+
+    var bodyresp = json.decode(response.body) as Map<String, dynamic>;
+    var temp = bodyresp['points'];
+    log('temp: $temp');
+    log('json: $bodyresp');
+    return temp;
   }
 }
