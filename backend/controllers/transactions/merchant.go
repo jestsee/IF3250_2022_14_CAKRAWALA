@@ -69,7 +69,6 @@ func AddMerchant(c *gin.Context) {
 // @Tags authentication
 // @Accept */*
 // @Produce json
-// @Param true "Inputan yang benar"
 // @Success 200 {string} GetAllMerchantsAdmin
 // @Router /admin/merchant [get]
 func GetAllMerchantsAdmin(c *gin.Context) {
@@ -94,7 +93,6 @@ func GetAllMerchantsAdmin(c *gin.Context) {
 // @Tags authentication
 // @Accept */*
 // @Produce json
-// @Param true "Inputan yang benar"
 // @Success 200 {string} GetAllMerchantsUser
 // @Router /v1/merchant [get]
 func GetAllMerchantsUser(c *gin.Context) {
