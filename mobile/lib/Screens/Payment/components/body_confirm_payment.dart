@@ -88,7 +88,7 @@ class BodyConfirmPayment extends StatelessWidget {
             text: "Finish Payment",
             press: () {
               // reset current merchant
-              currentMerchant = Merchant(-1, "Unknown", "Unknown", -1);
+              currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
               Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
