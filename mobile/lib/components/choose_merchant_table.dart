@@ -1,15 +1,17 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Payment/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
+import 'package:cakrawala_mobile/utils/merchant-api.dart';
 import 'package:flutter/material.dart';
 
 // global variable
+MerchantAPI mAPI = MerchantAPI();
 Merchant currentMerchant = Merchant.fromJson(
     {
-      "id_merchant": -1,
-      "nama_merchant": "Unknown",
-      "alamat": "Unknown",
-      "no_rekening": -1,
+      "id": -1,
+      "Name": "Unknown",
+      "Address": "Unknown",
+      "AccountId": -1,
     }
 );
 
@@ -17,15 +19,15 @@ class Merchant {
   int id;
   String name;
   String alamat;
-  int no_rek;
+  String no_rek;
 
   Merchant(this.id, this.name, this.alamat, this.no_rek);
   factory Merchant.fromJson(dynamic json) {
     return Merchant(
-      json['id_merchant'] as int,
-      json['nama_merchant'] as String,
-      json['alamat'] as String,
-      json['no_rekening'] as int);
+      json['id'] as int,
+      json['Name'] as String,
+      json['Address'] as String,
+      json['AccountId'] as String);
   }
 
   @override
@@ -47,8 +49,9 @@ class ChooseMerchantTable extends StatefulWidget {
 }
 
 class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
-  List<Merchant> merchants = DummyDataMerchant().data.map((e) =>
-      Merchant.fromJson(e)).toList();
+  // TODO array of merchants taroh disini
+  late Future<List<Merchant>> _merchants;
+  List<Merchant> merchants = [];
   List<Merchant> merchantsFiltered = [];
   TextEditingController controller = TextEditingController();
   String _searchResult = '';
@@ -57,7 +60,18 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
   @override
   void initState() {
     super.initState();
-    merchantsFiltered = merchants;
+    _merchants = loadData();
+    // merchantsFiltered = merchants;
+    log("merchants initState $merchants");
+  }
+
+  Future<List<Merchant>> loadData() async {
+    List<Merchant> data = await mAPI.fetchMerchant();
+    setState(() {
+      merchants = data;
+      merchantsFiltered = data;
+    });
+    return data;
   }
 
   double handleOverflow(BuildContext context) {
@@ -89,52 +103,64 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
           const SizedBox(
             height: 16,
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: handleOverflow(context)
-              ),
-              child: ListView.builder(
-                itemCount: merchantsFiltered.length,
-                itemBuilder: (context, index) => Card(
-                  shape: RoundedRectangleBorder (
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
-                  elevation: 3,
-                  margin: const EdgeInsets.only(bottom: 15),
-                  child: ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                      Image.network(
-                        // TODO penyimpanan picture-nya nanti gimana ya?
-                        'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
-                        height: 0.095 * size.width,
-                        width: 0.095 * size.width,
+          FutureBuilder<List<Merchant>>(
+            future: _merchants,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          bottom: handleOverflow(context)
                       ),
-                    ),
-                    title: Text(
-                        merchantsFiltered[index].name,
-                      style: const TextStyle (
-                        fontSize: 16,
-                        letterSpacing: 0.1,
-                        fontWeight: FontWeight.w600
+                      child: ListView.builder(
+                        itemCount: merchantsFiltered.length,
+                        itemBuilder: (context, index) => Card(
+                          shape: RoundedRectangleBorder (
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
+                          elevation: 3,
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child:
+                              Image.network(
+                                // TODO penyimpanan picture-nya nanti gimana ya?
+                                'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
+                                height: 0.095 * size.width,
+                                width: 0.095 * size.width,
+                              ),
+                            ),
+                            title: Text(
+                              merchantsFiltered[index].name,
+                              style: const TextStyle (
+                                  fontSize: 16,
+                                  letterSpacing: 0.1,
+                                  fontWeight: FontWeight.w600
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                                FocusScope.of(context).requestFocus(new FocusNode());
+                                currentMerchant = merchantsFiltered[index];
+                                log("selected merchant: $currentMerchant");
+                              });
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                        FocusScope.of(context).requestFocus(new FocusNode());
-                        currentMerchant = merchantsFiltered[index];
-                        log("selected merchant: $currentMerchant");
-                      });
-                    },
-                  ),
-                ),
-              ),
-            )
-          ),
+                    )
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            }
+          )
+
         ],
       ),
     );
