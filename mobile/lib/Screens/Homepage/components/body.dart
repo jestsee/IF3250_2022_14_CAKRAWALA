@@ -4,10 +4,16 @@ import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_co
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/constants.dart';
+import 'package:cakrawala_mobile/Screens/Homepage/components/list_transaction.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +45,9 @@ class Body extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ),ChooseTransaction()
       ]),
+      
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         type: BottomNavigationBarType.fixed,
