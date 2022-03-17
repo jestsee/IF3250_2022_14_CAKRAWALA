@@ -43,7 +43,7 @@ class BodyPayToMerchant extends StatelessWidget {
             );
           } else {
             // TODO nominal masih statis
-            int nominal = 900000;
+            int nominal = 10000;
             int points = await PointsAPI.payCalculatePoints(nominal);
             log("points: $points");
             Navigator.push(
