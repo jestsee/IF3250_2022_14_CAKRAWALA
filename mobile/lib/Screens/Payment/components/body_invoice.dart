@@ -103,8 +103,8 @@ class Product {
 }
 
 class BodyInvoice extends StatelessWidget {
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   final String namaMerchant;
   final String time;
   const BodyInvoice({

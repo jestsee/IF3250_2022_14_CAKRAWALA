@@ -8,12 +8,16 @@ import 'package:cakrawala_mobile/components/rounded_payment_detail_field.dart';
 import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/constants.dart';
+import 'package:cakrawala_mobile/utils/pembayaran-api.dart';
+import 'package:cakrawala_mobile/utils/points-api.dart';
 import 'package:flutter/material.dart';
+
+import '../../../components/blurry-dialog.dart';
 
 class BodyConfirmPayment extends StatelessWidget {
   final Merchant choosenMerchant;
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   const BodyConfirmPayment({
     Key? key,
     required this.choosenMerchant,
@@ -86,21 +90,40 @@ class BodyConfirmPayment extends StatelessWidget {
         ),
         ButtonConfirmButton(
             text: "Finish Payment",
-            press: () {
-              // reset current merchant
-              currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
-                    namaMerchant: choosenMerchant.name,
-                    nominal: nominal,
-                    points: points,
-                    time: getCurrentTime(),
+            press: () async {
+              var respP = await PointsAPI.payCalculatePoints(nominal);
+              var resp = await PembayaranAPI.payToMerchant(
+                choosenMerchant.id, nominal, choosenMerchant.alamat, choosenMerchant.no_rek);
+              if(resp.data && respP.data) {
+                log('points resp ${respP.data}');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
+                      namaMerchant: choosenMerchant.name,
+                      nominal: nominal,
+                      points: points,
+                      time: getCurrentTime(),
+                    )
                   )
-                )
-              );
+                );
+                // reset current merchant
+                currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
+              } else {
+                log('resp message: ${resp.message}');
+                _showDialog(context, "Gagal melakukan top-up", resp.message, null);
+              }
+
             })
       ],
     );
   }
+
+  _showDialog(BuildContext context, title, content, callback) {
+    BlurryDialog bd = BlurryDialog(title, content, callback);
+
+    showDialog(context: context, builder: (BuildContext context) {
+      return bd;
+    });
+  }
+
 }

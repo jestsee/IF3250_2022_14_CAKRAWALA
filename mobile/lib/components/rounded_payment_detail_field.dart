@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class RoundedPaymentDetail extends StatelessWidget {
   final String nama;
-  final double nominal;
-  final double points;
+  final int nominal;
+  final int points;
   final bool amount;
   const RoundedPaymentDetail(
       {

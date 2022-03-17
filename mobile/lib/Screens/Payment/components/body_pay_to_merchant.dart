@@ -47,7 +47,7 @@ class BodyPayToMerchant extends StatelessWidget {
                       choosenMerchant: Merchant.getSelectedMerchant(),
                       // TODO points dan nominal transaksi
                       points: 100,
-                      nominal: 1035.69,
+                      nominal: 12000,
                     )
                 )
             );
