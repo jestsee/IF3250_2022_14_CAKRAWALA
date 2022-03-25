@@ -163,11 +163,8 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
         ),
         ButtonConfirmButton(
             text: "Finish Payment",
-            press: () async {
-              int points = await PointsAPI.payCalculatePoints(amount);
-              log("points: $points");
-              var resp = await PembayaranAPI.payToMerchant(
-                widget.choosenMerchant.id, amount, widget.choosenMerchant.alamat, widget.choosenMerchant.no_rek);
+            press: () {
+              // cek amount > 0
               if(amount<=0) {
                 if (amount == 0) {
                   Fluttertoast.showToast(
@@ -193,25 +190,33 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
                   return;
                 }
               }
-              if(resp.data) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
-                      namaMerchant: widget.choosenMerchant.name,
-                      nominal: amount,
-                      points: points,
-                      time: getCurrentTime(),
-                    )
-                  )
-                );
-                // reset current merchant
-                currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
-              } else {
-                log('resp message: ${resp.message}');
-                var msg = json.decode(resp.message) as Map<String, dynamic>;
-                var temp = msg['message'];
-                _showDialog(context, "Gagal melakukan pembayaran", temp, null);
-              }
+
+              // pop up dialog
+              showConfirmDialog(context, () async {
+                int points = await PointsAPI.payCalculatePoints(amount);
+                log("points: $points");
+                var resp = await PembayaranAPI.payToMerchant(
+                    widget.choosenMerchant.id, amount, widget.choosenMerchant.alamat, widget.choosenMerchant.no_rek);
+                if(resp.data) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
+                        namaMerchant: widget.choosenMerchant.name,
+                        nominal: amount,
+                        points: points,
+                        time: getCurrentTime(),
+                      )
+                      )
+                  );
+                  // reset current merchant
+                  currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
+                } else {
+                  log('resp message: ${resp.message}');
+                  var msg = json.decode(resp.message) as Map<String, dynamic>;
+                  var temp = msg['message'];
+                  _showDialog(context, "Gagal melakukan pembayaran", temp, null);
+                }
+              });
 
             })
       ],
@@ -224,5 +229,65 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
     showDialog(context: context, builder: (BuildContext context) {
       return bd;
     });
+  }
+
+  showConfirmDialog(BuildContext context, VoidCallback pressContinue) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      child: const Text("Cancel",
+        style: TextStyle(
+            color: black,
+            fontWeight: FontWeight.w600
+        ),
+      ),
+      onPressed:  () => Navigator.pop(context),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(white),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(color: black, width: 0.8)
+          )
+        )
+      ),
+    );
+    Widget continueButton = ElevatedButton(
+      child: const Text(
+          "Continue",
+          style: TextStyle(
+              color: white,
+              fontWeight: FontWeight.w600
+          )
+      ),
+      onPressed: pressContinue,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(black),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+                side: const BorderSide(color: black),
+              )
+          )
+      )
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15)
+      ),
+      title: const Text("Payment Confirmation"),
+      content: const Text("Are you sure you want to continue?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
