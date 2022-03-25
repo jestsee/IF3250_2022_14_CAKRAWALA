@@ -3,6 +3,7 @@ import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
 import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
+import 'package:cakrawala_mobile/components/number_formatter.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/userinfo-api.dart';
 import 'package:cakrawala_mobile/value-store/constant.dart';
@@ -15,7 +16,7 @@ class WalletInfo extends StatefulWidget {
   const WalletInfo({
     Key? key,
   }) : super(key: key);
-  static const double pad = 0.035;
+  static const double pad = 0.02;
   @override
   State<WalletInfo> createState() => _WalletInfoState();
 }
@@ -48,6 +49,7 @@ class _WalletInfoState extends State<WalletInfo> {
 
   @override
   Widget build(BuildContext context) {
+    var formatter = NumberFormatter();
     Size size = MediaQuery.of(context).size;
     return WhiteFieldContainer(
         child: Column(
@@ -64,11 +66,10 @@ class _WalletInfoState extends State<WalletInfo> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                child: Text(balance.toString(),
+                child: Text(formatter.formatNumber(balance),
                 style: const TextStyle(
-                  fontFamily: 'Mulish',
                   fontWeight: FontWeight.w900,
-                  fontSize: 30)),
+                  fontSize: 32)),
               ),
               const Text("IDR",
               style: TextStyle(
@@ -81,13 +82,13 @@ class _WalletInfoState extends State<WalletInfo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text("$points points",
+              Text("${formatter.formatNumber(points)} points",
                 style: const TextStyle(
                   fontFamily: 'Mulish',
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),),
-              Text("$rewards exp",
+              Text("${formatter.formatNumber(rewards)} exp",
                 style: const TextStyle(
                   fontFamily: 'Mulish',
                   fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:cakrawala_mobile/components/number_formatter.dart';
 import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +43,7 @@ class RoundedPaymentDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var formatter = NumberFormatter();
     return Center(
       child: Container(
         width: .68 * size.width,
@@ -63,13 +65,13 @@ class RoundedPaymentDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextAccountTemplate(
-                  text: nominal.toString(),
+                  text: formatter.formatNumber(nominal.toString()),
                   align: TextAlign.center,
                   weight: FontWeight.w800,
                   size: 30,
                   color: black,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(left: 6),
                   child: TextAccountTemplate(
                     text: "IDR",
