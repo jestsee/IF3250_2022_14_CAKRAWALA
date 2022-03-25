@@ -42,17 +42,11 @@ class BodyPayToMerchant extends StatelessWidget {
                 fontSize: 14.0
             );
           } else {
-            // TODO nominal masih statis
-            int nominal = 10000;
-            int points = await PointsAPI.payCalculatePoints(nominal);
-            log("points: $points");
             Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) =>
                     ConfirmPaymentScreen(
                       choosenMerchant: Merchant.getSelectedMerchant(),
-                      points: points,
-                      nominal: nominal,
                     )
                 )
             );

@@ -85,7 +85,7 @@ class RoundedPaymentDetail extends StatelessWidget {
               height: .005 * size.height,
             ),
             TextAccountTemplate(
-              text: "Get $points points",
+              text: "You received $points points",
               align: TextAlign.center,
               weight: FontWeight.w400,
               size: 17,

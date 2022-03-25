@@ -147,21 +147,6 @@ class BodyInvoice extends StatelessWidget {
         WhiteInvoiceContainer(title: "Merchant", subtitle: namaMerchant),
         WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"), // TODO id invoice
         WhiteInvoiceContainer(title: "Time", subtitle: time), // TODO waktu transaksi
-        WhiteFieldContainer(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: .22 * size.height,
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: showProduct(),
-                  ),
-                ),
-              ),
-            )
-        ),
         ButtonConfirmButton(text: "Back To Home", press: () {
           Navigator.push(
               context,

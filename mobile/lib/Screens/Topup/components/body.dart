@@ -27,6 +27,7 @@ class _BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size; // Screen height and width
     const Color blue = Color.fromRGBO(0, 162, 237, 1);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: deepSkyBlue,
       appBar: AppBar(
         titleSpacing: 40,
