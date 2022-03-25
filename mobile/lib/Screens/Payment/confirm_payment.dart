@@ -7,13 +7,9 @@ import '../../constants.dart';
 
 class ConfirmPaymentScreen extends StatelessWidget {
   final Merchant choosenMerchant;
-  final int nominal;
-  final int points;
   const ConfirmPaymentScreen(
       {Key? key,
         required this.choosenMerchant,
-        required this.nominal,
-        required this.points
       }) : super(key: key);
 
   @override
@@ -23,8 +19,6 @@ class ConfirmPaymentScreen extends StatelessWidget {
       appBar: const CustomAppBar(text: "Confirm Payment"),
       body: BodyConfirmPayment(
         choosenMerchant: choosenMerchant,
-        points: points,
-        nominal: nominal,
       )
     );
   }
