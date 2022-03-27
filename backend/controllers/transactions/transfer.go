@@ -42,7 +42,7 @@ func Transfer(c *gin.Context)  {
 	}
 
 	// check sender's balance
-	if user.Balance < data.Amount {
+	if uint64(user.Balance) < uint64(data.Amount) {
 		c.JSON(400, gin.H{
 			"message": "saldo kurang",
 		})
@@ -55,10 +55,6 @@ func Transfer(c *gin.Context)  {
 
 	models.DB.Updates(&user)
 	models.DB.Updates(&receiver)
-	
-
-
-
 
 	// bonus := service.TransferBonus(user, int64(data.Amount))
 	transaction := models.Transaksi{
