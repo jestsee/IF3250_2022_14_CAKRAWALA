@@ -10,6 +10,7 @@ type Transaksi struct {
 	Cashback  uint32    `gorm:"default:0"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
+	IsDebit   bool      `json:"IsDebit"`
 
 	UserID uint `gorm:"column:user_id"`
 	User   User
