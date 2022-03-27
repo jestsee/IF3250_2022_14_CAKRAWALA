@@ -1,7 +1,6 @@
 package transactions
 
 import (
-	"log"
 	"net/http"
 
 	"cakrawala.id/m/models"
@@ -15,15 +14,12 @@ type TransferBody struct {
 	Exp 		uint32 	`json:"exp"`
 	Status 		string 	`json:"status"`
 	Cashback 	uint32 	`json:"cashback"`
-	UserID 		uint 	`json:"user_id"`
 	FriendID 	uint 	`json:"friend_id"`
 }
 
 func Transfer(c *gin.Context)  {
 	user := c.MustGet("user").(models.User)
 	var data = new(TransferBody)
-	// var sender_phone = "081219083250"
-	var receiver_phone = "081219083251"
 	var receiver models.User
 
 	if err := c.ShouldBind(data); err != nil {
@@ -31,11 +27,11 @@ func Transfer(c *gin.Context)  {
 		return
 	}
 
-	// check receiver's phone
-	err := models.DB.Where("phone = ?", receiver_phone).First(&receiver).Error
+	// check receiver's account
+	err := models.DB.Where("id = ?", &data.FriendID).First(&receiver).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"message": "no ponsel tidak ada",
+			"message": "penerima tidak ada",
 		})
 		c.Abort()
 		return
@@ -60,18 +56,17 @@ func Transfer(c *gin.Context)  {
 	transaction := models.Transaksi{
 		Amount: data.Amount,
 		Exp: uint32(10),
-		Cashback: uint32(5),
-		UserID: data.UserID,
+		Cashback: uint32(0),
+		UserID: user.ID,
 		MerchantID: nil,
-		FriendID: &data.UserID,
+		FriendID: &data.FriendID,
 	}
-	log.Println(transaction)
 
-	// err := models.DB.Create(&transaction).Error
-	// if err != nil {
-	// 	_ = c.AbortWithError(500, err)
-	// 	return
-	// }
+	err = models.DB.Create(&transaction).Error
+	if err != nil {
+		_ = c.AbortWithError(500, err)
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "berhasil transfer",
