@@ -8,12 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 type TransferBody struct {
 	Amount 		uint64 	`json:"amount"`
-	Exp 		uint32 	`json:"exp"`
-	Status 		string 	`json:"status"`
-	Cashback 	uint32 	`json:"cashback"`
 	FriendID 	uint 	`json:"friend_id"`
 }
 
@@ -27,11 +23,20 @@ func Transfer(c *gin.Context)  {
 		return
 	}
 
+	//check sender's destination
+	if data.FriendID == user.ID {
+		c.JSON(400, gin.H{
+			"message": "Penerima tidak boleh sama dengan pengirim",
+		})
+		c.Abort()
+		return
+	}
+
 	// check receiver's account
 	err := models.DB.Where("id = ?", &data.FriendID).First(&receiver).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"message": "penerima tidak ada",
+			"message": "Penerima tidak ada",
 		})
 		c.Abort()
 		return
@@ -40,7 +45,7 @@ func Transfer(c *gin.Context)  {
 	// check sender's balance
 	if uint64(user.Balance) < uint64(data.Amount) {
 		c.JSON(400, gin.H{
-			"message": "saldo kurang",
+			"message": "Saldo anda kurang",
 		})
 		c.Abort()
 		return
@@ -69,6 +74,6 @@ func Transfer(c *gin.Context)  {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "berhasil transfer",
+		"message": "Transfer berhasil",
 	})
 }
