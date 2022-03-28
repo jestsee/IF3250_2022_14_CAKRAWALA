@@ -67,22 +67,42 @@ func ExchangeReward(c *gin.Context) {
 		return
 	}
 
-	reward_history := models.HistoryReward {
-		Quantity: 	body.Quantity,
-		PointsPaid: body.PointsPaid,
-		UserID: 	user.ID,
-		RewardID:	body.RewardID,
+	var reward models.Reward
+	
+	err0 := models.DB.Where("id = ?", body.RewardID).First(&reward).Error
+	if err0 != nil {
+		c.JSON(400, gin.H{
+			"message": "id reward tidak ditemukan",
+		})
+		c.Abort()
+		return
 	}
 
+	// cek reward cukup ga
+	if reward.Stock < body.Quantity {
+		c.AbortWithStatusJSON(400, gin.H{
+			"message": "stock tidak mencukupi",
+		})
+		return
+	}
+	
 	// kurangin point user
 	user.Point -= body.PointsPaid
 
 	// kurangin stock reward
+	reward.Stock -= body.Quantity
 
+	// masukin ke db
+	reward_history := models.HistoryReward {
+		Quantity: 	body.Quantity,
+		PointsPaid: body.PointsPaid, // perhitungan di frontend price * qty
+		UserID: 	user.ID,
+		RewardID:	body.RewardID,
+	}
 
 	err := models.DB.Transaction(func(tx *gorm.DB) error {
 		// add row baru di history
-		if e:= tx.Save(&reward_history).Error; e != nil {
+		if e:= tx.Create(&reward_history).Error; e != nil {
 			return e
 		}
 		// update point user
@@ -90,7 +110,9 @@ func ExchangeReward(c *gin.Context) {
 			return e
 		}
 		// update stock reward
-		// if e:= tx.Update()
+		if e:= tx.Updates(&reward).Error; e != nil {
+			return e
+		}
 		return nil
 	})
 
