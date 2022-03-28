@@ -17,7 +17,6 @@ type AddRewardBody struct {
 type ExchangeRewardBody struct {
 	RewardID	uint	`json:"reward_id"`
 	Quantity	uint16 	`json:"qty"`
-	PointsPaid	uint32	`json:"paid"`
 }
 
 func AddReward(c *gin.Context) {
@@ -59,16 +58,8 @@ func ExchangeReward(c *gin.Context) {
 		return
 	}
 
-	// cek point cukup ga
-	if user.Point < body.PointsPaid {
-		c.AbortWithStatusJSON(400, gin.H{
-			"message": "insufficient points",
-		})
-		return
-	}
-
+	// get reward as struct
 	var reward models.Reward
-	
 	err0 := models.DB.Where("id = ?", body.RewardID).First(&reward).Error
 	if err0 != nil {
 		c.JSON(400, gin.H{
@@ -78,16 +69,27 @@ func ExchangeReward(c *gin.Context) {
 		return
 	}
 
-	// cek reward cukup ga
+	// cek stok reward cukup ga
 	if reward.Stock < body.Quantity {
 		c.AbortWithStatusJSON(400, gin.H{
-			"message": "stock tidak mencukupi",
+			"message": "stok tidak mencukupi",
+		})
+		return
+	}
+
+	// calculate points needed
+	var pointsNeeded = body.Quantity * uint16(reward.Price)
+
+	// cek point cukup ga
+	if user.Point < uint32(pointsNeeded) {
+		c.AbortWithStatusJSON(400, gin.H{
+			"message": "point tidak mencukupi",
 		})
 		return
 	}
 	
 	// kurangin point user
-	user.Point -= body.PointsPaid
+	user.Point -= uint32(pointsNeeded)
 
 	// kurangin stock reward
 	reward.Stock -= body.Quantity
@@ -95,7 +97,7 @@ func ExchangeReward(c *gin.Context) {
 	// masukin ke db
 	reward_history := models.HistoryReward {
 		Quantity: 	body.Quantity,
-		PointsPaid: body.PointsPaid, // perhitungan di frontend price * qty
+		PointsPaid: uint32(pointsNeeded), // perhitungan di frontend price * qty
 		UserID: 	user.ID,
 		RewardID:	body.RewardID,
 	}
@@ -118,11 +120,11 @@ func ExchangeReward(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil  menukarkan point",
-			"data":    reward_history,
+			"message"		:	"berhasil  menukarkan point",
+			"data"			:    reward_history,
+			"current_point"	:	user.Point,	
 		})
 	} else {
 		_ = c.AbortWithError(500, err)
 	}
-
 }
