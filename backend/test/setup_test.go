@@ -38,9 +38,8 @@ func TestSuite(t *testing.T) {
 	suite.Run(t, new(TestSuiteEnv))
 }
 
-
-func (suite *TestSuiteEnv) TestLoginRegister{
-	r:= gin.New()
+func (suite *TestSuiteEnv) TestLoginRegister() {
+	r := gin.New()
 	r.POST("/register", controllers.Register)
 	var jstr = []byte(`{
     "email" : "13519002@std.stei.itb.ac.id",
@@ -58,7 +57,7 @@ func (suite *TestSuiteEnv) TestLoginRegister{
 	}
 	defer resp.Body.Close()
 
-	a:=suite.Assert()
+	a := suite.Assert()
 	a.Equal(resp.StatusCode, 200)
 
 	req, err = http.NewRequest(http.MethodPost, "/register", bytes.NewBuffer(jstr))
@@ -74,6 +73,36 @@ func (suite *TestSuiteEnv) TestLoginRegister{
 
 }
 
-func (suite *TestSuiteEnv) TestMiddleware{
+func (suite *TestSuiteEnv) TestMiddleware() {
+	r := gin.New()
+	r.POST("/register", controllers.Register)
+	var jstr = []byte(`{
+    "email" : "13519002@std.stei.itb.ac.id",
+    "name" : "robert alfonsius",
+    "phone" : "085257560828",
+    "password" : "asdf12345"
+	}`)
+	req, err := http.NewRequest(http.MethodPost, "/register", bytes.NewBuffer(jstr))
+	req.Header.Set("Content-Type", "application/json")
 
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	a := suite.Assert()
+	a.Equal(resp.StatusCode, 200)
+
+	req, err = http.NewRequest(http.MethodPost, "/register", bytes.NewBuffer(jstr))
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err = client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	a.Equal(resp.StatusCode, 400)
 }
