@@ -19,6 +19,15 @@ type ExchangeRewardBody struct {
 	Quantity	uint16 	`json:"qty"`
 }
 
+// AddReward godoc
+// @Summary AddReward.
+// @Description Add New Reward.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body AddRewardBody true "Inputan yang benar"
+// @Success 200 {string} AddReward
+// @Router /admin/add-reward [post]
 func AddReward(c *gin.Context) {
 	var body AddRewardBody
 	if err := c.BindJSON(&body); err != nil {
@@ -49,6 +58,15 @@ func AddReward(c *gin.Context) {
 	}
 }
 
+// ExchangeReward godoc
+// @Summary ExchangeReward.
+// @Description Exchange Reward with Points.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Param data body ExchangeRewardBody true "Inputan yang benar"
+// @Success 200 {string} ExchangeReward
+// @Router /v1/exchange-reward [post]
 func ExchangeReward(c *gin.Context) {
 	// get user
 	user := c.MustGet("user").(models.User)
@@ -93,6 +111,12 @@ func ExchangeReward(c *gin.Context) {
 
 	// kurangin stock reward
 	reward.Stock -= body.Quantity
+
+	// nanganin stock reward yang gabisa 0
+	if (reward.Stock == 0) {
+		println("reward stock 0")
+		// reward.Stock = null
+	}
 
 	// masukin ke db
 	reward_history := models.HistoryReward {

@@ -19,6 +19,40 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
+        "/admin/add-reward": {
+            "post": {
+                "description": "Add New Reward.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "AddReward.",
+                "parameters": [
+                    {
+                        "description": "Inputan yang benar",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transactions.AddRewardBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/merchant": {
             "get": {
                 "description": "Show All Merchants for Admin.",
@@ -117,6 +151,40 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/controllers.RegisterReqBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/exchange-reward": {
+            "post": {
+                "description": "Exchange Reward with Points.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "ExchangeReward.",
+                "parameters": [
+                    {
+                        "description": "Inputan yang benar",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transactions.ExchangeRewardBody"
                         }
                     }
                 ],
@@ -356,10 +424,35 @@
                 }
             }
         },
+        "transactions.AddRewardBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
         "transactions.BonusCheckerBody": {
             "type": "object",
             "properties": {
                 "amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "transactions.ExchangeRewardBody": {
+            "type": "object",
+            "properties": {
+                "qty": {
+                    "type": "integer"
+                },
+                "reward_id": {
                     "type": "integer"
                 }
             }
