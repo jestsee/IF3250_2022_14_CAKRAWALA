@@ -27,9 +27,25 @@ definitions:
       name:
         type: string
     type: object
+  transactions.AddRewardBody:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+    type: object
   transactions.BonusCheckerBody:
     properties:
       amount:
+        type: integer
+    type: object
+  transactions.ExchangeRewardBody:
+    properties:
+      qty:
+        type: integer
+      reward_id:
         type: integer
     type: object
   transactions.PayBody:
@@ -60,6 +76,28 @@ info:
   title: Cakrawala API
   version: "1.0"
 paths:
+  /admin/add-reward:
+    post:
+      consumes:
+      - '*/*'
+      description: Add New Reward.
+      parameters:
+      - description: Inputan yang benar
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/transactions.AddRewardBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: AddReward.
+      tags:
+      - authentication
   /admin/merchant:
     get:
       consumes:
@@ -130,6 +168,28 @@ paths:
           schema:
             type: string
       summary: Register.
+      tags:
+      - authentication
+  /v1/exchange-reward:
+    post:
+      consumes:
+      - '*/*'
+      description: Exchange Reward with Points.
+      parameters:
+      - description: Inputan yang benar
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/transactions.ExchangeRewardBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: ExchangeReward.
       tags:
       - authentication
   /v1/login:
