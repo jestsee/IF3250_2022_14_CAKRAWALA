@@ -58,16 +58,33 @@ func Transfer(c *gin.Context)  {
 	models.DB.Updates(&receiver)
 
 	// bonus := service.TransferBonus(user, int64(data.Amount))
-	transaction := models.Transaksi{
+	transaction_sender := models.Transaksi{
 		Amount: data.Amount,
 		Exp: uint32(10),
 		Cashback: uint32(0),
 		UserID: user.ID,
 		MerchantID: nil,
 		FriendID: &data.FriendID,
+		IsDebit: true,
 	}
 
-	err = models.DB.Create(&transaction).Error
+	err = models.DB.Create(&transaction_sender).Error
+	if err != nil {
+		_ = c.AbortWithError(500, err)
+		return
+	}
+
+	transaction_receiver := models.Transaksi{
+		Amount: data.Amount,
+		Exp: uint32(10),
+		Cashback: uint32(0),
+		UserID: data.FriendID,
+		MerchantID: nil,
+		FriendID: &user.ID,
+		IsDebit: false,
+	}
+
+	err = models.DB.Create(&transaction_receiver).Error
 	if err != nil {
 		_ = c.AbortWithError(500, err)
 		return
