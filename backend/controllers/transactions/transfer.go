@@ -1,51 +1,96 @@
 package transactions
 
-// import (
-// 	"net/http"
+import (
+	"net/http"
 
-// 	"cakrawala.id/m/models"
-// 	"cakrawala.id/m/service"
-// 	"cakrawala.id/m/utils"
-// 	"github.com/gin-gonic/gin"
-// )
+	"cakrawala.id/m/models"
+	"cakrawala.id/m/utils"
+	"github.com/gin-gonic/gin"
+)
 
+type TransferBody struct {
+	Amount 		uint64 	`json:"amount"`
+	FriendID 	uint 	`json:"friend_id"`
+}
 
-// type TransferBody struct {
-// 	Amount 		uint64 	`json:"amount`
-// 	Exp 		uint32 	`json:"exp"`
-// 	Status 		string 	`json:"status"`
-// 	Cashback 	uint32 	`json:"cashback"`
-// 	UserID 		uint 	`json:"user_id"`
-// 	FriendID 	uint 	`json:"friend_id"`
-// }
+func Transfer(c *gin.Context)  {
+	user := c.MustGet("user").(models.User)
+	var data = new(TransferBody)
+	var receiver models.User
 
-// func Transfer(c *gin.Context)  {
-// 	user := c.MustGet("user").(models.User)
-// 	data := new(PayMerchantBody)
+	if err := c.ShouldBind(data); err != nil {
+		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
 
-// 	if err := c.ShouldBind(data); err != nil {
-// 		c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
-// 		return
-// 	}
+	//check sender's destination
+	if data.FriendID == user.ID {
+		c.JSON(400, gin.H{
+			"message": "Penerima tidak boleh sama dengan pengirim",
+		})
+		c.Abort()
+		return
+	}
 
-// 	bonus := service.TransferBonus(user, int64(data.Amount))
-// 	transaction := models.Transaksi{
-// 		Amount: data.Amount,
-// 		Exp: uint32(bonus),
-// 		Cashback: uint32(5),
-// 		UserID: data.UserID,
-// 		MerchantID: nil,
-// 		FriendID: &data.UserID,
-// 	}
+	// check receiver's account
+	err := models.DB.Where("id = ?", &data.FriendID).First(&receiver).Error
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "Penerima tidak ada",
+		})
+		c.Abort()
+		return
+	}
 
-// 	err := models.DB.Create(&transaction).Error
-// 	if err != nil {
-// 		_ = c.AbortWithError(500, err)
-// 		return
-// 	}
+	// check sender's balance
+	if uint64(user.Balance) < uint64(data.Amount) {
+		c.JSON(400, gin.H{
+			"message": "Saldo anda kurang",
+		})
+		c.Abort()
+		return
+	}
 
-// 	c.JSON(http.StatusOK, gin.H{
-// 		"message": "berhasil transfer",
-// 		"data":    transaction,
-// 	})
-// }
+	user.Balance -= uint64(data.Amount)
+	receiver.Balance += uint64(data.Amount)
+
+	models.DB.Updates(&user)
+	models.DB.Updates(&receiver)
+
+	// bonus := service.TransferBonus(user, int64(data.Amount))
+	transaction_sender := models.Transaksi{
+		Amount: data.Amount,
+		Exp: uint32(10),
+		Cashback: uint32(0),
+		UserID: user.ID,
+		MerchantID: nil,
+		FriendID: &data.FriendID,
+		IsDebit: true,
+	}
+
+	err = models.DB.Create(&transaction_sender).Error
+	if err != nil {
+		_ = c.AbortWithError(500, err)
+		return
+	}
+
+	transaction_receiver := models.Transaksi{
+		Amount: data.Amount,
+		Exp: uint32(10),
+		Cashback: uint32(0),
+		UserID: data.FriendID,
+		MerchantID: nil,
+		FriendID: &user.ID,
+		IsDebit: false,
+	}
+
+	err = models.DB.Create(&transaction_receiver).Error
+	if err != nil {
+		_ = c.AbortWithError(500, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Transfer berhasil",
+	})
+}
