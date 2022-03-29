@@ -24,4 +24,4 @@ test:
   script:
     - cd backend
     - go get -d -v
-    - go build -o hehe -v .
+    - go test cakrawala.id/m/test
