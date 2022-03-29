@@ -10,3 +10,18 @@ build:
     - cd backend
     - go get -d -v
     - go build -o hehe -v .
+
+test:
+  stage: test
+  image: golang:latest
+  services:  
+    - postgres:12.2-alpine
+  variables:
+    POSTGRES_DB: testingdb
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: root
+    POSTGRES_HOST_AUTH_METHOD: trust
+  script:
+    - cd backend
+    - go get -d -v
+    - go build -o hehe -v .
