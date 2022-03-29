@@ -31,3 +31,8 @@ test:
     - export DBPORT=5432
     - export DBNAME=testingdb
     - go test cakrawala.id/m/test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "coming soon ya gan"
