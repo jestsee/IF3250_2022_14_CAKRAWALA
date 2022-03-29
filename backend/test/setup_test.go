@@ -26,7 +26,9 @@ type TestSuiteEnv struct {
 
 // Tests are run before they start
 func (suite *TestSuiteEnv) SetupSuite() {
-	err := godotenv.Load("../.env.test")
+	if lf := os.Getenv("LF"); lf != "Y" {
+		godotenv.Load("../.env.test")
+	}
 	dbUsn := os.Getenv("DBUSN")
 	dbPass := os.Getenv("DBPASS")
 	dbHost := os.Getenv("DBHOST")
