@@ -7,5 +7,6 @@ build:
   stage: build
   image: golang:latest
   script:
+    - cd backend
     - go get -d -v
     - go build -o hehe -v .
