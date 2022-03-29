@@ -1,0 +1,11 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  image: golang:latest
+  script:
+    - go get -d -v
+    - go build -o hehe -v .
