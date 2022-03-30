@@ -18,7 +18,10 @@ func getenv(key string) string {
 	err := godotenv.Load(".env")
 
 	if err != nil {
-		panic("gawatt, env tidak terdeteksii")
+		e2 := godotenv.Load("../.env.test")
+		if e2 != nil {
+			panic("gawatt, env tidak terdeteksii")
+		}
 	}
 
 	return os.Getenv(key)
