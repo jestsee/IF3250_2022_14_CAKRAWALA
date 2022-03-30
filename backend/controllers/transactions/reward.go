@@ -9,14 +9,14 @@ import (
 )
 
 type AddRewardBody struct {
-	Name 	string 	`json:"name"`
-	Price 	uint32 	`json:"price"`
-	Stock	uint16	`json:"stock"`
+	Name  string `json:"name"`
+	Price uint32 `json:"price"`
+	Stock int16  `json:"stock"`
 }
 
 type ExchangeRewardBody struct {
-	RewardID	uint	`json:"reward_id"`
-	Quantity	uint16 	`json:"qty"`
+	RewardID uint  `json:"reward_id"`
+	Quantity int16 `json:"qty"`
 }
 
 // AddReward godoc
@@ -35,14 +35,14 @@ func AddReward(c *gin.Context) {
 		return
 	}
 
-	new_reward := models.Reward {
-		Name: 	body.Name,
-		Price:	body.Price,
-		Stock:	body.Stock,
+	new_reward := models.Reward{
+		Name:  body.Name,
+		Price: body.Price,
+		Stock: body.Stock,
 	}
 
 	err := models.DB.Transaction(func(tx *gorm.DB) error {
-		if e:= tx.Save(&new_reward).Error; e != nil {
+		if e := tx.Save(&new_reward).Error; e != nil {
 			return e
 		}
 		return nil
@@ -96,7 +96,7 @@ func ExchangeReward(c *gin.Context) {
 	}
 
 	// calculate points needed
-	var pointsNeeded = body.Quantity * uint16(reward.Price)
+	var pointsNeeded = body.Quantity * int16(reward.Price)
 
 	// cek point cukup ga
 	if user.Point < uint32(pointsNeeded) {
@@ -105,38 +105,39 @@ func ExchangeReward(c *gin.Context) {
 		})
 		return
 	}
-	
+
 	// kurangin point user
 	user.Point -= uint32(pointsNeeded)
 
-	// kurangin stock reward
-	reward.Stock -= body.Quantity
-
-	// nanganin stock reward yang gabisa 0
-	if (reward.Stock == 0) {
-		println("reward stock 0")
-		// reward.Stock = null
+	if reward.Stock == 1 {
+		println("asdfasdf")
+		reward.Stock = 0
+	} else {
+		reward.Stock -= body.Quantity
 	}
 
 	// masukin ke db
-	reward_history := models.HistoryReward {
-		Quantity: 	body.Quantity,
+	reward_history := models.HistoryReward{
+		Quantity:   uint16(body.Quantity),
 		PointsPaid: uint32(pointsNeeded), // perhitungan di frontend price * qty
-		UserID: 	user.ID,
-		RewardID:	body.RewardID,
+		UserID:     user.ID,
+		RewardID:   body.RewardID,
 	}
-
+	println(reward.Stock)
 	err := models.DB.Transaction(func(tx *gorm.DB) error {
 		// add row baru di history
-		if e:= tx.Create(&reward_history).Error; e != nil {
+		if e := tx.Create(&reward_history).Error; e != nil {
 			return e
 		}
 		// update point user
-		if e:= tx.Updates(&user).Error; e != nil {
+		if e := tx.Updates(&user).Error; e != nil {
 			return e
 		}
 		// update stock reward
-		if e:= tx.Updates(&reward).Error; e != nil {
+		if e := tx.Updates(&reward).Error; e != nil {
+			return e
+		}
+		if e := tx.Exec("UPDATE rewards SET stock = ? WHERE id = ?", reward.Stock, reward.ID).Error; e != nil {
 			return e
 		}
 		return nil
@@ -144,9 +145,9 @@ func ExchangeReward(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message"		:	"berhasil  menukarkan point",
-			"data"			:    reward_history,
-			"current_point"	:	user.Point,	
+			"message":       "berhasil  menukarkan point",
+			"data":          reward_history,
+			"current_point": user.Point,
 		})
 	} else {
 		_ = c.AbortWithError(500, err)
