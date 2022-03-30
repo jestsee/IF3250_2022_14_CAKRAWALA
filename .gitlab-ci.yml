@@ -40,7 +40,7 @@ deploy:
 
 mobile:
   stage: mobile-build
-  image: mobiledevops/flutter-sdk-image:2.10.0
+  image: mobiledevops/flutter-sdk-image:2.0.1
   script:
     - cd mobile
     - flutter packages get
