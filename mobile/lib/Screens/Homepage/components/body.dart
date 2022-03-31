@@ -36,38 +36,6 @@ class Body extends StatelessWidget {
           ],
         ),
         const History(),
-
-        // Card(
-        //   child: FutureBuilder(
-        //       future: HistoryAPI.getHistoryAdmin(),
-        //       builder: (context, snapshot) {
-        //         if (snapshot.data == null) {
-        //           return Container(
-        //             child: Text('Loading...'),
-        //           );
-        //         } else {
-        //           var length = snapshot.data.length;
-        //           if (!length) {
-        //             return ListView.builder(
-        //               itemCount: length,
-        //               itemBuilder: (context, i) {
-        //                 return ListTile(
-        //                   title: Text(animals[i]),
-        //                 );
-        //               },
-        //             );
-        //           } else {
-        //             return ListView.builder(
-        //                 itemCount: snapshot.data!.length,
-        //                 itemBuilder: (context, i) {
-        //                   return ListTile(
-        //                     title: Text(snapshot.data[i]),
-        //                   );
-        //                 });
-        //           }
-        //         }
-        //       }),
-        // ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
