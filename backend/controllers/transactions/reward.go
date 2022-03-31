@@ -156,3 +156,19 @@ func ExchangeReward(c *gin.Context) {
 		_ = c.AbortWithError(500, err)
 	}
 }
+
+func GetAllRewards(c *gin.Context) {
+	var rewards []models.Reward
+	err := models.DB.Find(&rewards).Error
+
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	data := rewards
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get all merchant",
+		"data":    data,
+	})
+}

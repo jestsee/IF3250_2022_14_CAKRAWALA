@@ -1,6 +1,7 @@
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
 import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
+import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/components/number_formatter.dart';
@@ -106,7 +107,7 @@ class _WalletInfoState extends State<WalletInfo> {
                 color: black,
                 press: () {
                   Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => PayToMerchantScreen()
+                      builder: (context) => const PayToMerchantScreen()
                   ));
                 },
               ),
@@ -117,7 +118,7 @@ class _WalletInfoState extends State<WalletInfo> {
                 color: black,
                 press: () {
                   Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => ChooseTransferScreen()
+                      builder: (context) => const RedeemGift()
                   ));
                 },
               ),
