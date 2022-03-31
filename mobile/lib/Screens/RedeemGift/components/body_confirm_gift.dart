@@ -9,9 +9,7 @@ import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/redeem-api.dart';
-import 'package:cakrawala_mobile/utils/points-api.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../components/blurry-dialog.dart';
 
