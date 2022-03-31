@@ -118,7 +118,7 @@ class _WalletInfoState extends State<WalletInfo> {
                 color: black,
                 press: () {
                   Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => const RedeemGift()
+                      builder: (context) => const ChooseTransferScreen()
                   ));
                 },
               ),

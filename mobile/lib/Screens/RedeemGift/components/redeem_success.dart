@@ -5,13 +5,11 @@ import 'package:cakrawala_mobile/Screens/RedeemGift/components/body_redeem_succe
 
 class RedeemSuccessfulScreen extends StatelessWidget {
   final int nominal;
-  final int points;
   final String namaGift;
   final String time;
   const RedeemSuccessfulScreen({
     Key? key,
     required this.nominal,
-    required this.points,
     required this.namaGift,
     required this.time,
   }) : super(key: key);
@@ -24,7 +22,6 @@ class RedeemSuccessfulScreen extends StatelessWidget {
         backgroundColor: deepSkyBlue,
         body: BodyRedeemSuccessful(
           nominal: nominal,
-          points: points,
           namaGift: namaGift,
           time: time,
         ),
