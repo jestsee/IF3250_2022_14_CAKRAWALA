@@ -42,3 +42,12 @@ func ConnectDatabase() {
 
 	DB = database
 }
+
+func ClearTable() {
+	DB.Exec("DELETE FROM auths")
+	DB.Exec("DELETE FROM history_rewards")
+	DB.Exec("DELETE FROM merchants")
+	DB.Exec("DELETE FROM rewards")
+	DB.Exec("DELETE FROM transaksis")
+	DB.Exec("DELETE FROM users")
+}
