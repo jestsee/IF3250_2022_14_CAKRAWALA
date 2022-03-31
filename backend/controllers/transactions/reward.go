@@ -157,6 +157,14 @@ func ExchangeReward(c *gin.Context) {
 	}
 }
 
+// GetAllRewards godoc
+// @Summary GetAllRewards.
+// @Description Show All Rewards for User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Success 200 {string} GetAllRewards
+// @Router /v1/get-rewards [get]
 func GetAllRewards(c *gin.Context) {
 	var rewards []models.Reward
 	err := models.DB.Find(&rewards).Error

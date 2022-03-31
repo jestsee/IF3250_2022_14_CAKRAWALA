@@ -54,11 +54,11 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                   height: .02 * size.height,
                 ),
                 const TextAccountTemplate(
-                  text: "Gift Name",
+                  text: "AMOUNT",
                   align: TextAlign.center,
-                  weight: FontWeight.bold,
-                  size: 14,
-                  color: Color(0xFF565656),
+                  weight: FontWeight.w400,
+                  size: 16,
+                  color: black,
                 ),
                 SizedBox(
                   height: .01 * size.height,
@@ -66,42 +66,25 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      width: .08 * size.width,
+                    TextAccountTemplate(
+                      text: widget.choosenGift.price.toString(),
+                      align: TextAlign.center,
+                      weight: FontWeight.w800,
+                      size: 30,
+                      color: black,
                     ),
-                    Container(
-                      width: .4 * size.width,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        autofocus: true,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w800,
-                            color: black
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          amount = value == "" ? 0 : int.parse(value); // TODO
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: .08 * size.width,
-                      child: const TextAccountTemplate(
-                        text: "Points",
+                    const Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: TextAccountTemplate(
+                        text: "points",
                         align: TextAlign.center,
                         weight: FontWeight.w400,
-                        size: 16,
+                        size: 13,
                         color: black,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: .018 * size.height,
-                ),
-
                 SizedBox(
                   height: .02 * size.height,
                 ),
@@ -116,7 +99,7 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const TextAccountTemplate(
-              text: "INPUT AMOUNT",
+              text: "Description",
               align: TextAlign.left,
               weight: FontWeight.w400,
               size: 15,
@@ -134,63 +117,17 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                 ),
               )
             ),
-            const TextAccountTemplate(
-              text: "Details",
-              align: TextAlign.left,
-              weight: FontWeight.w400,
-              size: 15,
-            ),
-            WhiteFieldContainer(
-                round: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: TextAccountTemplate(
-                    text: widget.choosenGift.detail,
-                    align: TextAlign.left,
-                    weight: FontWeight.w400,
-                    size: 15,
-                    color: black,
-                  ),
-                )
-            ),
           ],
         ),
         ButtonConfirmButton(
             text: "Finish Redeem",
             press: () {
-              // cek amount > 0
-              if(amount<=0) {
-                if (amount == 0) {
-                  Fluttertoast.showToast(
-                      msg: "Field gift name cannot be empty",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black54,
-                      textColor: Colors.white,
-                      fontSize: 14.0
-                  );
-                  return;
-                } else {
-                  Fluttertoast.showToast(
-                      msg: "Amount must be positive value",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black54,
-                      textColor: Colors.white,
-                      fontSize: 14.0
-                  );
-                  return;
-                }
-              }
-
               // pop up dialog
               showConfirmDialog(context, () async {
                 int points = await PointsAPI.payCalculatePoints(amount);
                 log("points: $points");
                 var resp = await RedeemAPI.redeemGifts(
-                    widget.choosenGift.id, amount, widget.choosenGift.name, widget.choosenGift.detail);
+                    widget.choosenGift.id, amount, widget.choosenGift.name, widget.choosenGift.stock.toString());
                 if(resp.data) {
                   Navigator.push(
                       context,
@@ -203,7 +140,7 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                       )
                   );
                   // reset current merchant
-                  currentGift = Gift(-1, "Unknown", -1, "Unknown");
+                  currentGift = Gift(-1, "Unknown", -1, -1);
                 } else {
                   log('resp message: ${resp.message}');
                   var msg = json.decode(resp.message) as Map<String, dynamic>;
