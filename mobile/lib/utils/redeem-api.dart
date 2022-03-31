@@ -16,17 +16,15 @@ class RedeemAPI{
     return map;
   }
 
-  static Future<CustomHttpResponse<bool>> redeemGifts(int id, int amount, String name, String detail ) async {
+  static Future<CustomHttpResponse<bool>> redeemGifts(int id) async {
     var header = await _getHeaders();
     var body = {
-      "name": name,
-      "amount": amount,
-      "detail": detail,
-      "gift_id": id
+      "reward_id": id,
+      "qty": 1
     };
 
     var response  = await http.post(
-        Uri.parse(Constant.URL_BE+"/redeem-gift"),
+        Uri.parse(Constant.URL_BE+"/exchange-reward"),
         body: json.encode(body),
         headers: header
     );

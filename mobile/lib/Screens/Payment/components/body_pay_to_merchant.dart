@@ -13,12 +13,12 @@ class BodyPayToMerchant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
         Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 10,bottom: 20),
+          padding: const EdgeInsets.only(top: 10,bottom: 20),
           child: const Text(
             "Choose the merchant that you want to pay.",
             style: TextStyle(

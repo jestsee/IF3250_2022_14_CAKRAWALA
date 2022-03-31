@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:cakrawala_mobile/Screens/Payment/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/utils/merchant-api.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +60,6 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
   void initState() {
     super.initState();
     _merchants = loadData();
-    // merchantsFiltered = merchants;
     log("merchants initState $merchants");
   }
 

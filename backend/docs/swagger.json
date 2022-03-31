@@ -198,6 +198,29 @@
                 }
             }
         },
+        "/v1/get-rewards": {
+            "get": {
+                "description": "Show All Rewards for User.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "GetAllRewards.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/login": {
             "post": {
                 "description": "Add New User.",
