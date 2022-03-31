@@ -10,29 +10,29 @@ Gift currentGift = Gift.fromJson(
     {
       "id": -1,
       "Name": "Unknown",
-      "Points": -1,
-      "Details" : "Unknown",
+      "Price": -1,
+      "Stock" : -1,
     }
 );
 
 class Gift {
   int id;
   String name;
-  int point;
-  String detail;
+  int price;
+  int stock;
 
-  Gift(this.id, this.name, this.point, this.detail);
+  Gift(this.id, this.name, this.price, this.stock);
   factory Gift.fromJson(dynamic json) {
     return Gift(
       json['id'] as int,
       json['Name'] as String,
-      json['Points'] as int,
-      json['Details'] as String);
+      json['Price'] as int,
+      json['Stock'] as int);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.point}, ${this.detail}}';
+    return '{${this.id}, ${this.name}, ${this.price}, ${this.stock}}';
   }
 
   static Gift getSelectedGift() {
@@ -124,27 +124,32 @@ class _ChooseGiftTableState extends State<ChooseGiftTable> {
                               borderRadius: BorderRadius.circular(10),
                               child:
                               Image.network(
-       
+                                // TODO
                                 'https://picsum.photos/250?image=${giftsFiltered[index].id}',
                                 height: 0.095 * size.width,
                                 width: 0.095 * size.width,
                               ),
                             ),
-                            title: Text(
-                              giftsFiltered[index].name,
-                              style: const TextStyle (
-                                  fontSize: 16,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.w600
-                              ),
-                            ),
-                            subtitle: Text(
-                              giftsFiltered[index].point.toString(),
-                              style: const TextStyle (
-                                  fontSize: 16,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.w600
-                              ),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  giftsFiltered[index].name,
+                                    style: const TextStyle (
+                                        fontSize: 16,
+                                        letterSpacing: 0.1,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                ),
+                                Text(
+                                  "${giftsFiltered[index].price.toString()} points",
+                                  style: const TextStyle (
+                                      fontSize: 16,
+                                      letterSpacing: 0.1,
+                                      fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               setState(() {

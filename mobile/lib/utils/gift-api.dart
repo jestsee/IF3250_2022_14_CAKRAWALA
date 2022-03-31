@@ -21,7 +21,7 @@ class GiftAPI{
 
   Future<List<Gift>> fetchGift() async {
     var header = await _getHeaders();
-    final response = await http.get(Uri.parse(Constant.URL_BE+"/gift"), headers: header);
+    final response = await http.get(Uri.parse(Constant.URL_BE+"/get-rewards"), headers: header);
     var bodyresp = json.decode(response.body) as Map<String, dynamic>;
 
     if(response.statusCode == 200){
