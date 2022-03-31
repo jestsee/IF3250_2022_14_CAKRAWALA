@@ -140,6 +140,9 @@ func ExchangeReward(c *gin.Context) {
 		if e := tx.Exec("UPDATE rewards SET stock = ? WHERE id = ?", reward.Stock, reward.ID).Error; e != nil {
 			return e
 		}
+		if e := tx.Exec("UPDATE users SET point = ? WHERE id = ?", user.Point, user.ID).Error; e != nil {
+			return e
+		}
 		return nil
 	})
 
