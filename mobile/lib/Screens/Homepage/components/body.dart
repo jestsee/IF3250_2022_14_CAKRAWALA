@@ -2,12 +2,34 @@ import 'dart:ui';
 
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
+import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/components/custom_app_bar.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/constants.dart';
 
-class Body extends StatelessWidget {
+import '../homepage_screen.dart';
+
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int _currentIndex = 0;
+
+  void onItemTapped(int index) {
+    if (index != 2) {
+      setState(() {
+        _currentIndex = index;
+      });
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => RedeemGift()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +58,7 @@ class Body extends StatelessWidget {
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
@@ -63,6 +85,7 @@ class Body extends StatelessWidget {
               backgroundColor: Colors.black
             ),
         ],
+        onTap: onItemTapped,
       ),
     );
   }
