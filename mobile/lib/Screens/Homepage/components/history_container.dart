@@ -13,6 +13,7 @@ class HistoryContainer extends StatelessWidget {
 
     return Center(
       child: Container(
+        height: 220,
         margin: const EdgeInsets.symmetric(vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         width: size.width * 0.9,

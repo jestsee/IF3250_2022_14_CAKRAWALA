@@ -5,8 +5,6 @@ import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:cakrawala_mobile/utils/custom-http-response.dart';
-
 class HistoryAPI {
   static Future<Map<String, String>> _getHeaders() async {
     var token = await SharedPreferenceHandler.getHandler();
@@ -24,23 +22,43 @@ class HistoryAPI {
         headers: header);
     var bodyResp = json.decode(response.body);
 
-    print(bodyResp["data"]);
+    // print(bodyResp["data"]);
 
     List<TransactionHistory> transHistory = [];
+    late String type;
 
     if (response.statusCode == 200) {
       for (var t in bodyResp["data"]) {
-        // TODO
-        // BUAT IF UNTUK NENTUIN TRANSACTION_TYPE
-        String type = "topup";
+        // Classify transaction type
+        if (t["MerchantID"] == null && t["FriendID"] == null) {
+          type = "Topup";
+        } else if (t["MerchantID"] != null && t["FriendID"] == null) {
+          type = "Pay Merchant";
+        } else if (t["MerchantID"] == null && t["FriendID"] != null) {
+          type = "Transfer";
+        } else {
+          type = "Error";
+        }
+
+        print("The transaction type is " + type.toUpperCase());
         String destID = t["UserID"].toString();
         String nominal = t["Amount"].toString();
-        TransactionHistory temp = TransactionHistory(type, destID, nominal);
-        transHistory.add(temp);
-      }
+        String createdAt = t["createdAt"].toString();
 
-      TransactionHistory trans = TransactionHistory("topup", "100", "100000");
-      transHistory.add(trans);
+        // parsing createdAt
+        List<String> timestamp = createdAt.split('T');
+        String date = timestamp[0];
+        String time = timestamp[1].split('.')[0];
+        createdAt = date + " " + time;
+
+        TransactionHistory trans =
+            TransactionHistory(type, destID, nominal, createdAt);
+        transHistory.add(trans);
+
+        // print(createdAt.split('T')[0]);
+
+        print(createdAt);
+      }
     }
 
     return transHistory;
@@ -48,6 +66,7 @@ class HistoryAPI {
 }
 
 class TransactionHistory {
-  final String transactionType, destID, nominal;
-  TransactionHistory(this.transactionType, this.destID, this.nominal);
+  final String transactionType, destID, nominal, createdAt;
+  TransactionHistory(
+      this.transactionType, this.destID, this.nominal, this.createdAt);
 }
