@@ -21,3 +21,4 @@ type Transaksi struct {
 	FriendID *uint `gorm:"column:friend_id"`
 	Friend   *User
 }
+

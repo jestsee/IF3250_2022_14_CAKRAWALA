@@ -2,16 +2,40 @@ import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_co
 import 'package:cakrawala_mobile/Screens/Homepage/components/history_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/history.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
+import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/components/custom_app_bar.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/history-api.dart';
 
-class Body extends StatelessWidget {
+import '../homepage_screen.dart';
+
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int _currentIndex = 0;
+
+  void onItemTapped(int index) {
+    if (index != 2) {
+      setState(() {
+        _currentIndex = index;
+      });
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => RedeemGift()),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: deepSkyBlue,
       appBar: const CustomAppBar(text: "Home"),
@@ -37,23 +61,23 @@ class Body extends StatelessWidget {
         ),
         const History(),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Scan',
-              backgroundColor: Colors.black),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Account',
-              backgroundColor: Colors.black),
+      bottomNavigationBar: FloatingNavbar(
+        iconSize: 30,
+        borderRadius: 24,
+        selectedBackgroundColor: null,
+        selectedItemColor: white,
+        unselectedItemColor: Colors.white70,
+        width: 0.9 * size.width,
+        margin: const EdgeInsets.symmetric(vertical: 34),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        currentIndex: _currentIndex,
+        items: [
+          FloatingNavbarItem(icon: Icons.home_outlined),
+          FloatingNavbarItem(icon: Icons.camera),
+          FloatingNavbarItem(icon: Icons.card_giftcard_rounded),
+          FloatingNavbarItem(icon: Icons.person)
         ],
+        onTap: onItemTapped,
       ),
     );
   }

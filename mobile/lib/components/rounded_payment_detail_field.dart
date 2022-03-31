@@ -14,8 +14,8 @@ class RoundedPaymentDetail extends StatelessWidget {
         Key? key,
         required this.nama,
         required this.nominal,
-        required this.points,
-        this.amount = false
+        this.amount = false,
+        this.points = -1
       }
   ) : super(key: key);
 
@@ -37,6 +37,28 @@ class RoundedPaymentDetail extends StatelessWidget {
         color: Color(0xFF565656),
       );
     }
+  }
+
+  Widget pointAttr(double h) {
+    if(points != -1) {
+      return Column(
+        children: [
+          TextAccountTemplate(
+            text: "You received $points points",
+            align: TextAlign.center,
+            weight: FontWeight.w400,
+            size: 17,
+            color: const Color(0xFF565656),
+          ),
+          SizedBox(
+            height: .02 * h,
+          )
+        ],
+      );
+    }
+    return SizedBox(
+        height: .01 * h
+    );
   }
 
 
@@ -86,16 +108,7 @@ class RoundedPaymentDetail extends StatelessWidget {
             SizedBox(
               height: .005 * size.height,
             ),
-            TextAccountTemplate(
-              text: "You received $points points",
-              align: TextAlign.center,
-              weight: FontWeight.w400,
-              size: 17,
-              color: const Color(0xFF565656),
-            ),
-            SizedBox(
-              height: .02 * size.height,
-            ),
+           pointAttr(size.height),
           ],
         ),
       ),

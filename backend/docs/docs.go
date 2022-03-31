@@ -4,7 +4,7 @@ package docs
 
 import "github.com/swaggo/swag"
 
-const docTemplate_swagger = `{
+const docTemplate = `{
     "schemes": {{ marshal .Schemes }},
     "swagger": "2.0",
     "info": {
@@ -23,6 +23,40 @@ const docTemplate_swagger = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/add-reward": {
+            "post": {
+                "description": "Add New Reward.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "AddReward.",
+                "parameters": [
+                    {
+                        "description": "Inputan yang benar",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transactions.AddRewardBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/merchant": {
             "get": {
                 "description": "Show All Merchants for Admin.",
@@ -124,6 +158,63 @@ const docTemplate_swagger = `{
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/exchange-reward": {
+            "post": {
+                "description": "Exchange Reward with Points.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "ExchangeReward.",
+                "parameters": [
+                    {
+                        "description": "Inputan yang benar",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/transactions.ExchangeRewardBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/get-rewards": {
+            "get": {
+                "description": "Show All Rewards for User.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "authentication"
+                ],
+                "summary": "GetAllRewards.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -360,10 +451,35 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "transactions.AddRewardBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
         "transactions.BonusCheckerBody": {
             "type": "object",
             "properties": {
                 "amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "transactions.ExchangeRewardBody": {
+            "type": "object",
+            "properties": {
+                "qty": {
+                    "type": "integer"
+                },
+                "reward_id": {
                     "type": "integer"
                 }
             }
@@ -396,8 +512,8 @@ const docTemplate_swagger = `{
     }
 }`
 
-// SwaggerInfo_swagger holds exported Swagger Info so clients can modify it
-var SwaggerInfo_swagger = &swag.Spec{
+// SwaggerInfo holds exported Swagger Info so clients can modify it
+var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
 	BasePath:         "/",
@@ -405,9 +521,9 @@ var SwaggerInfo_swagger = &swag.Spec{
 	Title:            "Cakrawala API",
 	Description:      "This is a API for cakrawala.",
 	InfoInstanceName: "swagger",
-	SwaggerTemplate:  docTemplate_swagger,
+	SwaggerTemplate:  docTemplate,
 }
 
 func init() {
-	swag.Register(SwaggerInfo_swagger.InstanceName(), SwaggerInfo_swagger)
+	swag.Register(SwaggerInfo.InstanceName(), SwaggerInfo)
 }

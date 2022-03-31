@@ -1,57 +1,57 @@
 import 'dart:developer';
+import 'package:cakrawala_mobile/Screens/RedeemGift/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
-import 'package:cakrawala_mobile/utils/merchant-api.dart';
+import 'package:cakrawala_mobile/utils/gift-api.dart';
 import 'package:flutter/material.dart';
 
 // global variable
-MerchantAPI mAPI = MerchantAPI();
-Merchant currentMerchant = Merchant.fromJson(
+GiftAPI gAPI = GiftAPI();
+Gift currentGift = Gift.fromJson(
     {
       "id": -1,
       "Name": "Unknown",
-      "Address": "Unknown",
-      "AccountId": "-1",
+      "Price": -1,
+      "Stock" : -1,
     }
 );
 
-class Merchant {
+class Gift {
   int id;
   String name;
-  String alamat;
-  String no_rek;
+  int price;
+  int stock;
 
-  Merchant(this.id, this.name, this.alamat, this.no_rek);
-  factory Merchant.fromJson(dynamic json) {
-    return Merchant(
+  Gift(this.id, this.name, this.price, this.stock);
+  factory Gift.fromJson(dynamic json) {
+    return Gift(
       json['id'] as int,
       json['Name'] as String,
-      json['Address'] as String,
-      json['AccountId'] as String);
+      json['Price'] as int,
+      json['Stock'] as int);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.no_rek}}';
+    return '{${this.id}, ${this.name}, ${this.price}, ${this.stock}}';
   }
 
-  static Merchant getSelectedMerchant() {
-    log('selected:${currentMerchant.name}');
-    return currentMerchant;
+  static Gift getSelectedGift() {
+    log('selected:${currentGift.name}');
+    return currentGift;
   }
 }
 
-class ChooseMerchantTable extends StatefulWidget {
-  ChooseMerchantTable({Key? key}) : super(key: key);
+class ChooseGiftTable extends StatefulWidget {
+  ChooseGiftTable({Key? key}) : super(key: key);
 
   @override
-  State<ChooseMerchantTable> createState() => _ChooseMerchantTableState();
+  State<ChooseGiftTable> createState() => _ChooseGiftTableState();
 }
 
-class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
-  // TODO array of merchants taroh disini
-  late Future<List<Merchant>> _merchants;
-  List<Merchant> merchants = [];
-  List<Merchant> merchantsFiltered = [];
+class _ChooseGiftTableState extends State<ChooseGiftTable> {
+  late Future<List<Gift>> _gifts;
+  List<Gift> gifts = [];
+  List<Gift> giftsFiltered = [];
   TextEditingController controller = TextEditingController();
   String _searchResult = '';
   int selectedIndex = -1;
@@ -59,15 +59,15 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
   @override
   void initState() {
     super.initState();
-    _merchants = loadData();
-    log("merchants initState $merchants");
+    _gifts = loadData();
+    log("gifts initState $gifts");
   }
 
-  Future<List<Merchant>> loadData() async {
-    List<Merchant> data = await mAPI.fetchMerchant();
+  Future<List<Gift>> loadData() async {
+    List<Gift> data = await gAPI.fetchGift();
     setState(() {
-      merchants = data;
-      merchantsFiltered = data;
+      gifts = data;
+      giftsFiltered = data;
     });
     return data;
   }
@@ -89,20 +89,20 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
       child: Column(
         children: [
           SearchBox(
-              hintText: 'Search merchant',
+              hintText: 'Search gifts',
               onChanged: (value) {
                 setState(() {
                   _searchResult = value;
-                  merchantsFiltered = merchants.where((merchant) =>
-                  (merchant.name.toLowerCase().contains(_searchResult))).toList();
+                  giftsFiltered = gifts.where((gift) =>
+                  (gift.name.toLowerCase().contains(_searchResult))).toList();
                 });
               }
           ),
           const SizedBox(
             height: 16,
           ),
-          FutureBuilder<List<Merchant>>(
-            future: _merchants,
+          FutureBuilder<List<Gift>>(
+            future: _gifts,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Expanded(
@@ -111,7 +111,7 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                           bottom: handleOverflow(context)
                       ),
                       child: ListView.builder(
-                        itemCount: merchantsFiltered.length,
+                        itemCount: giftsFiltered.length,
                         itemBuilder: (context, index) => Card(
                           shape: RoundedRectangleBorder (
                               borderRadius: BorderRadius.circular(10)
@@ -124,26 +124,39 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                               borderRadius: BorderRadius.circular(10),
                               child:
                               Image.network(
-                                // TODO penyimpanan picture-nya nanti gimana ya?
-                                'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
+                                // TODO
+                                'https://picsum.photos/250?image=${giftsFiltered[index].id}',
                                 height: 0.095 * size.width,
                                 width: 0.095 * size.width,
                               ),
                             ),
-                            title: Text(
-                              merchantsFiltered[index].name,
-                              style: const TextStyle (
-                                  fontSize: 16,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.w600
-                              ),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  giftsFiltered[index].name,
+                                    style: const TextStyle (
+                                        fontSize: 16,
+                                        letterSpacing: 0.1,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                ),
+                                Text(
+                                  "${giftsFiltered[index].price.toString()} points",
+                                  style: const TextStyle (
+                                      fontSize: 16,
+                                      letterSpacing: 0.1,
+                                      fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               setState(() {
                                 selectedIndex = index;
                                 FocusScope.of(context).requestFocus(new FocusNode());
-                                currentMerchant = merchantsFiltered[index];
-                                log("selected merchant: $currentMerchant");
+                                currentGift = giftsFiltered[index];
+                                log("selected gift: $currentGift");
                               });
                             },
                           ),
