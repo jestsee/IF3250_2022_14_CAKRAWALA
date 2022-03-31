@@ -30,12 +30,8 @@ class GiftAPI{
       return temp;
     } else {
       log("masuk else");
-      // log("masuk <500>");
-      // return CustomHttpResponse(response.statusCode, bodyresp['message'], json.decode('{}') as Map<String, dynamic>);
       throw Exception('Failed to load gift');
     }
-    // log("masuk else future");
-    // return CustomHttpResponse(response.statusCode, response.body, json.decode('{}') as Map<String, dynamic>);
   }
 
   Future<CustomHttpResponse<Map<String, dynamic>>> getGift() async {
