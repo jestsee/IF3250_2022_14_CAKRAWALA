@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   fluttertoast: ^8.0.9
+  floating_bottom_navigation_bar: ^1.5.2
   intl: ^0.15.7
   flutter:
     sdk: flutter
