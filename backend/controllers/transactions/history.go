@@ -1,11 +1,10 @@
 package transactions
 
 import (
+	"net/http"
 	"cakrawala.id/m/models"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
-
 
 // GetTransactionHistoryUser godoc
 // @Summary GetTransactionHistoryUser.
