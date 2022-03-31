@@ -192,6 +192,21 @@ paths:
       summary: ExchangeReward.
       tags:
       - authentication
+  /v1/get-rewards:
+    get:
+      consumes:
+      - '*/*'
+      description: Show All Rewards for User.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: GetAllRewards.
+      tags:
+      - authentication
   /v1/login:
     post:
       consumes:

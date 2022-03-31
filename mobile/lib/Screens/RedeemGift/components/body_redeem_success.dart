@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 
 class BodyRedeemSuccessful extends StatelessWidget {
   final int nominal;
-  final int points;
   final String namaGift;
   final String time;
   const BodyRedeemSuccessful({
     Key? key,
     required this.nominal,
-    required this.points,
     required this.namaGift,
     required this.time,
   }) : super(key: key);
@@ -43,7 +41,6 @@ class BodyRedeemSuccessful extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => InvoiceScreen(
                     namaGift: namaGift,
                     nominal: nominal,
-                    points: points,
                     time: time,
                   )
                 )

@@ -156,3 +156,27 @@ func ExchangeReward(c *gin.Context) {
 		_ = c.AbortWithError(500, err)
 	}
 }
+
+// GetAllRewards godoc
+// @Summary GetAllRewards.
+// @Description Show All Rewards for User.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Success 200 {string} GetAllRewards
+// @Router /v1/get-rewards [get]
+func GetAllRewards(c *gin.Context) {
+	var rewards []models.Reward
+	err := models.DB.Find(&rewards).Error
+
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	data := rewards
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get all merchant",
+		"data":    data,
+	})
+}
