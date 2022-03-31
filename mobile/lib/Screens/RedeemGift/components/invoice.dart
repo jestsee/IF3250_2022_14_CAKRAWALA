@@ -6,13 +6,11 @@ import '../../../constants.dart';
 
 class InvoiceScreen extends StatelessWidget {
   final int nominal;
-  final int points;
   final String namaGift;
   final String time;
   const InvoiceScreen({
     Key? key,
     required this.nominal,
-    required this.points,
     required this.namaGift,
     required this.time
   }) : super(key: key);
@@ -25,7 +23,6 @@ class InvoiceScreen extends StatelessWidget {
       body: BodyInvoice(
         namaGift: namaGift,
         nominal: nominal,
-        points: points,
         time: time,
       ),
     );

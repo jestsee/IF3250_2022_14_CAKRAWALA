@@ -104,32 +104,14 @@ class Product {
 
 class BodyInvoice extends StatelessWidget {
   final int nominal;
-  final int points;
   final String namaGift;
   final String time;
   const BodyInvoice({
     Key? key,
     required this.nominal,
-    required this.points,
     required this.namaGift,
     required this.time,
   }) : super(key: key);
-  
-//  List<Widget> showProduct() {
-//     List<Product> list = DummyDataHadiah().data.map((e) =>
-//       Product.fromJson(e)).toList();
-//     List<Widget> widgets = List.generate(list.length, (index) =>
-//         ProductsDetail(
-//           productName: list[index].productName,
-//           price: list[index].price.toDouble(),
-//         ));
-//     widgets.insert(0, Row(
-//       children: const <Widget>[
-//         InvoiceText(text: "Products"),
-//       ],
-//     ));
-//     return widgets;
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -140,12 +122,10 @@ class BodyInvoice extends StatelessWidget {
         RoundedPaymentDetail(
             nama: "AMOUNT",
             nominal: nominal,
-            points: points,
             amount: true,
         ),
         SizedBox(height: .05 * size.width),
-        WhiteInvoiceContainer(title: "Gift", subtitle: namaGift),
-        WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"), // TODO id invoice
+        WhiteInvoiceContainer(title: "Details", subtitle: namaGift),
         WhiteInvoiceContainer(title: "Time", subtitle: time), // TODO waktu transaksi
         ButtonConfirmButton(text: "Back To Home", press: () {
           Navigator.push(

@@ -124,20 +124,16 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
             press: () {
               // pop up dialog
               showConfirmDialog(context, () async {
-                int points = await PointsAPI.payCalculatePoints(amount);
-                log("points: $points");
-                var resp = await RedeemAPI.redeemGifts(
-                    widget.choosenGift.id, amount, widget.choosenGift.name, widget.choosenGift.stock.toString());
+                var resp = await RedeemAPI.redeemGifts(widget.choosenGift.id);
                 if(resp.data) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RedeemSuccessfulScreen(
                         namaGift: widget.choosenGift.name,
-                        nominal: amount,
-                        points: points,
+                        nominal: widget.choosenGift.price,
                         time: getCurrentTime(),
                       )
-                      )
+                    )
                   );
                   // reset current merchant
                   currentGift = Gift(-1, "Unknown", -1, -1);

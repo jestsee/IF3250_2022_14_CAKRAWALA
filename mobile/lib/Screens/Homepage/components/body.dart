@@ -52,6 +52,12 @@ class Body extends StatelessWidget {
             ),
 
           BottomNavigationBarItem(
+              icon: Icon(Icons.card_giftcard_rounded),
+              label: 'Redeem',
+              backgroundColor: Colors.black,
+          ),
+
+          BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Account',
               backgroundColor: Colors.black
