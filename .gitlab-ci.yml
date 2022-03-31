@@ -38,11 +38,11 @@ deploy:
   script:
     - echo "coming soon ya gan"
 
-mobile:
-  stage: mobile-build
-  image: "cirrusci/flutter:1.22.5"
-  script:
-    - cd mobile
-    - flutter packages get
-    - flutter doctor
-    - flutter build apk
+# mobile:
+#   stage: mobile-build
+#   image: "cirrusci/flutter:1.22.5"
+#   script:
+#     - cd mobile
+#     - flutter packages get
+#     - flutter doctor
+#     - flutter build apk
