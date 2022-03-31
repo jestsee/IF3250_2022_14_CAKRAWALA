@@ -4,6 +4,7 @@ import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_co
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/components/custom_app_bar.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/constants.dart';
 
@@ -57,33 +58,17 @@ class _BodyState extends State<Body> {
           ],
         ),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: FloatingNavbar(
+        iconSize: 26,
+        borderRadius: 24,
+        margin: const EdgeInsets.symmetric(horizontal: 22, vertical: 34),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.black
-            ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Scan',
-              backgroundColor: Colors.black
-            ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.card_giftcard_rounded),
-              label: 'Redeem',
-              backgroundColor: Colors.black,
-          ),
-
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Account',
-              backgroundColor: Colors.black
-            ),
+        items: [
+          FloatingNavbarItem(icon: Icons.home_outlined),
+          FloatingNavbarItem(icon: Icons.camera),
+          FloatingNavbarItem(icon: Icons.card_giftcard_rounded),
+          FloatingNavbarItem(icon: Icons.person)
         ],
         onTap: onItemTapped,
       ),
