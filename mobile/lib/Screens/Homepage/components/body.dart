@@ -34,6 +34,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: deepSkyBlue,
       appBar: const CustomAppBar(text: "Home"),
@@ -59,9 +60,13 @@ class _BodyState extends State<Body> {
         ),
       ]),
       bottomNavigationBar: FloatingNavbar(
-        iconSize: 26,
+        iconSize: 30,
         borderRadius: 24,
-        margin: const EdgeInsets.symmetric(horizontal: 22, vertical: 34),
+        selectedBackgroundColor: null,
+        selectedItemColor: white,
+        unselectedItemColor: Colors.white70,
+        width: 0.9 * size.width,
+        margin: const EdgeInsets.symmetric(vertical: 34),
         padding: const EdgeInsets.symmetric(vertical: 12),
         currentIndex: _currentIndex,
         items: [
