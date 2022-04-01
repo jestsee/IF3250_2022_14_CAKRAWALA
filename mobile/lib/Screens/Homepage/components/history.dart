@@ -1,4 +1,3 @@
-import 'package:cakrawala_mobile/constants.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/utils/history-api.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/history_container.dart';
@@ -29,14 +28,6 @@ class _HistoryState extends State<History> {
 
   DataTable _createDataTable() {
     return DataTable(
-      headingRowColor: MaterialStateProperty.all(null),
-      headingRowHeight: 48,
-      dataRowColor: MaterialStateProperty.all(null),
-      dataTextStyle: const TextStyle(color: white),
-      headingTextStyle: const TextStyle(color: white, fontWeight: FontWeight.w600),
-      dividerThickness: .8,
-      horizontalMargin: 8,
-      columnSpacing: 35,
       columns: _createColumns(),
       rows: _createRows(),
     );
@@ -47,7 +38,7 @@ class _HistoryState extends State<History> {
       const DataColumn(label: Text('Type')),
       const DataColumn(label: Text('Dest ID')),
       const DataColumn(label: Text('Amount')),
-      const DataColumn(label: Text('Time'))
+      const DataColumn(label: Text('Created At'))
     ];
   }
 
@@ -80,12 +71,7 @@ class _HistoryState extends State<History> {
             scrollDirection: Axis.horizontal,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Theme(
-                data: Theme.of(context).copyWith (
-                    dividerColor: Colors.white70
-                ),
-                child: _createDataTable()
-              ),
+              child: _createDataTable(),
             ),
           )
         ],
