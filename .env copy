@@ -1,0 +1,6 @@
+DBHOST=localhost
+DBPORT=5432
+DBUSN=postgres
+DBPASS=1
+DBNAME=cokro
+JWTKEY=dxio8b3xuiiynxmu
