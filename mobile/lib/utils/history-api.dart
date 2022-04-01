@@ -5,6 +5,8 @@ import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
 
+import '../components/number_formatter.dart';
+
 class HistoryAPI {
   static Future<Map<String, String>> _getHeaders() async {
     var token = await SharedPreferenceHandler.getHandler();
@@ -40,9 +42,11 @@ class HistoryAPI {
           type = "Error";
         }
 
+        var formatter = NumberFormatter();
+
         print("The transaction type is " + type.toUpperCase());
         String destID = t["UserID"].toString();
-        String nominal = t["Amount"].toString();
+        String nominal = formatter.formatNumber(t["Amount"].toString());
         String createdAt = t["createdAt"].toString();
 
         // parsing createdAt
