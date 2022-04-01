@@ -43,7 +43,6 @@ class _BodyState extends State<Body> {
         const WhiteFieldContainer(
           child: WalletInfo(),
         ),
-        SizedBox(height: .017 * size.height,),
         Row(
           children: const [
             Padding(
