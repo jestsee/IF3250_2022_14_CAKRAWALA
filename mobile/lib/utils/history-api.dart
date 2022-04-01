@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cakrawala_mobile/components/number_formatter.dart';
 import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
@@ -40,9 +41,11 @@ class HistoryAPI {
           type = "Error";
         }
 
+        var formatter = NumberFormatter();
+
         print("The transaction type is " + type.toUpperCase());
         String destID = t["UserID"].toString();
-        String nominal = t["Amount"].toString();
+        String nominal = formatter.formatNumber(t["Amount"].toString());
         String createdAt = t["createdAt"].toString();
 
         // parsing createdAt
