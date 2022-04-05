@@ -24,12 +24,12 @@ const sidebarConfig = [
   {
     title: 'merchant',
     path: '/dashboard/merchant',
-    icon: getIcon('akar-icons:circle-chevron-up-fill')
+    icon: getIcon('bxs:store')
   },
   {
     title: 'hadiah',
     path: '/dashboard/hadiah',
-    icon: getIcon('eva:shopping-bag-fill')
+    icon: getIcon('bxs:gift')
   },
   {
     title: 'blog',
