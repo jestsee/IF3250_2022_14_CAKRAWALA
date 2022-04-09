@@ -1,11 +1,12 @@
 package transactions
 
 import (
+	"net/http"
+
 	"cakrawala.id/m/models"
 	"cakrawala.id/m/service"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"net/http"
 )
 
 type TopUpBody struct {
@@ -38,6 +39,7 @@ func TopUpRequest(c *gin.Context) {
 		MerchantID: nil,
 		FriendID:   nil,
 		Status:     "pending",
+		User:       user,
 	}
 	e := models.DB.Create(&transaksi).Error
 	if e != nil {
