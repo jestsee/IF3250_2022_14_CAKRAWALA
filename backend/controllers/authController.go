@@ -195,3 +195,21 @@ func UserInfo(c *gin.Context) {
 		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
 	}
 }
+
+// GetUserNameById godoc
+// @Summary GetUserNameById.
+// @Description GetUserById.
+// @Tags authentication
+// @Accept */*
+// @Produce json
+// @Success 200 {string} GetUserNameById
+// @Router /v1/self [get]
+func GetUserNameById(c *gin.Context) {
+	var user models.User
+	err := models.DB.Where("id = ?", c.Param("id")).First(&user).Error
+	if err == nil {
+		c.JSON(http.StatusOK, user)
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
+	}
+}

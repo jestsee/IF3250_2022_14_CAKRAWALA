@@ -6,6 +6,7 @@ require (
 	github.com/0xAX/notificator v0.0.0-20220220101646-ee9b8921e557 // indirect
 	github.com/codegangsta/envy v0.0.0-20141216192214-4b78388c8ce4 // indirect
 	github.com/codegangsta/gin v0.0.0-20211113050330-71f90109db02 // indirect
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-pg/pg/v10 v10.10.6 // indirect
 	github.com/go-playground/validator/v10 v10.10.1 // indirect
