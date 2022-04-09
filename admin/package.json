@@ -8,9 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx ./src",
-    "lint:fix": "eslint --fix --ext .js,.jsx ./src"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +43,7 @@
     "@mui/utils": "^5.4.2",
     "@testing-library/jest-dom": "^5.16.2",
     "apexcharts": "^3.33.1",
+    "axios": "^0.26.1",
     "change-case": "^4.1.2",
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
@@ -65,18 +64,6 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/eslint-parser": "^7.17.0",
-    "eslint": "^8.9.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.4.0",
-    "eslint-config-react-app": "^7.0.0",
-    "eslint-plugin-flowtype": "^8.0.3",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier": "^2.5.1"
+    "@babel/core": "^7.17.5"
   }
 }
