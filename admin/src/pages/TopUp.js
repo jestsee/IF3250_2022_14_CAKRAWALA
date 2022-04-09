@@ -5,6 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { url } from "../api";
+import moment from "moment";
 // material
 import {
   Card,
@@ -32,7 +33,7 @@ import { Box } from "@mui/system";
 
 export default function TopUp() {
   const [page, setPage] = useState(0);
-  const [alert, setAlert] = useState(1);
+  const [alert, setAlert] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(true);
@@ -106,7 +107,11 @@ export default function TopUp() {
                         <TableCell align="center">{row?.Amount}</TableCell>
                         <TableCell align="center">{row?.Exp}</TableCell>
                         <TableCell align="center">{row?.Status}</TableCell>
-                        <TableCell align="center">{row?.createdAt}</TableCell>
+                        <TableCell align="center">
+                          {moment(row?.createdAt).format(
+                            "MMMM Do YYYY, HH:mm:ss"
+                          )}
+                        </TableCell>
                         <TableCell align="center">
                           <Button
                             variant="outlined"
@@ -144,6 +149,8 @@ export default function TopUp() {
           <Collapse in={open}>
             {alert === 1 ? (
               <Alert
+                severity="success"
+                color="info"
                 onClose={() => {
                   setOpen(false);
                   setAlert(0);
@@ -153,6 +160,7 @@ export default function TopUp() {
               </Alert>
             ) : alert === -1 ? (
               <Alert
+                severity="error"
                 onClose={() => {
                   setOpen(false);
                   setAlert(0);
