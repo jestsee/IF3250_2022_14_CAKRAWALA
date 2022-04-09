@@ -1,7 +1,4 @@
-import { filter } from "lodash";
-import { sentenceCase } from "change-case";
 import { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { url } from "../api";
@@ -11,9 +8,7 @@ import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
-  Checkbox,
   TableRow,
   TableBody,
   TableCell,
@@ -27,7 +22,6 @@ import {
 } from "@mui/material";
 // components
 import Page from "../components/Page";
-import Label from "../components/Label";
 import Scrollbar from "../components/Scrollbar";
 import { Box } from "@mui/system";
 
@@ -97,35 +91,46 @@ export default function TopUp() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => (
-                      <TableRow key={row?.id}>
-                        <TableCell align="center">{row?.id}</TableCell>
-                        <TableCell align="center">{row?.UserID}</TableCell>
-                        <TableCell align="center">{row?.User?.Name}</TableCell>
-                        <TableCell align="center">{row?.Amount}</TableCell>
-                        <TableCell align="center">{row?.Exp}</TableCell>
-                        <TableCell align="center">{row?.Status}</TableCell>
-                        <TableCell align="center">
-                          {moment(row?.createdAt).format(
-                            "MMMM Do YYYY, HH:mm:ss"
-                          )}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Button
-                            variant="outlined"
-                            style={{
-                              borderColor: "#00A2ED",
-                              color: "#00A2ED",
-                            }}
-                            onClick={() => approveTopUp(row?.id)}
-                          >
-                            Approve
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                  {rows.length <= 0 ? (
+                    <TableCell colSpan={8} align="center">
+                      Tidak ada top up request
+                    </TableCell>
+                  ) : (
+                    rows
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => (
+                        <TableRow key={row?.id}>
+                          <TableCell align="center">{row?.id}</TableCell>
+                          <TableCell align="center">{row?.UserID}</TableCell>
+                          <TableCell align="center">
+                            {row?.User?.Name}
+                          </TableCell>
+                          <TableCell align="center">{row?.Amount}</TableCell>
+                          <TableCell align="center">{row?.Exp}</TableCell>
+                          <TableCell align="center">{row?.Status}</TableCell>
+                          <TableCell align="center">
+                            {moment(row?.createdAt).format(
+                              "MMMM Do YYYY, HH:mm:ss"
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            <Button
+                              variant="outlined"
+                              style={{
+                                borderColor: "#00A2ED",
+                                color: "#00A2ED",
+                              }}
+                              onClick={() => approveTopUp(row?.id)}
+                            >
+                              Approve
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  )}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
