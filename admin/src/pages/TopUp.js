@@ -140,6 +140,31 @@ export default function TopUp() {
             </TableContainer>
           </Scrollbar>
         </Card>
+        <Box sx={{ mt: 3 }}>
+          <Collapse in={open}>
+            {alert === 1 ? (
+              <Alert
+                onClose={() => {
+                  setOpen(false);
+                  setAlert(0);
+                }}
+              >
+                Top Up Approved
+              </Alert>
+            ) : alert === -1 ? (
+              <Alert
+                onClose={() => {
+                  setOpen(false);
+                  setAlert(0);
+                }}
+              >
+                Top Up Approval Failed
+              </Alert>
+            ) : (
+              <></>
+            )}
+          </Collapse>
+        </Box>
       </Container>
     </Page>
   );
