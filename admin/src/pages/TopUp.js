@@ -32,7 +32,7 @@ import { Box } from "@mui/system";
 
 export default function TopUp() {
   const [page, setPage] = useState(0);
-  const [alert, setAlert] = useState(1);
+  const [alert, setAlert] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(true);
@@ -144,6 +144,8 @@ export default function TopUp() {
           <Collapse in={open}>
             {alert === 1 ? (
               <Alert
+                severity="success"
+                color="info"
                 onClose={() => {
                   setOpen(false);
                   setAlert(0);
@@ -153,6 +155,7 @@ export default function TopUp() {
               </Alert>
             ) : alert === -1 ? (
               <Alert
+                severity="error"
                 onClose={() => {
                   setOpen(false);
                   setAlert(0);
