@@ -5,6 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { url } from "../api";
+import moment from "moment";
 // material
 import {
   Card,
@@ -106,7 +107,11 @@ export default function TopUp() {
                         <TableCell align="center">{row?.Amount}</TableCell>
                         <TableCell align="center">{row?.Exp}</TableCell>
                         <TableCell align="center">{row?.Status}</TableCell>
-                        <TableCell align="center">{row?.createdAt}</TableCell>
+                        <TableCell align="center">
+                          {moment(row?.createdAt).format(
+                            "MMMM Do YYYY, HH:mm:ss"
+                          )}
+                        </TableCell>
                         <TableCell align="center">
                           <Button
                             variant="outlined"
