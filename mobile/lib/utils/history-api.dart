@@ -20,7 +20,7 @@ class HistoryAPI {
   static Future<List<TransactionHistory>> getHistoryAdmin() async {
     var header = await _getHeaders();
     var response = await http.get(
-        Uri.parse(Constant.URL_ADMIN + "/transaction-history-admin"),
+        Uri.parse(Constant.URL_BE + "/transaction-history"),
         headers: header);
     var bodyResp = json.decode(response.body);
 

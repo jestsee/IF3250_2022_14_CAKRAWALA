@@ -9,10 +9,10 @@ class ChooseTransferScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: deepSkyBlue,
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(text: "Choose Account"),
+      // resizeToAvoidBottomInset: false,
+      appBar: CustomAppBar(text: "Transfer"),
       body: BodyChoose()
     );
   }
