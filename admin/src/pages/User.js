@@ -28,7 +28,7 @@ import { Box } from "@mui/system";
 
 export default function User() {
   const [page, setPage] = useState(0);
-  const [alert, setAlert] = useState(0);
+  const [alertSignal, setAlert] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(true);
@@ -41,11 +41,30 @@ export default function User() {
         .catch(e=>setAlert(-1))
   }
 
+  const deleteUser = async (uid, email) => {
+    if(!uid) return
+
+    const conf = window.confirm("apakah anda yakin ingin hapus akun "+email)
+    if(conf){
+      axios.delete(url + `/admin/user/${uid}`)
+          .then(r=>{
+            if(r.status === 200){
+              window.alert("berhasil hapus akun")
+              window.location.reload()
+            }else{
+              window.alert("gagal hapus akun")
+            }
+          })
+          .catch(e=>window.alert("terjadi kesalahan ketika hapus akun"))
+    }
+  }
+
   useEffect(async () => {
     await getAllUser()
   }, []);
 
   const handleChangePage = (event, newPage) => {
+    console.log("npage", newPage)
     setPage(newPage);
   };
 
@@ -93,10 +112,6 @@ export default function User() {
                     </TableCell>
                   ) : (
                     rows
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
                       .map((row, index) => (
                         <TableRow key={row?.id}>
                           <TableCell align="center">{row?.id}</TableCell>
@@ -130,7 +145,7 @@ export default function User() {
                                   borderColor: "#b50531",
                                   color: "#b50531",
                                 }}
-                                onClick={() => {}}
+                                onClick={() => { deleteUser(row?.id, row?.email) }}
                             >
                               Delete
                             </Button>
@@ -145,21 +160,21 @@ export default function User() {
                   )}
                 </TableBody>
               </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
+              {/*<TablePagination*/}
+              {/*  rowsPerPageOptions={[5, 10, 25]}*/}
+              {/*  component="div"*/}
+              {/*  count={rows.length}*/}
+              {/*  rowsPerPage={rowsPerPage}*/}
+              {/*  page={page}*/}
+              {/*  onChangePage={handleChangePage}*/}
+              {/*  onChangeRowsPerPage={handleChangeRowsPerPage}*/}
+              {/*/>*/}
             </TableContainer>
           </Scrollbar>
         </Card>
         <Box sx={{ mt: 3 }}>
           <Collapse in={open}>
-            {alert === 1 ? (
+            {alertSignal === 1 ? (
               <Alert
                 severity="success"
                 color="info"
@@ -170,7 +185,7 @@ export default function User() {
               >
                 Top Up Approved
               </Alert>
-            ) : alert === -1 ? (
+            ) : alertSignal === -1 ? (
               <Alert
                 severity="error"
                 onClose={() => {
