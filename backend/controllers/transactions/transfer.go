@@ -94,3 +94,34 @@ func Transfer(c *gin.Context)  {
 		"message": "Transfer berhasil",
 	})
 }
+
+type PhoneNumberBody struct {
+	Phone 		string 	`json:"phone"`
+}
+
+func IsPhoneNumberValid (c *gin.Context) {
+	var body PhoneNumberBody
+	var users[] models.User;
+
+	if err := c.BindJSON(&body); err != nil {
+		c.AbortWithError(400, err)
+		return
+	}
+
+	print(body.Phone)
+
+	models.DB.Where("phone = ?", body.Phone).Find(&users)
+	
+	if len(users) == 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Pengguna dengan nomor tersebut tidak ditemukan",
+		})
+		return
+	}
+
+	data := users
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get all users by phone number",
+		"data":    data,
+	})
+}

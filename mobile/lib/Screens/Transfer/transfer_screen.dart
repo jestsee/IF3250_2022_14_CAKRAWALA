@@ -14,7 +14,7 @@ class TransferScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: deepSkyBlue,
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(text: "Transfer"),
+      appBar: const CustomAppBar(text: "Transfer"),
       body: Body(choosenUser: choosenUser)
     );
   }
