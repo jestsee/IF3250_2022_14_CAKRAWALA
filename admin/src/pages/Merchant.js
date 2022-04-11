@@ -48,7 +48,7 @@ export default function Merchant() {
   useEffect(() => {
     getAllTopUpRequest();
     console.log(rows);
-  }, [rows]);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
