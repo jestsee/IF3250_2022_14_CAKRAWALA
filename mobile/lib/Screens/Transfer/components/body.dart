@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
-import 'package:cakrawala_mobile/components/choose_account_table.dart';
+// import 'package:cakrawala_mobile/components/choose_account_table2.dart';
 import 'package:cakrawala_mobile/components/circle_profile_icon.dart';
 import 'package:cakrawala_mobile/components/enter_amount_input.dart';
 import 'package:cakrawala_mobile/components/user_profile_container.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import "package:flutter/material.dart";
+
+import '../../../components/choose_account_table1.dart';
 
 class Body extends StatelessWidget {
   final User choosenUser;
