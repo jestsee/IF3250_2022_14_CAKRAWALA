@@ -33,22 +33,17 @@ export default function User() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(true);
 
-  const getAllTopUpRequest = async () => {
-    const response = await axios.get(url + "/admin/top-up/request");
-    setRows(response.data.data);
-  };
+  const getAllUser = async () => {
+    axios.get(url + "/admin/user")
+        .then(r=>{
+          setRows(r.data.data)
+        })
+        .catch(e=>setAlert(-1))
+  }
 
-  const approveTopUp = async (id) => {
-    axios
-      .patch(url + `/admin/top-up/${id}`)
-      .then((res) => setAlert(1))
-      .catch((err) => setAlert(-1));
-  };
-
-  useEffect(() => {
-    getAllTopUpRequest();
-    console.log(rows);
-  }, [rows]);
+  useEffect(async () => {
+    await getAllUser()
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -81,13 +76,13 @@ export default function User() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">ID Transaksi</TableCell>
                     <TableCell align="center">ID User</TableCell>
                     <TableCell align="center">Nama</TableCell>
-                    <TableCell align="center">Amount</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Saldo</TableCell>
                     <TableCell align="center">EXP</TableCell>
-                    <TableCell align="center">Status</TableCell>
-                    <TableCell align="center">Tanggal Request</TableCell>
+                    <TableCell align="center">Points</TableCell>
+                    <TableCell align="center">Tanggal Daftar</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -105,13 +100,13 @@ export default function User() {
                       .map((row, index) => (
                         <TableRow key={row?.id}>
                           <TableCell align="center">{row?.id}</TableCell>
-                          <TableCell align="center">{row?.UserID}</TableCell>
+                          <TableCell align="center">{row?.Name}</TableCell>
                           <TableCell align="center">
-                            {row?.User?.Name}
+                            {row?.email}
                           </TableCell>
-                          <TableCell align="center">{row?.Amount}</TableCell>
-                          <TableCell align="center">{row?.Exp}</TableCell>
-                          <TableCell align="center">{row?.Status}</TableCell>
+                          <TableCell align="center">{row?.balance}</TableCell>
+                          <TableCell align="center">{row?.exp}</TableCell>
+                          <TableCell align="center">{row?.point}</TableCell>
                           <TableCell align="center">
                             {moment(row?.createdAt).format(
                               "MMMM Do YYYY, HH:mm:ss"
@@ -119,14 +114,25 @@ export default function User() {
                           </TableCell>
                           <TableCell align="center">
                             <Button
-                              variant="outlined"
-                              style={{
-                                borderColor: "#00A2ED",
-                                color: "#00A2ED",
-                              }}
-                              onClick={() => approveTopUp(row?.id)}
+                                variant="outlined"
+                                style={{
+                                  borderColor: "#00A2ED",
+                                  color: "#00A2ED",
+                                  marginRight: "4px"
+                                }}
+                                onClick={() => {}}
                             >
-                              Approve
+                              Details
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                style={{
+                                  borderColor: "#b50531",
+                                  color: "#b50531",
+                                }}
+                                onClick={() => {}}
+                            >
+                              Delete
                             </Button>
                           </TableCell>
                         </TableRow>
