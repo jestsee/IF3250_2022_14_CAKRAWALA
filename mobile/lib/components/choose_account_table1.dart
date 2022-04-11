@@ -3,8 +3,6 @@ import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/utils/user-api.dart';
 import 'package:flutter/material.dart';
 
-import 'choose_account_table.dart';
-
 // global variable
 UserAPI gAPI = UserAPI();
 User currentUser = User.fromJson(
@@ -17,8 +15,40 @@ User currentUser = User.fromJson(
     }
 );
 
+class User {
+  int id;
+  String name;
+  String phone;
+  int exp;
+  String email;
+  bool selected = false;
+
+  User(this.id, this.name, this.phone, this.exp, this.email);
+  factory User.fromJson(dynamic json) {
+    return User(
+        json['id'] as int,
+        json['Name'] as String,
+        json['Phone'] as String,
+        json['exp'] as int,
+        json['email'] as String)
+    ;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.email}}';
+  }
+
+  static User getSelectedUser() {
+    log('selected:${currentUser.name}');
+    return currentUser;
+  }
+}
+
+
 class ChooseAccountTable extends StatefulWidget {
-  ChooseAccountTable({Key? key}) : super(key: key);
+  final String phone;
+  ChooseAccountTable({Key? key, required this.phone}) : super(key: key);
 
   @override
   State<ChooseAccountTable> createState() => _ChooseAccountTableState();
@@ -35,12 +65,12 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
   @override
   void initState() {
     super.initState();
-    _users = loadData();
+    _users = loadData(widget.phone);
     log("users initState $users");
   }
 
-  Future<List<User>> loadData() async {
-    List<User> data = await gAPI.fetchUser(123);
+  Future<List<User>> loadData(String phone) async {
+    List<User> data = await gAPI.fetchUser(phone);
     setState(() {
       users = data;
       usersFiltered = data;

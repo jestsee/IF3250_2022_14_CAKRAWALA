@@ -5,15 +5,16 @@ import '../../components/custom_app_bar.dart';
 import '../../constants.dart';
 
 class ChooseTransferScreen extends StatelessWidget {
-  const ChooseTransferScreen({Key? key}) : super(key: key);
+  final String phone;
+  const ChooseTransferScreen({Key? key, required this.phone}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: deepSkyBlue,
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(text: "Transfer"),
-      body: BodyChoose()
+      appBar: const CustomAppBar(text: "Transfer"),
+      body: BodyChoose(phone: phone,)
     );
   }
 }

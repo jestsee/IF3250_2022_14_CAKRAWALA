@@ -1,12 +1,10 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
-import 'package:cakrawala_mobile/components/choose_account_table.dart';
 import "package:flutter/material.dart";
 
 import '../../../components/text_account_template.dart';
 import '../../../constants.dart';
 import '../choose_transfer_screen.dart';
-import '../transfer_screen.dart';
 
 class BodyInput extends StatefulWidget {
   const BodyInput({Key? key}) : super(key: key);
@@ -16,7 +14,7 @@ class BodyInput extends StatefulWidget {
 }
 
 class _BodyInput extends State<BodyInput> {
-  int phoneNumber = -1;
+  String phoneNumber = "";
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +59,7 @@ class _BodyInput extends State<BodyInput> {
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      phoneNumber = int.parse(value); // TODO
+                      phoneNumber = value; // TODO
                     },
                   ),
                 ),
@@ -75,7 +73,7 @@ class _BodyInput extends State<BodyInput> {
         ButtonConfirmButton(
           text: "Continue",
           press: () {
-            if (phoneNumber == -1) {
+            if (phoneNumber == "") {
               Fluttertoast.showToast(
                   msg: "Field cannot be empty",
                   toastLength: Toast.LENGTH_SHORT,
@@ -89,7 +87,7 @@ class _BodyInput extends State<BodyInput> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ChooseTransferScreen()
+                      builder: (context) => ChooseTransferScreen(phone: phoneNumber,)
                   )
               );
             }

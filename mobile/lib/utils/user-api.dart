@@ -6,7 +6,7 @@ import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
 
-import '../components/choose_account_table.dart';
+import '../components/choose_account_table1.dart';
 
 class UserAPI{
   Future<Map<String, String>> _getHeaders() async{
@@ -18,7 +18,7 @@ class UserAPI{
     return map;
   }
 
-  Future<List<User>> fetchUser(int phone) async {
+  Future<List<User>> fetchUser(String phone) async {
     var header = await _getHeaders();
     var data = {
       "phone": phone.toString()

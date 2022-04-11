@@ -6,36 +6,37 @@ import "package:flutter/material.dart";
 import '../transfer_screen.dart';
 
 class BodyChoose extends StatelessWidget {
-  const BodyChoose({Key? key}) : super(key: key);
+  final String phone;
+  const BodyChoose({Key? key, required this.phone}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column (
       children: <Widget>[
-        ChooseAccountTable(),
+        ChooseAccountTable(phone: phone,),
         ButtonConfirmButton(
           text: "Continue to Transfer",
           press: () {
-            // User u = User.getSelectedUser();
-            // if (u.id == -1) {
-            //   Fluttertoast.showToast(
-            //       msg: "Please choose account before continue",
-            //       toastLength: Toast.LENGTH_SHORT,
-            //       gravity: ToastGravity.CENTER,
-            //       timeInSecForIosWeb: 1,
-            //       backgroundColor: Colors.black54,
-            //       textColor: Colors.white,
-            //       fontSize: 14.0
-            //   );
-            // } else {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) =>
-            //             TransferScreen(choosenUser: User.getSelectedUser())
-            //     ),
-            //   );
-            // }
+            User u = User.getSelectedUser();
+            if (u.id == -1) {
+              Fluttertoast.showToast(
+                  msg: "Please choose account before continue",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black54,
+                  textColor: Colors.white,
+                  fontSize: 14.0
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        TransferScreen(choosenUser: User.getSelectedUser())
+                ),
+              );
+            }
           },
         )
       ],

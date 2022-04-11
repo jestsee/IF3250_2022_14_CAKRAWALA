@@ -1,7 +1,7 @@
 import 'package:cakrawala_mobile/Screens/Transfer/components/body.dart';
-import 'package:cakrawala_mobile/components/choose_account_table.dart';
 import "package:flutter/material.dart";
 
+import '../../components/choose_account_table1.dart';
 import '../../components/custom_app_bar.dart';
 import '../../constants.dart';
 
