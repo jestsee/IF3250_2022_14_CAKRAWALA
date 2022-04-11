@@ -4,6 +4,7 @@ import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
 import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
+import 'package:cakrawala_mobile/Screens/Transfer/input_phone_number.dart';
 import 'package:cakrawala_mobile/components/number_formatter.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/userinfo-api.dart';
@@ -118,7 +119,7 @@ class _WalletInfoState extends State<WalletInfo> {
                   color: black,
                   press: () {
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const ChooseTransferScreen()
+                        builder: (context) => const InputPhoneNumberScreen()
                     ));
                   },
                 ),

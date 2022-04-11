@@ -12,7 +12,6 @@ User currentUser = User.fromJson(
       "name": "Unknown",
       "phone": "-1",
       "exp": 0,
-      "address": "Unknown",
       "email" : "Unknown"
     }
 );
@@ -22,25 +21,23 @@ class User {
   String name;
   String phone;
   int exp;
-  String address;
   String email;
   bool selected = false;
 
-  User(this.id, this.name, this.phone, this.exp, this.address, this.email);
+  User(this.id, this.name, this.phone, this.exp, this.email);
   factory User.fromJson(dynamic json) {
     return User(
         json['id'] as int,
-        json['name'] as String,
-        json['phone'] as String,
+        json['Name'] as String,
+        json['Phone'] as String,
         json['exp'] as int,
-        json['address'] as String,
         json['email'] as String)
     ;
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.address}, ${this.email}}';
+    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.email}}';
   }
 
   static User getSelectedUser() {

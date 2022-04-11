@@ -11,7 +11,7 @@ class ChooseTransferScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: deepSkyBlue,
-      // resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(text: "Transfer"),
       body: BodyChoose()
     );

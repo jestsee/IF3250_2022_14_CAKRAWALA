@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
           WhiteFieldContainer(
             child: UserProfileContainer(
               name: choosenUser.name,
-              address: choosenUser.address,
+              address: "",
               email: choosenUser.email
             )
           ),
@@ -45,7 +45,7 @@ class Body extends StatelessWidget {
           ButtonConfirmButton(
             text: "Confirm Transfer",
             press: (){
-              currentUser = User(-1, "Unknown", "-1", -1, "Unknown", "Unknown");
+              currentUser = User(-1, "Unknown", "-1", -1, "Unknown");
             }),
         ],
     );
