@@ -9,9 +9,9 @@ GiftAPI gAPI = GiftAPI();
 Gift currentGift = Gift.fromJson(
     {
       "id": -1,
-      "Name": "Unknown",
-      "Price": -1,
-      "Stock" : -1,
+      "name": "Unknown",
+      "price": -1,
+      "stock" : -1,
     }
 );
 
@@ -25,9 +25,9 @@ class Gift {
   factory Gift.fromJson(dynamic json) {
     return Gift(
       json['id'] as int,
-      json['Name'] as String,
-      json['Price'] as int,
-      json['Stock'] as int);
+      json['name'] as String,
+      json['price'] as int,
+      json['stock'] as int);
   }
 
   @override
