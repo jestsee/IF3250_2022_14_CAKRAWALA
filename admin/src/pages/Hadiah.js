@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
@@ -12,11 +12,15 @@ import {
 } from '../sections/@dashboard/products';
 //
 import PRODUCTS from '../_mocks_/products';
+import axios from "axios";
+import { url } from "../api";
+import {uploadImageFirbase} from "../api/firebase";
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
+  const [prods, setProds] = useState([])
 
   const formik = useFormik({
     initialValues: {
@@ -41,10 +45,48 @@ export default function EcommerceShop() {
     setOpenFilter(false);
   };
 
-  const handleResetFilter = () => {
-    handleSubmit();
-    resetForm();
+  const handleResetFilter = async (name, stock, points, image) => {
+    //Disini buat skema submitnya ya ges ya
+    if(!(stock&&name&&points&&image)){
+      window.alert("semua form harus terisi!")
+      return
+    }
+    await uploadImageFirbase(image)
+        .then(r=>{
+          if(r){
+            return axios.post(url+"/admin/add-reward", {
+              name: name,
+              price: parseInt(points),
+              stock: parseInt(stock),
+              image: r
+            })
+          }
+        })
+        .then(r=>{
+          if(r.status === 200){
+            alert("berhasil upload hadiah baru")
+            window.location.reload()
+          }
+        })
+        .catch(e=>{
+          console.log(e)
+          alert("gagal upload hadiah baru")
+        })
   };
+
+  const getProducts = () => {
+    axios.get(url + "/admin/reward")
+        .then(r=>{
+          if(r.status === 200){
+            setProds(r.data.data)
+          }
+        })
+        .catch(e=>console.log(e))
+  }
+
+  useEffect(()=>{
+    getProducts()
+  }, [])
 
   return (
     <Page title="Dashboard: Hadiah | Cakrawala.id Admin">
@@ -68,12 +110,10 @@ export default function EcommerceShop() {
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
             />
-            <ProductSort />
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
-        <ProductCartWidget />
+        <ProductList products={prods} />
       </Container>
     </Page>
   );
