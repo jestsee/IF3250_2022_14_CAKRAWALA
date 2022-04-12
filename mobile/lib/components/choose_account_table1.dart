@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Transfer/user_not_found.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
+import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/user_not_found.dart';
 import 'package:cakrawala_mobile/utils/user-api.dart';
 import 'package:flutter/material.dart';
@@ -127,35 +128,36 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                             elevation: 3,
                             margin: const EdgeInsets.only(bottom: 15),
                             child: ListTile(
+                              contentPadding: const EdgeInsets.all(15),
                               leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(12),
                                 child:
                                 Image.network(
                                   // TODO
                                   'https://picsum.photos/250?image=${usersFiltered[index].id}',
-                                  height: 0.095 * size.width,
-                                  width: 0.095 * size.width,
+                                  height: 0.128 * size.width,
+                                  width: 0.128 * size.width,
                                 ),
                               ),
-                              title: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   Text(
                                     usersFiltered[index].name,
                                     style: const TextStyle (
-                                        fontSize: 16,
+                                        fontSize: 18,
                                         letterSpacing: 0.1,
-                                        fontWeight: FontWeight.w600
+                                        fontWeight: FontWeight.w800
                                     ),
                                   ),
-                                  Text(
-                                    "${usersFiltered[index].phone.toString()} points",
-                                    style: const TextStyle (
-                                        fontSize: 16,
-                                        letterSpacing: 0.1,
-                                        fontWeight: FontWeight.w600
-                                    ),
-                                  ),
+                                  const SizedBox(height: 5,),
+                                  TextAccountTemplate(
+                                    text: usersFiltered[index].email,
+                                    align: TextAlign.left,
+                                    weight: FontWeight.w500,
+                                    size: 14,
+                                    color: Colors.black54,
+                                  )
                                 ],
                               ),
                               onTap: () {
