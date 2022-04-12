@@ -113,9 +113,10 @@ func IsPhoneNumberValid (c *gin.Context) {
 	models.DB.Where("phone = ?", body.Phone).Find(&users)
 	
 	if len(users) == 0 {
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(400, gin.H{
 			"message": "Pengguna dengan nomor tersebut tidak ditemukan",
 		})
+		c.Abort()
 		return
 	}
 

@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'package:cakrawala_mobile/Screens/Transfer/user_not_found.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
+import 'package:cakrawala_mobile/components/user_not_found.dart';
 import 'package:cakrawala_mobile/utils/user-api.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +46,6 @@ class User {
     return currentUser;
   }
 }
-
 
 class ChooseAccountTable extends StatefulWidget {
   final String phone;
@@ -171,13 +172,21 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                       )
                   );
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                  log('${snapshot.error}');
+                  Future.delayed(Duration.zero, () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (BuildContext context) => const UserNotFoundScreen()),
+                        ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
+                    );
+                  });
+
+                  // return const UserNotFound();
                 }
                 // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               }
           )
-
         ],
       ),
     );

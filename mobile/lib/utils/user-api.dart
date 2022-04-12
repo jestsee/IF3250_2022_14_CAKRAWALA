@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cakrawala_mobile/components/user_not_found.dart';
 import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +40,6 @@ class UserAPI{
       log("masuk 200!! $temp");
       return temp;
     } else {
-      log("masuk else");
       throw Exception('Failed to load user');
     }
   }
