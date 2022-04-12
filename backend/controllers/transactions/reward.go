@@ -12,11 +12,16 @@ type AddRewardBody struct {
 	Name  string `json:"name"`
 	Price uint32 `json:"price"`
 	Stock int16  `json:"stock"`
+	Image string `json:"image"`
 }
 
 type ExchangeRewardBody struct {
 	RewardID uint  `json:"reward_id"`
 	Quantity int16 `json:"qty"`
+}
+
+type UpdateStockBody struct {
+	Stock int16 `json:"stock"`
 }
 
 // AddReward godoc
@@ -39,6 +44,7 @@ func AddReward(c *gin.Context) {
 		Name:  body.Name,
 		Price: body.Price,
 		Stock: body.Stock,
+		Image: body.Image,
 	}
 
 	err := models.DB.Transaction(func(tx *gorm.DB) error {
@@ -179,4 +185,38 @@ func GetAllRewards(c *gin.Context) {
 		"message": "Get all merchant",
 		"data":    data,
 	})
+}
+
+func UpdateStock(c *gin.Context) {
+	var body UpdateStockBody
+	var data models.Reward
+	if err := c.BindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "gagal binding ",
+		})
+		return
+	}
+	if err := models.DB.Where("id = ?", c.Param("id")).First(&data).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "gagal menemukan barang hadiah",
+		})
+		return
+	}
+
+	data.Stock = body.Stock
+	err := models.DB.Transaction(func(tx *gorm.DB) error {
+		if e := tx.Updates(&data).Error; e != nil {
+			return e
+		}
+		return nil
+	})
+
+	if err != nil {
+		c.AbortWithError(500, err)
+	} else {
+		c.JSON(200, gin.H{
+			"message": "berhasil update hadiah gan",
+			"data":    data,
+		})
+	}
 }
