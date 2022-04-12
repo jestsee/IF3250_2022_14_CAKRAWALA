@@ -213,3 +213,34 @@ func GetUserNameById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
 	}
 }
+
+func GetAllUser(c *gin.Context) {
+	var user []models.User
+	if err := models.DB.Where("1 = 1").Find(&user).Error; err != nil {
+		_ = c.AbortWithError(500, err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "berhasil get all user",
+		"data":    user,
+	})
+}
+
+func DeleteUser(c *gin.Context) {
+	var user models.User
+	err := models.DB.Where("id = ?", c.Param("id")).First(&user).Error
+	if err == nil {
+		err = models.DB.Delete(&user).Error
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "gagal delete",
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "berhasil delete",
+			})
+		}
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat user"))
+	}
+}
