@@ -77,11 +77,13 @@ class _BodyState extends State<Body> {
               showConfirmDialog(context, () async {
                 var resp = await TransferAPI.transfer(widget.choosenUser.id, amount);
                 if(resp.data) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Homepage()
-                    )
-                  );
+                  _showDialog(context, "Berhasil", "Transfer sebesar $amount ke ${widget.choosenUser.name} telah berhasil", (){
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (BuildContext context) => const Homepage()),
+                        ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
+                    );
+                  });
                   // reset current user
                   currentUser = User(-1, "Unknown", "-1", -1, "Unknown");
                 } else {
