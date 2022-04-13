@@ -105,7 +105,14 @@ export default function Merchant() {
     })
   };
 
-
+  const approveTopUp = async (id) => {
+    axios
+      .patch(url + `/admin/top-up/${id}`)
+      .then((res) => {
+        alert(`Top up saldo sukses`);
+      })
+      .catch((err) => setAlert(-1));
+  };
 
   useEffect(async () => {
     await getAllMerchant()
