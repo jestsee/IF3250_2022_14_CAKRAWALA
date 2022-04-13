@@ -54,7 +54,7 @@ export default function Hadiah() {
       <IconWrapperStyle>
         <Iconify icon="bxs:gift" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{rows.length}</Typography>
+      <Typography variant="h3">{rows?.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Hadiah
       </Typography>

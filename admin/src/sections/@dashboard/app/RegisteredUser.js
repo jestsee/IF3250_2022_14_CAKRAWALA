@@ -58,9 +58,9 @@ export default function RegisteredUser() {
       <IconWrapperStyle>
         <Iconify icon="eva:people-fill" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{rows.length}</Typography>
+      <Typography variant="h3">{rows?.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Registered User
+        {rows.length > 1 ? "Registered Users" : "Registered User"}
       </Typography>
     </RootStyle>
   );

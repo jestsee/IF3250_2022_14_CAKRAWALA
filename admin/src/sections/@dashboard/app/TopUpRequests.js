@@ -57,9 +57,9 @@ export default function TopUpRequests() {
           height={24}
         />
       </IconWrapperStyle>
-      <Typography variant="h3">{rows.length}</Typography>
+      <Typography variant="h3">{rows?.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Top Up Requests
+        {rows.length > 1 ? "Top Up Requests" : "Top Up Request"}
       </Typography>
     </RootStyle>
   );
