@@ -1,38 +1,36 @@
-import { useFormik } from 'formik';
-import {useEffect, useState} from 'react';
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
 // material
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography } from "@mui/material";
 // components
-import Page from '../components/Page';
+import Page from "../components/Page";
 import {
   ProductSort,
   ProductList,
   ProductCartWidget,
-  ProductFilterSidebar
-} from '../sections/@dashboard/products';
-//
-import PRODUCTS from '../_mocks_/products';
+  ProductFilterSidebar,
+} from "../sections/@dashboard/products";
 import axios from "axios";
 import { url } from "../api";
-import {uploadImageFirbase} from "../api/firebase";
+import { uploadImageFirbase } from "../api/firebase";
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
-  const [prods, setProds] = useState([])
+  const [prods, setProds] = useState([]);
 
   const formik = useFormik({
     initialValues: {
-      gender: '',
-      category: '',
-      colors: '',
-      priceRange: '',
-      rating: ''
+      gender: "",
+      category: "",
+      colors: "",
+      priceRange: "",
+      rating: "",
     },
     onSubmit: () => {
       setOpenFilter(false);
-    }
+    },
   });
 
   const { resetForm, handleSubmit } = formik;
@@ -47,46 +45,47 @@ export default function EcommerceShop() {
 
   const handleResetFilter = async (name, stock, points, image) => {
     //Disini buat skema submitnya ya ges ya
-    if(!(stock&&name&&points&&image)){
-      window.alert("semua form harus terisi!")
-      return
+    if (!(stock && name && points && image)) {
+      window.alert("semua form harus terisi!");
+      return;
     }
     await uploadImageFirbase(image)
-        .then(r=>{
-          if(r){
-            return axios.post(url+"/admin/add-reward", {
-              name: name,
-              price: parseInt(points),
-              stock: parseInt(stock),
-              image: r
-            })
-          }
-        })
-        .then(r=>{
-          if(r.status === 200){
-            alert("berhasil upload hadiah baru")
-            window.location.reload()
-          }
-        })
-        .catch(e=>{
-          console.log(e)
-          alert("gagal upload hadiah baru")
-        })
+      .then((r) => {
+        if (r) {
+          return axios.post(url + "/admin/add-reward", {
+            name: name,
+            price: parseInt(points),
+            stock: parseInt(stock),
+            image: r,
+          });
+        }
+      })
+      .then((r) => {
+        if (r.status === 200) {
+          alert("berhasil upload hadiah baru");
+          window.location.reload();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("gagal upload hadiah baru");
+      });
   };
 
   const getProducts = () => {
-    axios.get(url + "/admin/reward")
-        .then(r=>{
-          if(r.status === 200){
-            setProds(r.data.data)
-          }
-        })
-        .catch(e=>console.log(e))
-  }
+    axios
+      .get(url + "/admin/reward")
+      .then((r) => {
+        if (r.status === 200) {
+          setProds(r.data.data);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
 
-  useEffect(()=>{
-    getProducts()
-  }, [])
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <Page title="Dashboard: Hadiah | Cakrawala.id Admin">
