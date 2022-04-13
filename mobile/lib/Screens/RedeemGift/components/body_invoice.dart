@@ -128,9 +128,11 @@ class BodyInvoice extends StatelessWidget {
         WhiteInvoiceContainer(title: "Details", subtitle: namaGift),
         WhiteInvoiceContainer(title: "Time", subtitle: time), // TODO waktu transaksi
         ButtonConfirmButton(text: "Back To Home", press: () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const Homepage()));
+              MaterialPageRoute(builder: (BuildContext context) => const Homepage()),
+              ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
+          );
         })
       ],
     );

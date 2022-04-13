@@ -11,11 +11,17 @@ class TransferScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: deepSkyBlue,
-      resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBar(text: "Transfer"),
-      body: Body(choosenUser: choosenUser)
+    return WillPopScope(
+      onWillPop: () async {
+        currentUser = User(-1, "Unknown", "-1", -1, "Unknown");
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: deepSkyBlue,
+        resizeToAvoidBottomInset: false,
+        appBar: const CustomAppBar(text: "Transfer"),
+        body: Body(choosenUser: choosenUser)
+      ),
     );
   }
 }

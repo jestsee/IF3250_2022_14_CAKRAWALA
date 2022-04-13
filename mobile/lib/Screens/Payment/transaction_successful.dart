@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'components/body_transaction_successful.dart';
 
 class TransactionSuccessfulScreen extends StatelessWidget {
+  final int id;
   final int nominal;
   final int points;
   final String namaMerchant;
   final String time;
   const TransactionSuccessfulScreen({
     Key? key,
+    required this.id,
     required this.nominal,
     required this.points,
     required this.namaMerchant,
@@ -23,6 +25,7 @@ class TransactionSuccessfulScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: deepSkyBlue,
         body: BodyTransactionSuccessful(
+          id: id,
           nominal: nominal,
           points: points,
           namaMerchant: namaMerchant,

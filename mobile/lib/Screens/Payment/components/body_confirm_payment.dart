@@ -8,7 +8,7 @@ import 'package:cakrawala_mobile/components/formatter.dart';
 import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/constants.dart';
-import 'package:cakrawala_mobile/utils/pembayaran-api.dart';
+import 'package:cakrawala_mobile/utils/payment-api.dart';
 import 'package:cakrawala_mobile/utils/points-api.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -197,10 +197,12 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
                 log("points: $points");
                 var resp = await PembayaranAPI.payToMerchant(
                     widget.choosenMerchant.id, amount, widget.choosenMerchant.alamat, widget.choosenMerchant.no_rek);
-                if(resp.data) {
+                if(resp.status == 200) {
+                  log(resp.data['data']['id'].toString());
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => TransactionSuccessfulScreen(
+                        id: resp.data['data']['id'],
                         namaMerchant: widget.choosenMerchant.name,
                         nominal: amount,
                         points: points,
