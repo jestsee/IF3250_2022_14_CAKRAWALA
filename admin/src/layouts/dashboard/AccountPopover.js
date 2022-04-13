@@ -1,38 +1,9 @@
 import { useRef, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 // material
 import { alpha } from "@mui/material/styles";
-import {
-  Button,
-  Box,
-  Divider,
-  MenuItem,
-  Typography,
-  Avatar,
-  IconButton,
-} from "@mui/material";
+import { Box, Typography, Avatar, IconButton } from "@mui/material";
 // components
-import Iconify from "../../components/Iconify";
 import MenuPopover from "../../components/MenuPopover";
-// ----------------------------------------------------------------------
-
-const MENU_OPTIONS = [
-  {
-    label: "Home",
-    icon: "eva:home-fill",
-    linkTo: "/",
-  },
-  {
-    label: "Profile",
-    icon: "eva:person-fill",
-    linkTo: "#",
-  },
-  {
-    label: "Settings",
-    icon: "eva:settings-2-fill",
-    linkTo: "#",
-  },
-];
 
 // ----------------------------------------------------------------------
 
@@ -87,35 +58,6 @@ export default function AccountPopover() {
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
             {account?.email}
           </Typography>
-        </Box>
-
-        <Divider sx={{ my: 1 }} />
-
-        {MENU_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.label}
-            to={option.linkTo}
-            component={RouterLink}
-            onClick={handleClose}
-            sx={{ typography: "body2", py: 1, px: 2.5 }}
-          >
-            <Iconify
-              icon={option.icon}
-              sx={{
-                mr: 2,
-                width: 24,
-                height: 24,
-              }}
-            />
-
-            {option.label}
-          </MenuItem>
-        ))}
-
-        <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
-            Logout
-          </Button>
         </Box>
       </MenuPopover>
     </>
