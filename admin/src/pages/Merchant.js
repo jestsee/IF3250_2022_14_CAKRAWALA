@@ -41,7 +41,9 @@ export default function Merchant() {
   const approveTopUp = async (id) => {
     axios
       .patch(url + `/admin/top-up/${id}`)
-      .then((res) => setAlert(1))
+      .then((res) => {
+        alert(`Top up saldo sukses`);
+      })
       .catch((err) => setAlert(-1));
   };
 
