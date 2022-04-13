@@ -47,7 +47,7 @@ class _BodyState extends State<Body> {
           WhiteFieldContainer(
             child: UserProfileContainer(
               name: widget.choosenUser.name,
-              address: "",
+              phone: widget.choosenUser.phone,
               email: widget.choosenUser.email
             )
           ),

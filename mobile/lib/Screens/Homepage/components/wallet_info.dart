@@ -1,14 +1,11 @@
 import 'package:cakrawala_mobile/Screens/Homepage/components/white_text_field_container.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/icon_button.dart';
 import 'package:cakrawala_mobile/Screens/Payment/pay_to_merchant.dart';
-import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
 import 'package:cakrawala_mobile/Screens/Topup/topup_screen.dart';
-import 'package:cakrawala_mobile/Screens/Transfer/choose_transfer_screen.dart';
 import 'package:cakrawala_mobile/Screens/Transfer/input_phone_number.dart';
 import 'package:cakrawala_mobile/components/number_formatter.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/userinfo-api.dart';
-import 'package:cakrawala_mobile/value-store/constant.dart';
 
 import "package:flutter/material.dart";
 
@@ -43,7 +40,7 @@ class _WalletInfoState extends State<WalletInfo> {
               points=data.data['point'].toString();
               rewards=data.data['exp'].toString();
               userData = data.data;
-              print(data.data);
+              print(userData);
             });
           }
         });

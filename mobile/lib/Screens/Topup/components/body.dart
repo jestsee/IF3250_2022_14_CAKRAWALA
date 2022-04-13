@@ -69,7 +69,7 @@ class _BodyState extends State<Body> {
           WhiteFieldContainer(
               child: UserProfileContainer(
                   name: widget.userInfo["Name"],
-                  address: "Jl. Contoh Alamat No. 10",
+                  phone: widget.userInfo["Phone"],
                   email: widget.userInfo["email"])),
           SizedBox(
             height: size.height * 0.005,

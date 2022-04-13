@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cakrawala_mobile/utils/custom-http-response.dart';
@@ -18,13 +19,16 @@ class UserInfoAPI{
   
   static Future<CustomHttpResponse<Map<String, dynamic>>> getUserInformation() async {
     var header = await _getHeaders();
+    log("getUserInformation called");
     var response = await http.get(Uri.parse(Constant.URL_BE+"/self"), headers: header);
     var bodyresp = json.decode(response.body) as Map<String, dynamic>;
     if(response.statusCode == 200){
+      log("USERINFO masuk 200 gan");
       return CustomHttpResponse(response.statusCode, "", bodyresp);
     } else if(response.statusCode < 500){
       return CustomHttpResponse(response.statusCode, bodyresp['message'], json.decode('{}') as Map<String, dynamic>);
     }
+    log("USERINFO ga masuk mana2");
     return CustomHttpResponse(response.statusCode, response.body, json.decode('{}') as Map<String, dynamic>);
   }
 }

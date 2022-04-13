@@ -5,12 +5,12 @@ import "package:flutter/material.dart";
 
 class UserProfileContainer extends StatelessWidget {
   final String name;
-  final String address;
+  final String phone;
   final String email;
   const UserProfileContainer({
     Key? key,
     required this.name,
-    required this.address,
+    required this.phone,
     required this.email
   }) : super(key: key);
   static const double pad = 0.035;
@@ -24,7 +24,7 @@ class UserProfileContainer extends StatelessWidget {
         children: <Widget> [
           UserInfoText(attribute: "Name", value: name),
           SizedBox(height: size.height * pad),
-          UserInfoText(attribute: "Address", value: address),
+          UserInfoText(attribute: "Phone Number", value: phone),
           SizedBox(height: size.height * pad),
           UserInfoText(attribute: "Email", value: email)
         ]

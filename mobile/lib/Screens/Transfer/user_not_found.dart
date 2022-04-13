@@ -82,8 +82,8 @@ class UserNotFoundScreen extends StatelessWidget {
                         ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
                     );
                   },
-                  color: deepSkyBlue,
-                  width: .32 * size.width,
+                  color: black,
+                  width: 120,
                   height: 36,
                   padding: false,
                   textColor: white,
