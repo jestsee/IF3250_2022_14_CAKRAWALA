@@ -110,3 +110,32 @@ func GetAllMerchantsUser(c *gin.Context) {
 		"data":    data,
 	})
 }
+
+func GetMerchantAdminById(c *gin.Context) {
+	var merchant models.Merchant
+	err := models.DB.Where("id = ?", c.Param("id")).First(&merchant).Error
+	if err == nil {
+		c.JSON(http.StatusOK, merchant)
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat merchant"))
+	}
+}
+
+func DeleteMerchant(c *gin.Context) {
+	var merchant models.Merchant
+	err := models.DB.Where("id = ?", c.Param("id")).First(&merchant).Error
+	if err == nil {
+		err = models.DB.Delete(&merchant).Error
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "gagal delete",
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "berhasil delete",
+			})
+		}
+	} else {
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat merchant"))
+	}
+}
