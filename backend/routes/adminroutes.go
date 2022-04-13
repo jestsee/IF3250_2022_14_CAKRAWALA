@@ -21,6 +21,7 @@ func adminRoutes(e *gin.Engine) {
 		// gr.POST("/transfer", transactions.Transfer)
 		// gr.POST("/pay-merchant", transactions.PayMerchant)
 		gr.POST("/merchant/add", transactions.AddMerchant)
+		gr.DELETE("/merchant/:id", transactions.DeleteMerchant)
 		gr.GET("/merchant", transactions.GetAllMerchantsAdmin)
 		gr.POST("/add-reward", transactions.AddReward)
 	}
