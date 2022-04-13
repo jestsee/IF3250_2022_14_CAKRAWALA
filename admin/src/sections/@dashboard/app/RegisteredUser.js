@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
+import { url } from "src/api";
+import axios from "axios";
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
-// utils
-import { fShortenNumber } from "../../../utils/formatNumber";
 // component
 import Iconify from "../../../components/Iconify";
-import { url } from "src/api";
-import axios from "axios";
 
 // ----------------------------------------------------------------------
 

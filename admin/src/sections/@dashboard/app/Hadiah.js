@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { url } from "src/api";
 import axios from "axios";
-
 // material
 import { alpha, styled } from "@mui/material/styles";
 import { Card, Typography } from "@mui/material";
-// utils
-import { fShortenNumber } from "../../../utils/formatNumber";
 //
 import Iconify from "../../../components/Iconify";
 
@@ -55,7 +52,7 @@ export default function Hadiah() {
   return (
     <RootStyle>
       <IconWrapperStyle>
-        <Iconify icon="ant-design:bug-filled" width={24} height={24} />
+        <Iconify icon="bxs:gift" width={24} height={24} />
       </IconWrapperStyle>
       <Typography variant="h3">{rows.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
