@@ -52,9 +52,9 @@ export default function Merchants() {
       <IconWrapperStyle>
         <Iconify icon="bxs:store" width={24} height={24} />
       </IconWrapperStyle>
-      <Typography variant="h3">{rows.length}</Typography>
+      <Typography variant="h3">{rows?.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Merchants
+        {rows.length > 1 ? "Merchants" : "Merchant"}
       </Typography>
     </RootStyle>
   );
