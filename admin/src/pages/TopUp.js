@@ -39,16 +39,31 @@ export default function TopUp() {
   };
 
   const approveTopUp = async (id) => {
-    axios
-      .patch(url + `/admin/top-up/${id}`)
-      .then((res) => setAlert(1))
-      .catch((err) => setAlert(-1));
+    axios.patch(url + `/admin/top-up/${id}`);
+    window.location.reload();
   };
+
+  // const approveTopUp = async (id) => {
+  //   const response = axios.patch(url + `/admin/top-up/${id}`);
+  //   console.log(response.data);
+  //   if (response.data.Status === "completed") {
+  //     alert("Top up saldo di-approve");
+  //     window.location.reload();
+  //   }
+  // };
+  // const isInitialMount = useRef(true);
+
+  // useEffect(() => {
+  //   if (isInitialMount.current) {
+  //     isInitialMount.current = false;
+  //   } else {
+  //     return getAllTopUpRequest();
+  //   }
+  // }, [rows]);
 
   useEffect(() => {
     getAllTopUpRequest();
-    console.log(rows);
-  }, [rows]);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -151,34 +166,6 @@ export default function TopUp() {
             </TableContainer>
           </Scrollbar>
         </Card>
-        <Box sx={{ mt: 3 }}>
-          <Collapse in={open}>
-            {alert === 1 ? (
-              <Alert
-                severity="success"
-                color="info"
-                onClose={() => {
-                  setOpen(false);
-                  setAlert(0);
-                }}
-              >
-                Top Up Approved
-              </Alert>
-            ) : alert === -1 ? (
-              <Alert
-                severity="error"
-                onClose={() => {
-                  setOpen(false);
-                  setAlert(0);
-                }}
-              >
-                Top Up Approval Failed
-              </Alert>
-            ) : (
-              <></>
-            )}
-          </Collapse>
-        </Box>
       </Container>
     </Page>
   );

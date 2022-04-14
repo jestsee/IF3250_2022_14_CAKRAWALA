@@ -3,6 +3,7 @@ import 'package:cakrawala_mobile/Screens/Homepage/components/history_container.d
 import 'package:cakrawala_mobile/Screens/Homepage/components/history.dart';
 import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 import 'package:cakrawala_mobile/Screens/RedeemGift/redeem_gift.dart';
+import 'package:cakrawala_mobile/Screens/AccountInfo/account_info_screen.dart';
 import 'package:cakrawala_mobile/components/custom_app_bar.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import "package:flutter/material.dart";
@@ -22,14 +23,29 @@ class _BodyState extends State<Body> {
   int _currentIndex = 0;
 
   void onItemTapped(int index) {
-    if (index != 2) {
-      setState(() {
-        _currentIndex = index;
-      });
-    } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => RedeemGift()),
-      );
+    switch (index) {
+      case 0:
+        setState(() {
+          _currentIndex = index;
+        });
+        break;
+
+      case 1:
+        // camera bakal dibuang
+        break;
+
+      case 2:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => RedeemGift()),
+        );
+        break;
+
+      case 3:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => AccountInfo()),
+        );
+        break;
+      default:
     }
   }
 
@@ -43,7 +59,9 @@ class _BodyState extends State<Body> {
         const WhiteFieldContainer(
           child: WalletInfo(),
         ),
-        SizedBox(height: .017 * size.height,),
+        SizedBox(
+          height: .017 * size.height,
+        ),
         Row(
           children: const [
             Padding(
