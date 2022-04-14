@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cakrawala_mobile/value-store/constant.dart';
 import 'package:cakrawala_mobile/value-store/sp-handler.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '../components/number_formatter.dart';
 
@@ -20,7 +22,7 @@ class HistoryAPI {
   static Future<List<TransactionHistory>> getHistoryAdmin() async {
     var header = await _getHeaders();
     var response = await http.get(
-        Uri.parse(Constant.URL_ADMIN + "/transaction-history-admin"),
+        Uri.parse(Constant.URL_BE + "/transaction-history"),
         headers: header);
     var bodyResp = json.decode(response.body);
 
@@ -55,13 +57,16 @@ class HistoryAPI {
         String time = timestamp[1].split('.')[0];
         createdAt = date + " " + time;
 
+        var temp = DateTime.parse(createdAt);
+        // log('${DateFormat.MMMM().format(temp)}');
+
         TransactionHistory trans =
-            TransactionHistory(type, destID, nominal, createdAt);
+            TransactionHistory(type, destID, nominal, temp);
         transHistory.add(trans);
 
         // print(createdAt.split('T')[0]);
 
-        print(createdAt);
+
       }
     }
 
@@ -70,7 +75,8 @@ class HistoryAPI {
 }
 
 class TransactionHistory {
-  final String transactionType, destID, nominal, createdAt;
+  final String transactionType, destID, nominal;
+  final DateTime createdAt;
   TransactionHistory(
       this.transactionType, this.destID, this.nominal, this.createdAt);
 }

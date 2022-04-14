@@ -13,12 +13,13 @@ class WhiteFieldContainer extends StatelessWidget {
 
     return Center(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         width: size.width * 0.9,
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: child,
       ),
     );

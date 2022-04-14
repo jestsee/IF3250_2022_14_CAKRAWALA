@@ -16,7 +16,7 @@ class PembayaranAPI{
     return map;
   }
 
-  static Future<CustomHttpResponse<bool>> payToMerchant(int id, int amount, String address, String bank ) async {
+  static Future<CustomHttpResponse> payToMerchant(int id, int amount, String address, String bank ) async {
     var header = await _getHeaders();
     var body = {
       "address": address,
@@ -30,6 +30,9 @@ class PembayaranAPI{
         body: json.encode(body),
         headers: header
     );
-    return CustomHttpResponse(response.statusCode, response.body, response.statusCode==200);
+
+    var bodyresp = json.decode(response.body) as Map<String, dynamic>;
+
+    return CustomHttpResponse(response.statusCode, bodyresp['message'], json.decode(response.body) as Map<String, dynamic>);
   }
 }

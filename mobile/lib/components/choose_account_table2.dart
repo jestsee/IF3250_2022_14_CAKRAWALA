@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Transfer/components/dummy_data.dart';
-import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/components/text_account_attribute.dart';
 import 'package:flutter/material.dart';
+
+import 'choose_account_table1.dart';
 
 // global variable
 User currentUser = User.fromJson(
@@ -12,42 +13,39 @@ User currentUser = User.fromJson(
       "name": "Unknown",
       "phone": "-1",
       "exp": 0,
-      "address": "Unknown",
       "email" : "Unknown"
     }
 );
 
-class User {
-  int id;
-  String name;
-  String phone;
-  int exp;
-  String address;
-  String email;
-  bool selected = false;
-
-  User(this.id, this.name, this.phone, this.exp, this.address, this.email);
-  factory User.fromJson(dynamic json) {
-    return User(
-        json['id'] as int,
-        json['name'] as String,
-        json['phone'] as String,
-        json['exp'] as int,
-        json['address'] as String,
-        json['email'] as String)
-    ;
-  }
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.address}, ${this.email}}';
-  }
-
-  static User getSelectedUser() {
-    log('selected:${currentUser.name}');
-    return currentUser;
-  }
-}
+// class User {
+//   int id;
+//   String name;
+//   String phone;
+//   int exp;
+//   String email;
+//   bool selected = false;
+//
+//   User(this.id, this.name, this.phone, this.exp, this.email);
+//   factory User.fromJson(dynamic json) {
+//     return User(
+//         json['id'] as int,
+//         json['Name'] as String,
+//         json['Phone'] as String,
+//         json['exp'] as int,
+//         json['email'] as String)
+//     ;
+//   }
+//
+//   @override
+//   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+//     return '{${this.id}, ${this.name}, ${this.phone}, ${this.exp}, ${this.email}}';
+//   }
+//
+//   static User getSelectedUser() {
+//     log('selected:${currentUser.name}');
+//     return currentUser;
+//   }
+// }
 
 class ChooseAccountTable extends StatefulWidget {
   ChooseAccountTable({Key? key}) : super(key: key);

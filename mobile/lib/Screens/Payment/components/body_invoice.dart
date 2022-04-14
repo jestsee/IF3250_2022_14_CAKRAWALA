@@ -103,12 +103,14 @@ class Product {
 }
 
 class BodyInvoice extends StatelessWidget {
+  final int id;
   final int nominal;
   final int points;
   final String namaMerchant;
   final String time;
   const BodyInvoice({
     Key? key,
+    required this.id,
     required this.nominal,
     required this.points,
     required this.namaMerchant,
@@ -145,12 +147,14 @@ class BodyInvoice extends StatelessWidget {
         ),
         SizedBox(height: .05 * size.width),
         WhiteInvoiceContainer(title: "Merchant", subtitle: namaMerchant),
-        WhiteInvoiceContainer(title: "Invoice ID", subtitle: "123456"), // TODO id invoice
+        WhiteInvoiceContainer(title: "Invoice ID", subtitle: id.toString()), // TODO id invoice
         WhiteInvoiceContainer(title: "Time", subtitle: time), // TODO waktu transaksi
         ButtonConfirmButton(text: "Back To Home", press: () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const Homepage()));
+              MaterialPageRoute(builder: (BuildContext context) => const Homepage()),
+              ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
+          );
         })
       ],
     );
