@@ -20,8 +20,8 @@ class CustomIconButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size; // Screen height and width
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      width: size.width * 0.27,
+      margin: const EdgeInsets.only(top: 20, bottom: 5),
+      width: size.width * 0.26,
       decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(50)),

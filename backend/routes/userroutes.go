@@ -28,6 +28,7 @@ func userRoutes(e *gin.Engine) {
 		gr.POST("/pay-calculate-points", middleware.IsAuthrorized(), transactions.BonusCheckController)
 		
 		gr.POST("/transfer", middleware.IsAuthrorized(), transactions.Transfer)
+		gr.POST("/phone-number", middleware.IsAuthrorized(), transactions.IsPhoneNumberValid)
 
 		gr.POST("/exchange-reward", middleware.IsAuthrorized(), transactions.ExchangeReward)
 		gr.GET("/get-rewards", middleware.IsAuthrorized(), transactions.GetAllRewards)
