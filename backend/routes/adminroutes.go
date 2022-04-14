@@ -12,6 +12,8 @@ func adminRoutes(e *gin.Engine) {
 		gr.POST("/login", controllers.Login)
 
 		gr.GET("/user/:id", controllers.GetUserNameById)
+		gr.GET("/user", controllers.GetAllUser)
+		gr.DELETE("/user/:id", controllers.DeleteUser)
 
 		gr.PATCH("/top-up/:id", transactions.ApproveTopUp)
 		gr.GET("/top-up/request", transactions.GetTopUpRequest)
@@ -22,6 +24,9 @@ func adminRoutes(e *gin.Engine) {
 		// gr.POST("/pay-merchant", transactions.PayMerchant)
 		gr.POST("/merchant/add", transactions.AddMerchant)
 		gr.GET("/merchant", transactions.GetAllMerchantsAdmin)
+		gr.DELETE("/merchant/:id", transactions.DeleteMechant)
 		gr.POST("/add-reward", transactions.AddReward)
+		gr.GET("/reward", transactions.GetAllRewards)
+		gr.PATCH("/reward/:id", transactions.UpdateStock)
 	}
 }

@@ -14,12 +14,13 @@ import {
   IconButton,
   Typography,
   RadioGroup,
-  FormControlLabel
+  FormControlLabel, TextField
 } from '@mui/material';
 //
 import Iconify from '../../../components/Iconify';
 import Scrollbar from '../../../components/Scrollbar';
 import ColorManyPicker from '../../../components/ColorManyPicker';
+import {useState} from "react";
 
 // ----------------------------------------------------------------------
 
@@ -67,15 +68,28 @@ export default function ShopFilterSidebar({
 }) {
   const { values, getFieldProps, handleChange } = formik;
 
+  const [name, setName] = useState("")
+  const [stock, setStock] = useState("")
+  const [points, setPoints] = useState("")
+  const [imageup, setImage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const submitProcesser = () => {
+    setIsLoading(true)
+    onResetFilter(name, stock, points, imageup)
+        .finally(()=>{
+          setIsLoading(false)
+        })
+  }
+
   return (
     <>
       <Button
         disableRipple
         color="inherit"
-        endIcon={<Iconify icon="ic:round-filter-list" />}
+        endIcon={<Iconify icon="carbon:add-filled" />}
         onClick={onOpenFilter}
       >
-        Filters&nbsp;
+        Add New Prize&nbsp;
       </Button>
 
       <FormikProvider value={formik}>
@@ -95,7 +109,7 @@ export default function ShopFilterSidebar({
               sx={{ px: 1, py: 2 }}
             >
               <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                Filters
+                Add New Prize
               </Typography>
               <IconButton onClick={onCloseFilter}>
                 <Iconify icon="eva:close-fill" width={20} height={20} />
@@ -108,114 +122,73 @@ export default function ShopFilterSidebar({
               <Stack spacing={3} sx={{ p: 3 }}>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Gender
+                    Nama Hadiah
                   </Typography>
-                  <FormGroup>
-                    {FILTER_GENDER_OPTIONS.map((item) => (
-                      <FormControlLabel
-                        key={item}
-                        control={
-                          <Checkbox
-                            {...getFieldProps('gender')}
-                            value={item}
-                            checked={values.gender.includes(item)}
-                          />
-                        }
-                        label={item}
-                      />
-                    ))}
-                  </FormGroup>
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Category
-                  </Typography>
-                  <RadioGroup {...getFieldProps('category')}>
-                    {FILTER_CATEGORY_OPTIONS.map((item) => (
-                      <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Colors
-                  </Typography>
-                  <ColorManyPicker
-                    name="colors"
-                    colors={FILTER_COLOR_OPTIONS}
-                    onChange={handleChange}
-                    onChecked={(color) => values.colors.includes(color)}
-                    sx={{ maxWidth: 38 * 4 }}
+                  <TextField
+                      id="nama-hadiah" label="Nama Hadiah" variant="outlined"
+                      onChange={e=>setName(e.target.value)}
                   />
                 </div>
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Price
+                    Stock
                   </Typography>
-                  <RadioGroup {...getFieldProps('priceRange')}>
-                    {FILTER_PRICE_OPTIONS.map((item) => (
-                      <FormControlLabel
-                        key={item.value}
-                        value={item.value}
-                        control={<Radio />}
-                        label={item.label}
-                      />
-                    ))}
-                  </RadioGroup>
+                  <TextField
+                      id="stock-hadiah" label="Stock Hadiah" variant="outlined" type={'number'}
+                      onChange={e=>setStock(e.target.value)}
+                  />
                 </div>
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Rating
+                    Points need to spend
                   </Typography>
-                  <RadioGroup {...getFieldProps('rating')}>
-                    {FILTER_RATING_OPTIONS.map((item, index) => (
-                      <FormControlLabel
-                        key={item}
-                        value={item}
-                        control={
-                          <Radio
-                            disableRipple
-                            color="default"
-                            icon={<Rating readOnly value={4 - index} />}
-                            checkedIcon={<Rating readOnly value={4 - index} />}
-                          />
-                        }
-                        label="& Up"
-                        sx={{
-                          my: 0.5,
-                          borderRadius: 1,
-                          '& > :first-of-type': { py: 0.5 },
-                          '&:hover': {
-                            opacity: 0.48,
-                            '& > *': { bgcolor: 'transparent' }
-                          },
-                          ...(values.rating.includes(item) && {
-                            bgcolor: 'background.neutral'
-                          })
-                        }}
-                      />
-                    ))}
-                  </RadioGroup>
+                  <TextField
+                      id="point-hadiah" label="Point Hadiah" variant="outlined" type={'number'}
+                      onChange={e=>setPoints(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Image
+                  </Typography>
+                  <input
+                      accept="image/*"
+                      className="gambar-hadiah"
+                      style={{ display: 'none' }}
+                      id="raised-button-file"
+                      onChange={(e)=>{setImage(e.target.files[0])}}
+                      multiple
+                      type="file"
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button variant="raised" component="span" className="gambar-hadiah">
+                      Upload
+                    </Button>
+                  </label>
                 </div>
               </Stack>
             </Scrollbar>
 
             <Box sx={{ p: 3 }}>
-              <Button
-                fullWidth
-                size="large"
-                type="submit"
-                color="inherit"
-                variant="outlined"
-                onClick={onResetFilter}
-                startIcon={<Iconify icon="ic:round-clear-all" />}
-              >
-                Clear All
-              </Button>
+              {
+                isLoading ? <Typography variant="subtitle1" gutterBottom>Loading gan</Typography> : (
+                    <Button
+                        fullWidth
+                        size="large"
+                        type="submit"
+                        color="inherit"
+                        variant="outlined"
+                        onClick={submitProcesser}
+                        startIcon={<Iconify icon="ic:round-clear-all" />}
+                    >
+                      Submit
+                    </Button>
+                )
+              }
+
             </Box>
           </Drawer>
         </Form>
