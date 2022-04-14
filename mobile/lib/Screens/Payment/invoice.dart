@@ -5,12 +5,14 @@ import '../../components/custom_app_bar.dart';
 import '../../constants.dart';
 
 class InvoiceScreen extends StatelessWidget {
+  final int id;
   final int nominal;
   final int points;
   final String namaMerchant;
   final String time;
   const InvoiceScreen({
     Key? key,
+    required this.id,
     required this.nominal,
     required this.points,
     required this.namaMerchant,
@@ -23,6 +25,7 @@ class InvoiceScreen extends StatelessWidget {
       backgroundColor: deepSkyBlue,
       appBar: const CustomAppBar(text: "Invoice"),
       body: BodyInvoice(
+        id: id,
         namaMerchant: namaMerchant,
         nominal: nominal,
         points: points,
