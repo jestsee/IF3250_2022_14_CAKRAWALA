@@ -91,7 +91,7 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
 
-    return Container (
+    return SizedBox (
       width: .9 * size.width,
       height: .7 * size.height,
       child: Column(
