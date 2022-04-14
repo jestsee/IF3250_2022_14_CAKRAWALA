@@ -4,12 +4,14 @@ import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/material.dart';
 
 class BodyTransactionSuccessful extends StatelessWidget {
+  final int id;
   final int nominal;
   final int points;
   final String namaMerchant;
   final String time;
   const BodyTransactionSuccessful({
     Key? key,
+    required this.id,
     required this.nominal,
     required this.points,
     required this.namaMerchant,
@@ -41,6 +43,7 @@ class BodyTransactionSuccessful extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => InvoiceScreen(
+                    id: id,
                     namaMerchant: namaMerchant,
                     nominal: nominal,
                     points: points,
