@@ -51,13 +51,13 @@ export default function User() {
         .delete(url + `/admin/user/${uid}`)
         .then((r) => {
           if (r.status === 200) {
-            window.alert("berhasil hapus akun");
+            window.alert("Account has been deleted");
             window.location.reload();
           } else {
-            window.alert("gagal hapus akun");
+            window.alert("ERROR: Account cannot be deleted");
           }
         })
-        .catch((e) => window.alert("terjadi kesalahan ketika hapus akun"));
+        .catch((e) => window.alert("ERROR: Something went wrong"));
     }
   };
 
@@ -161,15 +161,15 @@ export default function User() {
                   )}
                 </TableBody>
               </Table>
-              {/*<TablePagination*/}
-              {/*  rowsPerPageOptions={[5, 10, 25]}*/}
-              {/*  component="div"*/}
-              {/*  count={rows.length}*/}
-              {/*  rowsPerPage={rowsPerPage}*/}
-              {/*  page={page}*/}
-              {/*  onChangePage={handleChangePage}*/}
-              {/*  onChangeRowsPerPage={handleChangeRowsPerPage}*/}
-              {/*/>*/}
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
             </TableContainer>
           </Scrollbar>
         </Card>
