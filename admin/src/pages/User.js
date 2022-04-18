@@ -34,37 +34,39 @@ export default function User() {
   const [open, setOpen] = useState(true);
 
   const getAllUser = async () => {
-    axios.get(url + "/admin/user")
-        .then(r=>{
-          setRows(r.data.data)
-        })
-        .catch(e=>setAlert(-1))
-  }
+    axios
+      .get(url + "/admin/user")
+      .then((r) => {
+        setRows(r.data.data);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const deleteUser = async (uid, email) => {
-    if(!uid) return
+    if (!uid) return;
 
-    const conf = window.confirm("apakah anda yakin ingin hapus akun "+email)
-    if(conf){
-      axios.delete(url + `/admin/user/${uid}`)
-          .then(r=>{
-            if(r.status === 200){
-              window.alert("berhasil hapus akun")
-              window.location.reload()
-            }else{
-              window.alert("gagal hapus akun")
-            }
-          })
-          .catch(e=>window.alert("terjadi kesalahan ketika hapus akun"))
+    const conf = window.confirm("apakah anda yakin ingin hapus akun " + email);
+    if (conf) {
+      axios
+        .delete(url + `/admin/user/${uid}`)
+        .then((r) => {
+          if (r.status === 200) {
+            window.alert("berhasil hapus akun");
+            window.location.reload();
+          } else {
+            window.alert("gagal hapus akun");
+          }
+        })
+        .catch((e) => window.alert("terjadi kesalahan ketika hapus akun"));
     }
-  }
+  };
 
   useEffect(async () => {
-    await getAllUser()
+    await getAllUser();
   }, []);
 
   const handleChangePage = (event, newPage) => {
-    console.log("npage", newPage)
+    console.log("npage", newPage);
     setPage(newPage);
   };
 
@@ -95,63 +97,62 @@ export default function User() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">ID User</TableCell>
-                    <TableCell align="center">Nama</TableCell>
+                    <TableCell align="center">User ID</TableCell>
+                    <TableCell align="center">Name</TableCell>
                     <TableCell align="center">Email</TableCell>
-                    <TableCell align="center">Saldo</TableCell>
+                    <TableCell align="center">Balance</TableCell>
                     <TableCell align="center">EXP</TableCell>
                     <TableCell align="center">Points</TableCell>
-                    <TableCell align="center">Tanggal Daftar</TableCell>
+                    <TableCell align="center">Register Date</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {rows.length <= 0 ? (
                     <TableCell colSpan={8} align="center">
-                      Tidak ada user
+                      There is no user
                     </TableCell>
                   ) : (
-                    rows
-                      .map((row, index) => (
-                        <TableRow key={row?.id}>
-                          <TableCell align="center">{row?.id}</TableCell>
-                          <TableCell align="center">{row?.Name}</TableCell>
-                          <TableCell align="center">
-                            {row?.email}
-                          </TableCell>
-                          <TableCell align="center">{row?.balance}</TableCell>
-                          <TableCell align="center">{row?.exp}</TableCell>
-                          <TableCell align="center">{row?.point}</TableCell>
-                          <TableCell align="center">
-                            {moment(row?.createdAt).format(
-                              "MMMM Do YYYY, HH:mm:ss"
-                            )}
-                          </TableCell>
-                          <TableCell align="center">
-                            <Button
-                                variant="outlined"
-                                style={{
-                                  borderColor: "#00A2ED",
-                                  color: "#00A2ED",
-                                  marginRight: "4px"
-                                }}
-                                onClick={() => {}}
-                            >
-                              Details
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                style={{
-                                  borderColor: "#b50531",
-                                  color: "#b50531",
-                                }}
-                                onClick={() => { deleteUser(row?.id, row?.email) }}
-                            >
-                              Delete
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))
+                    rows.map((row, index) => (
+                      <TableRow key={row?.id}>
+                        <TableCell align="center">{row?.id}</TableCell>
+                        <TableCell align="center">{row?.Name}</TableCell>
+                        <TableCell align="center">{row?.email}</TableCell>
+                        <TableCell align="center">{row?.balance}</TableCell>
+                        <TableCell align="center">{row?.exp}</TableCell>
+                        <TableCell align="center">{row?.point}</TableCell>
+                        <TableCell align="center">
+                          {moment(row?.createdAt).format(
+                            "MMMM Do YYYY, HH:mm:ss"
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button
+                            variant="outlined"
+                            style={{
+                              borderColor: "#00A2ED",
+                              color: "#00A2ED",
+                              marginRight: "4px",
+                            }}
+                            onClick={() => {}}
+                          >
+                            Details
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            style={{
+                              borderColor: "#b50531",
+                              color: "#b50531",
+                            }}
+                            onClick={() => {
+                              deleteUser(row?.id, row?.email);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
                   )}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
