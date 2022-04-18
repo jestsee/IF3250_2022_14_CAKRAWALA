@@ -56,7 +56,7 @@ export default function Hadiah() {
       </IconWrapperStyle>
       <Typography variant="h3">{rows?.length}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Hadiah
+        {rows.length > 0 ? "Rewards" : "Reward"}
       </Typography>
     </RootStyle>
   );
