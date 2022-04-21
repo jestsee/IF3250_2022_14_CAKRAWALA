@@ -7,4 +7,4 @@ services:
             dockerfile: Dockerfile
         container_name: admin-cakrawala
         ports: 
-            - "8700:8700"
+            - "3000:3000"
