@@ -48,7 +48,7 @@ func TopUpRequest(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "berhasil request topup",
+		"message": "Top up request has been sent",
 		"data":    transaksi,
 	})
 
@@ -60,7 +60,7 @@ func ApproveTopUp(c *gin.Context) {
 	e := models.DB.Preload("User").Where("id = ? AND status != 'completed'", c.Param("id")).First(&transaksi).Error
 	if e != nil {
 		c.AbortWithStatusJSON(404, gin.H{
-			"message": "request topup tidak ditemukan",
+			"message": "Top up request not found",
 		})
 		return
 	}
@@ -87,7 +87,7 @@ func ApproveTopUp(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Berhasil accept saldo",
+		"message": "Balance updated",
 		"data":    transaksi,
 	})
 }
@@ -100,7 +100,7 @@ func GetTopUpRequest(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": "berhasil get top up requests",
+		"message": "Get top up request success",
 		"data":    topupReq,
 	})
 }
