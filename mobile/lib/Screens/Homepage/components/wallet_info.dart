@@ -9,22 +9,20 @@ import 'package:cakrawala_mobile/utils/userinfo-api.dart';
 
 import "package:flutter/material.dart";
 
-import '../../../components/blurry-dialog.dart';
 
 class WalletInfo extends StatefulWidget {
-  const WalletInfo({
-    Key? key,
-  }) : super(key: key);
+  const WalletInfo({ Key? key,}) : super(key: key);
   static const double pad = 0.02;
   @override
-  State<WalletInfo> createState() => _WalletInfoState();
+  State<WalletInfo> createState() => WalletInfoState();
 }
 
-class _WalletInfoState extends State<WalletInfo> {
+class WalletInfoState extends State<WalletInfo> {
   String balance = "-";
   String points = "-";
   String rewards = "-";
   Map<String, dynamic> userData = {};
+
   @override
   void initState() {
     loadState();
@@ -134,13 +132,5 @@ class _WalletInfoState extends State<WalletInfo> {
               ],
             ),
         ]));
-  }
-
-  _showDialog(BuildContext context, title, content){
-    BlurryDialog bd = BlurryDialog(title, content, null);
-
-    showDialog(context: context, builder: (BuildContext context){
-      return bd;
-    });
   }
 }

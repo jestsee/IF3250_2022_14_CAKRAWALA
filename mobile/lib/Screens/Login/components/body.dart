@@ -110,7 +110,7 @@ class _BodyState extends State<Body> {
   }
 
   _showDialog(BuildContext context, title, content){
-    BlurryDialog bd = BlurryDialog(title, content, null);
+    BlurryDialog bd = BlurryDialog(title, content, null, 1);
 
     showDialog(context: context, builder: (BuildContext context){
       return bd;

@@ -5,6 +5,7 @@ import 'package:cakrawala_mobile/components/text_account_template.dart';
 import 'package:cakrawala_mobile/components/user_not_found.dart';
 import 'package:cakrawala_mobile/utils/user-api.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // global variable
 UserAPI gAPI = UserAPI();
@@ -118,56 +119,65 @@ class _ChooseAccountTableState extends State<ChooseAccountTable> {
                         padding: EdgeInsets.only(
                             bottom: handleOverflow(context)
                         ),
-                        child: ListView.builder(
-                          itemCount: usersFiltered.length,
-                          itemBuilder: (context, index) => Card(
-                            shape: RoundedRectangleBorder (
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
-                            elevation: 3,
-                            margin: const EdgeInsets.only(bottom: 15),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.all(15),
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child:
-                                Image.network(
-                                  // TODO
-                                  'https://picsum.photos/250?image=${usersFiltered[index].id}',
-                                  height: 0.128 * size.width,
-                                  width: 0.128 * size.width,
-                                ),
+                        child: RefreshIndicator (
+                          onRefresh: () {
+                            return Future.delayed(const Duration(seconds: 1), (){
+                              setState(() {
+                                loadData(widget.phone);
+                              });
+                            });
+                          },
+                          child: ListView.builder(
+                            itemCount: usersFiltered.length,
+                            itemBuilder: (context, index) => Card(
+                              shape: RoundedRectangleBorder (
+                                  borderRadius: BorderRadius.circular(10)
                               ),
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    usersFiltered[index].name,
-                                    style: const TextStyle (
-                                        fontSize: 18,
-                                        letterSpacing: 0.1,
-                                        fontWeight: FontWeight.w800
-                                    ),
+                              color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
+                              elevation: 3,
+                              margin: const EdgeInsets.only(bottom: 15),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(15),
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child:
+                                  Image.network(
+                                    // TODO
+                                    'https://picsum.photos/250?image=${usersFiltered[index].id}',
+                                    height: 0.128 * size.width,
+                                    width: 0.128 * size.width,
                                   ),
-                                  const SizedBox(height: 5,),
-                                  TextAccountTemplate(
-                                    text: usersFiltered[index].email,
-                                    align: TextAlign.left,
-                                    weight: FontWeight.w500,
-                                    size: 14,
-                                    color: Colors.black54,
-                                  )
-                                ],
+                                ),
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      usersFiltered[index].name,
+                                      style: const TextStyle (
+                                          fontSize: 18,
+                                          letterSpacing: 0.1,
+                                          fontWeight: FontWeight.w800
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    TextAccountTemplate(
+                                      text: usersFiltered[index].email,
+                                      align: TextAlign.left,
+                                      weight: FontWeight.w500,
+                                      size: 14,
+                                      color: Colors.black54,
+                                    )
+                                  ],
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                    FocusScope.of(context).requestFocus(new FocusNode());
+                                    currentUser = usersFiltered[index];
+                                    log("selected user: $currentUser");
+                                  });
+                                },
                               ),
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = index;
-                                  FocusScope.of(context).requestFocus(new FocusNode());
-                                  currentUser = usersFiltered[index];
-                                  log("selected user: $currentUser");
-                                });
-                              },
                             ),
                           ),
                         ),

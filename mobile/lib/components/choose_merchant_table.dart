@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/utils/merchant-api.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // global variable
 MerchantAPI mAPI = MerchantAPI();
@@ -110,42 +111,51 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
                       padding: EdgeInsets.only(
                           bottom: handleOverflow(context)
                       ),
-                      child: ListView.builder(
-                        itemCount: merchantsFiltered.length,
-                        itemBuilder: (context, index) => Card(
-                          shape: RoundedRectangleBorder (
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
-                          elevation: 3,
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child:
-                              Image.network(
-                                // TODO penyimpanan picture-nya nanti gimana ya?
-                                'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
-                                height: 0.095 * size.width,
-                                width: 0.095 * size.width,
-                              ),
+                      child: RefreshIndicator (
+                        onRefresh: () {
+                          return Future.delayed(const Duration(seconds: 1), (){
+                            setState(() {
+                              loadData();
+                            });
+                          });
+                        },
+                        child: ListView.builder(
+                          itemCount: merchantsFiltered.length,
+                          itemBuilder: (context, index) => Card(
+                            shape: RoundedRectangleBorder (
+                                borderRadius: BorderRadius.circular(10)
                             ),
-                            title: Text(
-                              merchantsFiltered[index].name,
-                              style: const TextStyle (
-                                  fontSize: 16,
-                                  letterSpacing: 0.1,
-                                  fontWeight: FontWeight.w600
+                            color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
+                            elevation: 3,
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child:
+                                Image.network(
+                                  // TODO penyimpanan picture-nya nanti gimana ya?
+                                  'https://picsum.photos/250?image=${merchantsFiltered[index].id}',
+                                  height: 0.095 * size.width,
+                                  width: 0.095 * size.width,
+                                ),
                               ),
+                              title: Text(
+                                merchantsFiltered[index].name,
+                                style: const TextStyle (
+                                    fontSize: 16,
+                                    letterSpacing: 0.1,
+                                    fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = index;
+                                  FocusScope.of(context).requestFocus(new FocusNode());
+                                  currentMerchant = merchantsFiltered[index];
+                                  log("selected merchant: $currentMerchant");
+                                });
+                              },
                             ),
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = index;
-                                FocusScope.of(context).requestFocus(new FocusNode());
-                                currentMerchant = merchantsFiltered[index];
-                                log("selected merchant: $currentMerchant");
-                              });
-                            },
                           ),
                         ),
                       ),

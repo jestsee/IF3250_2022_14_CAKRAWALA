@@ -28,7 +28,7 @@ class NumberFormatter {
     if (reversed.length % 4 == 0) {
       // remove ","
       reversed = reversed.substring(1);
-      log("substring: $reversed");
+      // log("substring: $reversed");
     }
     return reversed;
   }

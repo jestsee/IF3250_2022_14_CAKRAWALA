@@ -11,6 +11,7 @@ import 'package:cakrawala_mobile/constants.dart';
 import 'package:cakrawala_mobile/utils/payment-api.dart';
 import 'package:cakrawala_mobile/utils/points-api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../components/blurry-dialog.dart';
@@ -81,8 +82,10 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
                             color: black
                         ),
                         keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>
+                        [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                         onChanged: (value) {
-                          amount = value == "" ? 0 : int.parse(value); // TODO
+                          amount = value == "" ? 0 : int.parse(value);
                         },
                       ),
                     ),
@@ -213,10 +216,10 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
                   // reset current merchant
                   currentMerchant = Merchant(-1, "Unknown", "Unknown", "-1");
                 } else {
-                  log('resp message: ${resp.message}');
-                  var msg = json.decode(resp.message) as Map<String, dynamic>;
-                  var temp = msg['message'];
-                  _showDialog(context, "Gagal melakukan pembayaran", temp, null);
+                  log('resp message n: ${resp.message}');
+                  // var msg = json.decode(resp.message) as Map<String, dynamic>;
+                  // var temp = msg['message'];
+                  _showDialog(context, "Gagal melakukan pembayaran", resp.message, null);
                 }
               });
 
