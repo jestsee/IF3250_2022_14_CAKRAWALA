@@ -56,7 +56,7 @@ func AddReward(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil  menambahkan reward",
+			"message": "Successfully added new reward",
 			"data":    new_reward,
 		})
 	} else {
@@ -87,7 +87,7 @@ func ExchangeReward(c *gin.Context) {
 	err0 := models.DB.Where("id = ?", body.RewardID).First(&reward).Error
 	if err0 != nil {
 		c.JSON(400, gin.H{
-			"message": "id reward tidak ditemukan",
+			"message": "Reward id not found",
 		})
 		c.Abort()
 		return
@@ -96,7 +96,7 @@ func ExchangeReward(c *gin.Context) {
 	// cek stok reward cukup ga
 	if reward.Stock < body.Quantity {
 		c.AbortWithStatusJSON(400, gin.H{
-			"message": "stok tidak mencukupi",
+			"message": "Insufficient reward stock",
 		})
 		return
 	}
@@ -107,7 +107,7 @@ func ExchangeReward(c *gin.Context) {
 	// cek point cukup ga
 	if user.Point < uint32(pointsNeeded) {
 		c.AbortWithStatusJSON(400, gin.H{
-			"message": "point tidak mencukupi",
+			"message": "Insufficient point",
 		})
 		return
 	}
@@ -154,7 +154,7 @@ func ExchangeReward(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message":       "berhasil  menukarkan point",
+			"message":       "Successfully redeemed point",
 			"data":          reward_history,
 			"current_point": user.Point,
 		})
@@ -182,7 +182,7 @@ func GetAllRewards(c *gin.Context) {
 
 	data := rewards
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Get all merchant",
+		"message": "Get all rewards",
 		"data":    data,
 	})
 }
@@ -192,13 +192,13 @@ func UpdateStock(c *gin.Context) {
 	var data models.Reward
 	if err := c.BindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "gagal binding ",
+			"message": "Failed to binding",
 		})
 		return
 	}
 	if err := models.DB.Where("id = ?", c.Param("id")).First(&data).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "gagal menemukan barang hadiah",
+			"message": "Reward not found",
 		})
 		return
 	}
@@ -215,7 +215,7 @@ func UpdateStock(c *gin.Context) {
 		c.AbortWithError(500, err)
 	} else {
 		c.JSON(200, gin.H{
-			"message": "berhasil update hadiah gan",
+			"message": "Successfully updated reward",
 			"data":    data,
 		})
 	}
