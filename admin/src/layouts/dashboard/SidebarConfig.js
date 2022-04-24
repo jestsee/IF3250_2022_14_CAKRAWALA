@@ -27,7 +27,7 @@ const sidebarConfig = [
     icon: getIcon("bxs:store"),
   },
   {
-    title: "hadiah",
+    title: "Reward",
     path: "/dashboard/hadiah",
     icon: getIcon("bxs:gift"),
   },
