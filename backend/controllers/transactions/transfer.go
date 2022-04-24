@@ -26,7 +26,7 @@ func Transfer(c *gin.Context)  {
 	//check sender's destination
 	if data.FriendID == user.ID {
 		c.JSON(400, gin.H{
-			"message": "Penerima tidak boleh sama dengan pengirim",
+			"message": "The recipient cannot be the same as the sender",
 		})
 		c.Abort()
 		return
@@ -36,7 +36,7 @@ func Transfer(c *gin.Context)  {
 	err := models.DB.Where("id = ?", &data.FriendID).First(&receiver).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"message": "Penerima tidak ada",
+			"message": "Recipient doesn't exist",
 		})
 		c.Abort()
 		return
@@ -45,7 +45,7 @@ func Transfer(c *gin.Context)  {
 	// check sender's balance
 	if uint64(user.Balance) < uint64(data.Amount) {
 		c.JSON(400, gin.H{
-			"message": "Saldo anda kurang",
+			"message": "Insufficient balance",
 		})
 		c.Abort()
 		return
@@ -91,7 +91,7 @@ func Transfer(c *gin.Context)  {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Transfer berhasil",
+		"message": "Transfer success",
 	})
 }
 
@@ -114,7 +114,7 @@ func IsPhoneNumberValid (c *gin.Context) {
 	
 	if len(users) == 0 {
 		c.JSON(400, gin.H{
-			"message": "Pengguna dengan nomor tersebut tidak ditemukan",
+			"message": "The user with that phone number cannot be found",
 		})
 		c.Abort()
 		return

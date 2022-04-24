@@ -46,7 +46,7 @@ export default function EcommerceShop() {
   const handleResetFilter = async (name, stock, points, image) => {
     //Disini buat skema submitnya ya ges ya
     if (!(stock && name && points && image)) {
-      window.alert("semua form harus terisi!");
+      window.alert("Every fields needs to be filled!");
       return;
     }
     await uploadImageFirbase(image)
@@ -62,13 +62,13 @@ export default function EcommerceShop() {
       })
       .then((r) => {
         if (r.status === 200) {
-          alert("berhasil upload hadiah baru");
+          alert("New reward has been uploaded");
           window.location.reload();
         }
       })
       .catch((e) => {
         console.log(e);
-        alert("gagal upload hadiah baru");
+        alert("ERROR: New reward cannot be uploaded");
       });
   };
 
@@ -91,7 +91,7 @@ export default function EcommerceShop() {
     <Page title="Dashboard: Hadiah | Cakrawala.id Admin">
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hadiah
+          Reward
         </Typography>
 
         <Stack

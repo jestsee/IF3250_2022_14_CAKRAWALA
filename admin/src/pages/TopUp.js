@@ -18,20 +18,15 @@ import {
   TableContainer,
   TablePagination,
   TableHead,
-  Alert,
-  Collapse,
 } from "@mui/material";
 // components
 import Page from "../components/Page";
 import Scrollbar from "../components/Scrollbar";
-import { Box } from "@mui/system";
 
 export default function TopUp() {
   const [page, setPage] = useState(0);
-  const [alert, setAlert] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const [open, setOpen] = useState(true);
 
   const getAllTopUpRequest = async () => {
     const response = await axios.get(url + "/admin/top-up/request");
@@ -42,24 +37,6 @@ export default function TopUp() {
     axios.patch(url + `/admin/top-up/${id}`);
     window.location.reload();
   };
-
-  // const approveTopUp = async (id) => {
-  //   const response = axios.patch(url + `/admin/top-up/${id}`);
-  //   console.log(response.data);
-  //   if (response.data.Status === "completed") {
-  //     alert("Top up saldo di-approve");
-  //     window.location.reload();
-  //   }
-  // };
-  // const isInitialMount = useRef(true);
-
-  // useEffect(() => {
-  //   if (isInitialMount.current) {
-  //     isInitialMount.current = false;
-  //   } else {
-  //     return getAllTopUpRequest();
-  //   }
-  // }, [rows]);
 
   useEffect(() => {
     getAllTopUpRequest();
@@ -96,20 +73,20 @@ export default function TopUp() {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">ID Transaksi</TableCell>
-                    <TableCell align="center">ID User</TableCell>
-                    <TableCell align="center">Nama</TableCell>
+                    <TableCell align="center">Transaction ID</TableCell>
+                    <TableCell align="center">User ID</TableCell>
+                    <TableCell align="center">Name</TableCell>
                     <TableCell align="center">Amount</TableCell>
                     <TableCell align="center">EXP</TableCell>
                     <TableCell align="center">Status</TableCell>
-                    <TableCell align="center">Tanggal Request</TableCell>
+                    <TableCell align="center">Request Date</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {rows.length <= 0 ? (
                     <TableCell colSpan={8} align="center">
-                      Tidak ada top up request
+                      There is no top up request
                     </TableCell>
                   ) : (
                     rows
@@ -160,8 +137,8 @@ export default function TopUp() {
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableContainer>
           </Scrollbar>

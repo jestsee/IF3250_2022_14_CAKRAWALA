@@ -12,7 +12,7 @@ func IsAuthrorized() gin.HandlerFunc {
 		println(token)
 		if token == "" {
 			c.AbortWithStatusJSON(400, gin.H{
-				"message": "tidak ada authorization header",
+				"message": "No authorization header",
 			})
 			return
 		}
@@ -21,7 +21,7 @@ func IsAuthrorized() gin.HandlerFunc {
 		println(auth.ID)
 		if err != nil {
 			c.AbortWithStatusJSON(401, gin.H{
-				"message": "Token tidak ada",
+				"message": "No token found",
 			})
 			return
 		}
