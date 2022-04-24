@@ -7,8 +7,9 @@ class BlurryDialog extends StatelessWidget {
   String title;
   String content;
   VoidCallback? continueCallBack;
+  int? pop;
 
-  BlurryDialog(this.title, this.content, this.continueCallBack);
+  BlurryDialog(this.title, this.content, this.continueCallBack, [this.pop]);
   TextStyle textStyle = TextStyle (color: Colors.black);
 
   @override
@@ -25,7 +26,8 @@ class BlurryDialog extends StatelessWidget {
                 if(continueCallBack != null){
                   continueCallBack!();
                 }else{
-                  Navigator.of(context).pop();
+                  pop ??= 2;
+                  int count = 0; Navigator.of(context).popUntil((_)=> count++>= pop!);
                 }
               },
             ),

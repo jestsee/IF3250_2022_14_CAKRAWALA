@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:cakrawala_mobile/Screens/RedeemGift/components/dummy_data.dart';
 import 'package:cakrawala_mobile/components/search_box.dart';
 import 'package:cakrawala_mobile/utils/gift-api.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class Gift {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '{${this.id}, ${this.name}, ${this.price}, ${this.stock}}';
+    return '{$id, $name, $price, $stock}';
   }
 
   static Gift getSelectedGift() {
@@ -42,7 +41,7 @@ class Gift {
 }
 
 class ChooseGiftTable extends StatefulWidget {
-  ChooseGiftTable({Key? key}) : super(key: key);
+  const ChooseGiftTable({Key? key}) : super(key: key);
 
   @override
   State<ChooseGiftTable> createState() => _ChooseGiftTableState();
@@ -83,7 +82,7 @@ class _ChooseGiftTableState extends State<ChooseGiftTable> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; // Screen height and width
 
-    return Container (
+    return SizedBox (
       width: .9 * size.width,
       height: .7 * size.height,
       child: Column(
@@ -110,55 +109,65 @@ class _ChooseGiftTableState extends State<ChooseGiftTable> {
                       padding: EdgeInsets.only(
                           bottom: handleOverflow(context)
                       ),
-                      child: ListView.builder(
-                        itemCount: giftsFiltered.length,
-                        itemBuilder: (context, index) => Card(
-                          shape: RoundedRectangleBorder (
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
-                          elevation: 3,
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child:
-                              Image.network(
-                                // TODO
-                                'https://picsum.photos/250?image=${giftsFiltered[index].id}',
-                                height: 0.095 * size.width,
-                                width: 0.095 * size.width,
-                              ),
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return Future.delayed(const Duration(seconds: 1), (){
+                            setState(() {
+                              loadData();
+                            });
+                          });
+                        },
+                        child: ListView.builder(
+                          itemCount: giftsFiltered.length,
+                          itemBuilder: (context, index) => Card(
+                            shape: RoundedRectangleBorder (
+                                borderRadius: BorderRadius.circular(10)
                             ),
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  giftsFiltered[index].name,
+                            color: selectedIndex == index? const Color(0xFFD6D6D6): Colors.white,
+                            elevation: 3,
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child:
+                                Image.network(
+                                  // TODO
+                                  'https://picsum.photos/250?image=${giftsFiltered[index].id}',
+                                  height: 0.095 * size.width,
+                                  width: 0.095 * size.width,
+                                ),
+                              ),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    giftsFiltered[index].name,
+                                      style: const TextStyle (
+                                          fontSize: 16,
+                                          letterSpacing: 0.1,
+                                          fontWeight: FontWeight.w600
+                                      ),
+                                  ),
+                                  Text(
+                                    "${giftsFiltered[index].price.toString()} points",
                                     style: const TextStyle (
                                         fontSize: 16,
                                         letterSpacing: 0.1,
                                         fontWeight: FontWeight.w600
                                     ),
-                                ),
-                                Text(
-                                  "${giftsFiltered[index].price.toString()} points",
-                                  style: const TextStyle (
-                                      fontSize: 16,
-                                      letterSpacing: 0.1,
-                                      fontWeight: FontWeight.w600
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                              enabled: giftsFiltered[index].stock<1? false:true,
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = index;
+                                  FocusScope.of(context).requestFocus(FocusNode());
+                                  currentGift = giftsFiltered[index];
+                                  log("selected gift: $currentGift");
+                                });
+                              },
                             ),
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = index;
-                                FocusScope.of(context).requestFocus(new FocusNode());
-                                currentGift = giftsFiltered[index];
-                                log("selected gift: $currentGift");
-                              });
-                            },
                           ),
                         ),
                       ),

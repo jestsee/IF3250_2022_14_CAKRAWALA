@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cakrawala_mobile/Screens/Homepage/homepage_screen.dart';
 import 'package:cakrawala_mobile/components/bottom_confirm_button.dart';
 import 'package:cakrawala_mobile/components/circle_profile_icon.dart';
+import 'package:cakrawala_mobile/components/custom_app_bar.dart';
 import 'package:cakrawala_mobile/components/enter_amount_input.dart';
 import 'package:cakrawala_mobile/components/rounded_button.dart';
 import 'package:cakrawala_mobile/components/user_info_text.dart';
@@ -33,26 +34,7 @@ class _BodyState extends State<Body> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: deepSkyBlue,
-      appBar: AppBar(
-        titleSpacing: 40,
-        title: const Text(
-          'Top Up My Account',
-          style: TextStyle(
-              fontWeight: FontWeight.w900, color: Colors.white, fontSize: 20),
-        ),
-        backgroundColor: deepSkyBlue,
-        elevation: 0,
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.05 * size.width),
-            child: BackButton(
-              onPressed: (){
-                Navigator.pop(context);
-              },
-            ),
-          )
-        ],
-      ),
+      appBar: const CustomAppBar(text: 'Top Up My Account'),
       body: Column(
         children: <Widget>[
           SizedBox(

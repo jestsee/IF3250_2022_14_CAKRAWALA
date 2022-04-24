@@ -1,20 +1,22 @@
 import 'dart:developer';
 
+import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 import "package:flutter/material.dart";
 import 'package:cakrawala_mobile/utils/history-api.dart';
-import 'package:cakrawala_mobile/Screens/Homepage/components/history_container.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import '../../../components/text_account_template.dart';
 import '../../../constants.dart';
+import 'package:cakrawala_mobile/Screens/Homepage/components/wallet_info.dart';
 
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
 
   @override
-  State<History> createState() => _HistoryState();
+  State<History> createState() => HistoryState();
 }
 
-class _HistoryState extends State<History> {
+class HistoryState extends State<History> {
   late Future<List<TransactionHistory>> _transData;
   List<TransactionHistory> transData = [];
 
@@ -24,14 +26,17 @@ class _HistoryState extends State<History> {
     super.initState();
   }
 
-  Color whatColor(String type) {
-    if (type == "Topup") {
+  Color whatColor(String type, bool isDebit) {
+    if (type == "Top Up Completed" || (type == "Transfer" && !isDebit)) {
       return Colors.lightGreen;
-    } return Colors.red;
+    } else if (type == "Top Up Pending") {
+      return Colors.orangeAccent;
+    }
+    return Colors.red;
   }
 
-  String nominal(String type, String nominal) {
-    if (type == "Topup") {
+  String nominal(String type, String nominal, bool isDebit) {
+    if (type.substring(0,6) == "Top Up" || (type == "Transfer" && !isDebit)) {
       return "+$nominal";
     } return "-$nominal";
   }
@@ -46,49 +51,6 @@ class _HistoryState extends State<History> {
       _data = data;
     });
     return _data;
-  }
-
-  // DataTable _createDataTable() {
-  //   return DataTable(
-  //     headingRowColor: MaterialStateProperty.all(null),
-  //     headingRowHeight: 48,
-  //     dataRowColor: MaterialStateProperty.all(null),
-  //     dataTextStyle: const TextStyle(color: white),
-  //     headingTextStyle: const TextStyle(color: white, fontWeight: FontWeight.w600),
-  //     dividerThickness: .8,
-  //     horizontalMargin: 8,
-  //     columnSpacing: 35,
-  //     columns: _createColumns(),
-  //     rows: _createRows(),
-  //   );
-  // }
-
-  List<DataColumn> _createColumns() {
-    return [
-      const DataColumn(label: Text('Type')),
-      const DataColumn(label: Text('Dest ID')),
-      const DataColumn(label: Text('Amount')),
-      const DataColumn(label: Text('Time'))
-    ];
-  }
-
-  // List<DataRow> _createRows() {
-  //   List<DataRow> rows = [];
-  //   for (var t in transData) {
-  //     rows.add(_createRow(t.transactionType, t.destID, t.nominal, t.createdAt));
-  //   }
-  //
-  //   return rows;
-  // }
-
-  DataRow _createRow(
-      String type, String destID, String nominal, String createdAt) {
-    return DataRow(cells: [
-      DataCell(Text(type)),
-      DataCell(Text(destID)),
-      DataCell(Text(nominal)),
-      DataCell(Text(createdAt)),
-    ]);
   }
 
   double handleOverflow(BuildContext context) {
@@ -129,11 +91,14 @@ class _HistoryState extends State<History> {
                               Container(
                                 width: 7,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(10),
                                     bottomLeft: Radius.circular(10)
                                   ),
-                                  color: whatColor(transData[index].transactionType) // TODO
+                                  color: whatColor(
+                                    transData[index].transactionType,
+                                    transData[index].isDebit
+                                  ) // TODO
                                 ),
                               ),
                               Container(
@@ -149,7 +114,7 @@ class _HistoryState extends State<History> {
                                       color: Colors.grey.withOpacity(0.15),
                                       spreadRadius: 0.25,
                                       blurRadius: 2,
-                                      offset: Offset(0, 2), // changes position of shadow
+                                      offset: const Offset(0, 2), // changes position of shadow
                                     ),
                                   ],
                                 ),
@@ -170,13 +135,6 @@ class _HistoryState extends State<History> {
                                         size: 14,
                                         color: Colors.black38
                                     ),
-                                    // TextAccountTemplate(
-                                    //     text: "2022",
-                                    //     align: TextAlign.left,
-                                    //     weight: FontWeight.w600,
-                                    //     size: 12,
-                                    //     color: Colors.black54
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -194,7 +152,7 @@ class _HistoryState extends State<History> {
                                   ),
                                   const SizedBox(height: 5,),
                                   TextAccountTemplate(
-                                    text: DateFormat('yyyy hh:mm:ss').format(transData[index].createdAt),
+                                    text: DateFormat('yyyy HH:mm:ss').format(transData[index].createdAt),
                                     align: TextAlign.left,
                                     weight: FontWeight.w500,
                                     size: 14,
@@ -205,13 +163,20 @@ class _HistoryState extends State<History> {
                             ]
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 12),
+                            padding: const EdgeInsets.only(right: 12),
                             child: TextAccountTemplate(
-                              text: nominal(transData[index].transactionType, transData[index].nominal),
+                              text: nominal(
+                                  transData[index].transactionType,
+                                  transData[index].nominal,
+                                  transData[index].isDebit
+                              ),
                               align: TextAlign.left,
                               weight: FontWeight.w600,
                               size: 18,
-                              color: whatColor(transData[index].transactionType),
+                              color: whatColor(
+                                  transData[index].transactionType,
+                                  transData[index].isDebit
+                              ),
                             )
                           ),
                         ],
