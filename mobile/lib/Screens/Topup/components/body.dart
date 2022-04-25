@@ -90,7 +90,7 @@ class _BodyState extends State<Body> {
             }
             var resp = await TopUpAPI.topUp(topUpAmount);
             if(resp.data){
-              _showDialog(context, "Berhasil", "Request top-up sebesar $topUpAmount telah berhasil, silahkan tunggu ACC dari admin supaya saldo masuk ke akun anda", (){
+              _showDialog(context, "Berhasil", "Request top-up for $topUpAmount has been succeeded, please wait while we verify the transaction, then your balance will automatically increased", (){
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (BuildContext context) => const Homepage()),
