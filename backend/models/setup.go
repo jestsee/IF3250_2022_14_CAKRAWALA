@@ -14,15 +14,15 @@ var DB *gorm.DB
 func ConnectDatabase() {
 	err := godotenv.Load(".env")
 
-	if err != nil {
-		panic("gawatt, env tidak terdeteksii")
-	}
-
 	dbUsn := os.Getenv("DBUSN")
 	dbPass := os.Getenv("DBPASS")
 	dbHost := os.Getenv("DBHOST")
 	dbPort := os.Getenv("DBPORT")
 	dbName := os.Getenv("DBNAME")
+	isTest := os.Getenv("ISTEST")
+	if err != nil && isTest != "1" {
+		panic("gawatt, env tidak terdeteksii")
+	}
 
 	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
 		dbUsn,
