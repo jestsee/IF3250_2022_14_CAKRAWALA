@@ -45,7 +45,7 @@ deploy:
     - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh g13519028@$VM_IPADDRESS "ls"
+    - ssh g13519028@$VM_IPADDRESS "./cd.sh"
 
 # mobile:
 #   stage: mobile-build
