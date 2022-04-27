@@ -70,7 +70,7 @@ func PaymentController(c *gin.Context) {
 
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "berhasil  melakukan pembayaran di merchant",
+			"message": "successfully made a payment at the merchant",
 			"data":    transaksi,
 		})
 	} else {
