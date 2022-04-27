@@ -101,6 +101,11 @@ func GetTopUpRequest(c *gin.Context) {
 		c.AbortWithError(500, err)
 		return
 	}
+
+	for i, s := range topupReq {
+		models.DB.Where("id = ?", s.UserID).First(&topupReq[i].User)
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Get top up request success",
 		"data":    topupReq,
