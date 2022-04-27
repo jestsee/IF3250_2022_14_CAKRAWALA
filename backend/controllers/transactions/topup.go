@@ -94,7 +94,9 @@ func ApproveTopUp(c *gin.Context) {
 
 func GetTopUpRequest(c *gin.Context) {
 	var topupReq []models.Transaksi
-	err := models.DB.Preload("User").Where("merchant_id IS NULL AND friend_id IS NULL AND status != 'completed'").Find(&topupReq).Error
+	err := models.DB.Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Where("name != ''")
+	}).Where("merchant_id IS NULL AND friend_id IS NULL AND status != 'completed'").Find(&topupReq).Error
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
