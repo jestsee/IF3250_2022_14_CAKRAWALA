@@ -37,7 +37,7 @@ func AddMerchant(c *gin.Context) {
 	err := models.DB.Where("account_id = ?", data.AccountId).First(&merchant).Error
 	if err == nil {
 		c.JSON(400, gin.H{
-			"message": "account id sudah pernah dipakai",
+			"message": "account id has been used",
 		})
 		c.Abort()
 		return
@@ -117,7 +117,7 @@ func GetMerchantAdminById(c *gin.Context) {
 	if err == nil {
 		c.JSON(http.StatusOK, merchant)
 	} else {
-		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat merchant"))
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Failed to get merchant"))
 	}
 }
 
@@ -128,14 +128,14 @@ func DeleteMerchant(c *gin.Context) {
 		err = models.DB.Delete(&merchant).Error
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"message": "gagal delete",
+				"message": "failed to delete",
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
-				"message": "berhasil delete",
+				"message": "successfully deleted",
 			})
 		}
 	} else {
-		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Gagal mendapat merchant"))
+		c.JSON(http.StatusNotFound, utils.ExceptionResponse("Failed to get merchant"))
 	}
 }
