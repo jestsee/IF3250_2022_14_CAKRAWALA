@@ -29,7 +29,7 @@ class CustomIconButton extends StatelessWidget {
         icon: Icon(icon_,color: white),
         label: Text(
           text,
-          style: TextStyle(color: textColor, fontFamily: 'Mulish', fontSize: 15, fontWeight: FontWeight.w700)),
+          style: TextStyle(color: textColor, fontFamily: 'Mulish', fontSize: 14, fontWeight: FontWeight.w700)),
         
         onPressed: press,
       ),
