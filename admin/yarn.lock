@@ -1295,11 +1295,6 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
-"@faker-js/faker@^6.0.0-alpha.7":
-  "integrity" "sha512-T2nYE8+EfzfkRMLMSm7UvgC7fZ2KkKEyCMeyPVS0q2cuvENbt1SjWyu0bOJ0JqBbTs1g+gYMWMFMXspWlzNVmQ=="
-  "resolved" "https://registry.npmjs.org/@faker-js/faker/-/faker-6.0.0-alpha.7.tgz"
-  "version" "6.0.0-alpha.7"
-
 "@firebase/analytics-compat@0.1.8":
   "integrity" "sha512-2XBPTFD4DPVZUJZ2tPOib7BfyHB/Ucfq3DfYMNRZFUrgctABTO/lRwjm3oqv4EsoqEOlbxRurvfFN8BQEe28LA=="
   "resolved" "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.1.8.tgz"
