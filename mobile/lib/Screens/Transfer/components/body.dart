@@ -90,7 +90,7 @@ class _BodyState extends State<Body> {
                   log('resp message: ${resp.message}');
                   var msg = json.decode(resp.message) as Map<String, dynamic>;
                   var temp = msg['message'];
-                  _showDialog(context, "Gagal melakukan transfer", temp, null);
+                  _showDialog(context, "Transfer failed", temp, null);
                 }
               });
             }),

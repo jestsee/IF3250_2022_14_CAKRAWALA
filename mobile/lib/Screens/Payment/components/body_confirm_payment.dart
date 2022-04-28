@@ -219,7 +219,7 @@ class _BodyConfirmPaymentState extends State<BodyConfirmPayment> {
                   log('resp message n: ${resp.message}');
                   // var msg = json.decode(resp.message) as Map<String, dynamic>;
                   // var temp = msg['message'];
-                  _showDialog(context, "Gagal melakukan pembayaran", resp.message, null);
+                  _showDialog(context, "Payment failed", resp.message, null);
                 }
               });
 

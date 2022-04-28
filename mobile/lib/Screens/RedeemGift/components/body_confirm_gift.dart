@@ -139,7 +139,7 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                   log('resp message: ${resp.message}');
                   var msg = json.decode(resp.message) as Map<String, dynamic>;
                   var temp = msg['message'];
-                  _showDialog(context, "Gagal melakukan redeem", temp, null);
+                  _showDialog(context, "Redeem failed", temp, null);
                 }
               });
 

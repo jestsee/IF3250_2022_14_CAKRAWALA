@@ -21,7 +21,7 @@ class BlurryDialog extends StatelessWidget {
           content: new Text(content, style: textStyle,),
           actions: <Widget>[
             FlatButton(
-              child: const Text("Oke"),
+              child: const Text("Ok"),
               onPressed: () {
                 if(continueCallBack != null){
                   continueCallBack!();

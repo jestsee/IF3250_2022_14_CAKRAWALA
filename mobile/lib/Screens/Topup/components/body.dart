@@ -90,7 +90,7 @@ class _BodyState extends State<Body> {
             }
             var resp = await TopUpAPI.topUp(topUpAmount);
             if(resp.data){
-              _showDialog(context, "Berhasil", "Request top-up for $topUpAmount has been succeeded, please wait while we verify the transaction, then your balance will automatically increased", (){
+              _showDialog(context, "Success!", "Request top-up for $topUpAmount has been succeeded, please wait while we verify the transaction, then your balance will automatically increased", (){
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (BuildContext context) => const Homepage()),
@@ -98,7 +98,7 @@ class _BodyState extends State<Body> {
                 );
               });
             }else{
-              _showDialog(context, "Gagal melakukan top-up", resp.message, null);
+              _showDialog(context, "Top Up Failed", resp.message, null);
             }
           })
         ],
