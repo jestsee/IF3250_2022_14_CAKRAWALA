@@ -45,7 +45,8 @@ class HistoryState extends State<History> {
     List<TransactionHistory> _data = [];
     await HistoryAPI.getHistoryAdmin().then((data) {
       setState(() {
-        transData = data;
+        transData = [];
+        transData.addAll(data);
         transData = transData.reversed.toList();
       });
       _data = data;

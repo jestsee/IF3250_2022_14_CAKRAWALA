@@ -54,7 +54,7 @@ class _BodyState extends State<Body> {
         onRefresh: () {
           return Future.delayed(const Duration(seconds: 1), (){
             walletKey.currentState?.loadState();
-            historyKey.currentState?.initState();
+            historyKey.currentState?.loadState();
           });
         },
         child: SingleChildScrollView(

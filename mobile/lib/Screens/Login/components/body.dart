@@ -71,7 +71,7 @@ class _BodyState extends State<Body> {
                   var resp = await AuthenticationApi.loginRequest(emailUser, passwordUser);
                   if(resp.status==200){
                     setState((){
-                      buttonText = "Login Berhasil!";
+                      buttonText = "Login Success!";
                     });
                     Navigator.pushReplacement(context, MaterialPageRoute(
                         builder: (context) => Homepage()
@@ -80,13 +80,13 @@ class _BodyState extends State<Body> {
                     setState((){
                       buttonText = "Login";
                     });
-                    _showDialog(context, "Gagal login", "Cek kembali username dan password anda!");
+                    _showDialog(context, "Login failed", "Please enter a correct email and password. Note that both fields may be case-sensitive.");
                   }
                 }on Exception catch(e){
                   setState((){
                     buttonText = "Login";
                   });
-                  _showDialog(context, "Terjadi Error", e.toString());
+                  _showDialog(context, "Something went wrong", e.toString());
                 }
               },
               color: black,

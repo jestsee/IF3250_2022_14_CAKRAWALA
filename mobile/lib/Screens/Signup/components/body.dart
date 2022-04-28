@@ -76,17 +76,17 @@ class _BodyState extends State<Body> {
                   var resp = await AuthenticationApi.registerRequest(
                       email, password, name, phone);
                   if(resp.status==200){
-                    _showDialog(context, "Berhasil Mendaftar", "Silahkan login dengan akun yang anda daftarkan tadi ya!",(){
+                    _showDialog(context, "Success!", "Congratulations, your account has been successfully created.",(){
                       Navigator.pushReplacement(context, MaterialPageRoute(
                           builder: (context) => const LoginScreen()
                       ));
                     });
 
                   }else{
-                    _showDialog(context, "Gagal mendaftar", resp.message, null);
+                    _showDialog(context, "Sign up failed", resp.message, null);
                   }
                 } on Exception catch (e) {
-                  _showDialog(context, "Terjadi Error", e.toString(), null);
+                  _showDialog(context, "Something went wrong", e.toString(), null);
                 }
                 setState(() {
                   buttonText = "Register";
