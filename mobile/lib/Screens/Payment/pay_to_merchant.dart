@@ -1,4 +1,5 @@
 import 'package:cakrawala_mobile/Screens/Payment/components/body_pay_to_merchant.dart';
+import 'package:cakrawala_mobile/components/choose_merchant_table.dart';
 import 'package:cakrawala_mobile/components/custom_app_bar.dart';
 import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,15 +10,21 @@ class PayToMerchantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: deepSkyBlue,
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        text: "Pay To Merchant",
-        center: true,
-        backButton: false,
+    return WillPopScope(
+      onWillPop: () {
+        Merchant.resetMerchant();
+        return Future.value(true);
+      },
+      child: const Scaffold(
+        backgroundColor: deepSkyBlue,
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(
+          text: "Pay To Merchant",
+          center: true,
+          backButton: false,
+        ),
+        body: BodyPayToMerchant(),
       ),
-      body: BodyPayToMerchant(),
     );
   }
 }

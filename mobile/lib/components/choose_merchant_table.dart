@@ -39,16 +39,27 @@ class Merchant {
     log('selected:${currentMerchant.name}');
     return currentMerchant;
   }
+
+  static void resetMerchant() {
+    currentMerchant = Merchant.fromJson(
+        {
+          "id": -1,
+          "Name": "Unknown",
+          "Address": "Unknown",
+          "AccountId": "-1",
+        }
+    );
+  }
 }
 
 class ChooseMerchantTable extends StatefulWidget {
   ChooseMerchantTable({Key? key}) : super(key: key);
 
   @override
-  State<ChooseMerchantTable> createState() => _ChooseMerchantTableState();
+  State<ChooseMerchantTable> createState() => ChooseMerchantTableState();
 }
 
-class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
+class ChooseMerchantTableState extends State<ChooseMerchantTable> {
   // TODO array of merchants taroh disini
   late Future<List<Merchant>> _merchants;
   List<Merchant> merchants = [];
@@ -57,9 +68,14 @@ class _ChooseMerchantTableState extends State<ChooseMerchantTable> {
   String _searchResult = '';
   int selectedIndex = -1;
 
+  void resetIndex() {
+    selectedIndex = -1;
+  }
+
   @override
   void initState() {
     super.initState();
+    selectedIndex = -1;
     _merchants = loadData();
     log("merchants initState $merchants");
   }

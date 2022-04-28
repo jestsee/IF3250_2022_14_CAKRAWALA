@@ -19,14 +19,17 @@ class Gift {
   String name;
   int price;
   int stock;
+  String img;
 
-  Gift(this.id, this.name, this.price, this.stock);
+  Gift(this.id, this.name, this.price, this.stock, this.img);
   factory Gift.fromJson(dynamic json) {
     return Gift(
       json['id'] as int,
       json['name'] as String,
       json['price'] as int,
-      json['stock'] as int);
+      json['stock'] as int,
+      json['image'] as String
+    );
   }
 
   @override
@@ -37,6 +40,17 @@ class Gift {
   static Gift getSelectedGift() {
     log('selected:${currentGift.name}');
     return currentGift;
+  }
+
+  static void resetGift() {
+    currentGift = Gift.fromJson(
+        {
+          "id": -1,
+          "name": "Unknown",
+          "price": -1,
+          "stock" : -1,
+        }
+    );
   }
 }
 
@@ -132,7 +146,7 @@ class _ChooseGiftTableState extends State<ChooseGiftTable> {
                                 child:
                                 Image.network(
                                   // TODO
-                                  'https://picsum.photos/250?image=${giftsFiltered[index].id}',
+                                  giftsFiltered[index].img,
                                   height: 0.095 * size.width,
                                   width: 0.095 * size.width,
                                 ),

@@ -4,6 +4,8 @@ import 'package:cakrawala_mobile/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/choose_gift_table.dart';
+
 class RedeemGift extends StatelessWidget {
   const RedeemGift({Key? key}) : super(key: key);
 
