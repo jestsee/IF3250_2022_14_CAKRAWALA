@@ -11,6 +11,7 @@ Gift currentGift = Gift.fromJson(
       "name": "Unknown",
       "price": -1,
       "stock" : -1,
+      "image" : "Unknown",
     }
 );
 
@@ -38,7 +39,7 @@ class Gift {
   }
 
   static Gift getSelectedGift() {
-    log('selected:${currentGift.name}');
+    log('selected:${currentGift.id}');
     return currentGift;
   }
 
@@ -49,6 +50,7 @@ class Gift {
           "name": "Unknown",
           "price": -1,
           "stock" : -1,
+          "image" : "Unknown",
         }
     );
   }

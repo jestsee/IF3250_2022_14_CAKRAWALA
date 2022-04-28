@@ -11,15 +11,21 @@ class RedeemGift extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: deepSkyBlue,
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        text: "Redeem Gifts",
-        center: true,
-        backButton: false,
+    return WillPopScope(
+      onWillPop: () {
+        Gift.resetGift();
+        return Future.value(true);
+      },
+      child: const Scaffold(
+        backgroundColor: deepSkyBlue,
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(
+          text: "Redeem Gifts",
+          center: true,
+          backButton: false,
+        ),
+        body: BodyRedeemGift(),
       ),
-      body: BodyRedeemGift(),
     );
   }
 }
