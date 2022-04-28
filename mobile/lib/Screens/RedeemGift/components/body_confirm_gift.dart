@@ -134,7 +134,7 @@ class _BodyConfirmRedeemGiftState extends State<BodyConfirmRedeemGift> {
                     )
                   );
                   // reset current merchant
-                  currentGift = Gift(-1, "Unknown", -1, -1);
+                  currentGift = Gift(-1, "Unknown", -1, -1, "Unknown");
                 } else {
                   log('resp message: ${resp.message}');
                   var msg = json.decode(resp.message) as Map<String, dynamic>;
